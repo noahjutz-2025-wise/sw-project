@@ -1,17 +1,26 @@
-# 👋 Hi Team
+# Certified Bangers 💣️
 
-This Git Repository will serve as a central hub for collaborating on our project for Softwareentwicklung (SW).
+Spring Boot web app that provides movie and TV show recommendations. Created in the course of the computer science module "Softwareentwicklung (SW)" at OTH Regensburg.
 
-- We'll coordinate our responsibilities in the Product Backlog. I've set up a [document on CryptPad](https://cryptpad.fr/sheet/#/2/sheet/view/w9rsGPIjlMg1VfyyiRDTA0UcjcNywEH3Pl8vLufCzbI/) that we can all edit. This will be the PDF part of our submission.
-- This repository contains the Spring Boot source code and user/admin manual. It will be the ZIP part of our submission.
-- We'll have to present our app. Maybe someone else can take the initiative on this.
+## Exam submission
 
-## First steps
+There are three parts to the exam submission.
 
-- [ ] Come up with a product
-- [ ] Create a lean canvas
-- [ ] Define features (F)
-- [ ] Define initial product backlog items
-- [ ] Define initial user stories (US)
-- [ ] Prioritize USs (Must, Should, Could, Won't)
-- [ ] Plan the roadmap
+1. PDF Part including lean canvas and backlog: [CryptPad](https://cryptpad.fr/sheet/#/2/sheet/view/w9rsGPIjlMg1VfyyiRDTA0UcjcNywEH3Pl8vLufCzbI/).
+2. ZIP Part including source code and user/admin manual: [This repo](https://github.com/noahjutz-2025-wise/sw-project)
+3. Presentation: Maybe someone else can take the initiative on this.
+
+## Roadmap
+
+- 2025-10-16: Kickoff
+  - [x] Come up with a product
+  - [x] Create a lean canvas
+  - [x] Define features (F)
+  - [x] Developer environment setup (IntelliJ) and collaboration (PRs)
+  - [ ] Define initial user stories (US)
+- 2025-10-23
+  - [ ] Review lean canvas, features and priorities
+  - [ ] Complete USs
+  - [ ] Assign responsibilities to members (US owners)
+  - [ ] Definition of Done
+  - [ ] High-Level architecture sketch
