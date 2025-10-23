@@ -6,7 +6,7 @@ Spring Boot web app that provides movie and TV show recommendations. Created in 
 
 There are three parts to the exam submission.
 
-1. PDF Part including lean canvas and backlog: [CryptPad](https://cryptpad.fr/sheet/#/2/sheet/view/w9rsGPIjlMg1VfyyiRDTA0UcjcNywEH3Pl8vLufCzbI/).
+1. PDF Part including lean canvas and backlog: [Google Sheets](https://docs.google.com/spreadsheets/d/1GpOgG8HUAgziNxhD0JVqDjEqnBnJviiAjKFj3ZOB8ok/edit?usp=sharing).
 2. ZIP Part including source code and user/admin manual: [This repo](https://github.com/noahjutz-2025-wise/sw-project)
 3. Presentation: Maybe someone else can take the initiative on this.
 
@@ -17,10 +17,11 @@ There are three parts to the exam submission.
   - [x] Create a lean canvas
   - [x] Define features (F)
   - [x] Developer environment setup (IntelliJ) and collaboration (PRs)
-  - [ ] Define initial user stories (US)
+  - [ ] ~~Define initial user stories (US)~~
 - 2025-10-23
-  - [ ] Review lean canvas, features and priorities
-  - [ ] Complete USs
-  - [ ] Assign responsibilities to members (US owners)
+  - [x] Review lean canvas, features and priorities
+  - [x] Assign responsibilities to members (Feature Owners)
+  - [X] High-Level architecture sketch
   - [ ] Definition of Done
-  - [ ] High-Level architecture sketch
+- 2025-10-30
+  - [ ] Review USs
