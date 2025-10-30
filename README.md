@@ -10,6 +10,19 @@ There are three parts to the exam submission.
 2. ZIP Part including source code and user/admin manual: [This repo](https://github.com/noahjutz-2025-wise/sw-project)
 3. Presentation: Maybe someone else can take the initiative on this.
 
+## Definition of Done
+
+- (V) There is a landing page
+- (N) You can log in and sign up
+- (A) Upon sign up, user can see recommendations and trending movies
+- (V) There is one admin that can access the dashboard and perform some action
+- (N) The user can search any movie
+- (N) The user can save a watchlist
+- (A) The user can find other users
+- (N) There is a published container image for the server
+- (A) The web server sends E-mails to users (context is TBD)
+- (V) There is one error page in case of HTTP errors
+
 ## Roadmap
 
 - 2025-10-16: Kickoff
@@ -22,6 +35,10 @@ There are three parts to the exam submission.
   - [x] Review lean canvas, features and priorities
   - [x] Assign responsibilities to members (Feature Owners)
   - [X] High-Level architecture sketch
-  - [ ] Definition of Done
 - 2025-10-30
-  - [ ] Review USs
+  - [x] Review USs
+  - [x] Definition of Done
+  - [x] Resolve overlaps: F1/F7, F1/F4
+  - [x] Assign F17 to A
+- 2025-11-06
+  - [ ] Review PRs
