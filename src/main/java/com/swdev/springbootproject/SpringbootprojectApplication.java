@@ -1,4 +1,4 @@
-package com.noahjutz.springbootproject;
+package com.swdev.springbootproject;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
