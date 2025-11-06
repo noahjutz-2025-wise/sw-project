@@ -41,4 +41,8 @@ There are three parts to the exam submission.
   - [x] Resolve overlaps: F1/F7, F1/F4
   - [x] Assign F17 to A
 - 2025-11-06
-  - [ ] Review PRs
+  - [x] Review PRs
+  - [x] Define SQL Schema
+- 2025-11-13
+  - [ ] Submit PDF Part
+  - [ ] Review code PRs
