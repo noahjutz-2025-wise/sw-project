@@ -15,7 +15,7 @@ There are three parts to the exam submission.
 - (V) There is a landing page
 - (N) You can log in and sign up
 - (A) Upon sign up, user can see recommendations and trending movies
-- (V) There is one admin that can access the dashboard and perform some action
+- (V) There is one admin that can access the dashboard and perform some action (action is TBD)
 - (N) The user can search any movie
 - (N) The user can save a watchlist
 - (A) The user can find other users
@@ -46,4 +46,5 @@ There are three parts to the exam submission.
 - 2025-11-13
   - [ ] Submit PDF Part
   - [ ] Review code PRs
-  - [ ] Decide formatter (prettier)
+  - [ ] Decide on formatter (prettier)
+  - [ ] Finalize Definition of Done
