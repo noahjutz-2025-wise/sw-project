@@ -2,6 +2,12 @@
 
 Spring Boot web app that provides movie and TV show recommendations. Created in the course of the computer science module "Softwareentwicklung (SW)" at OTH Regensburg.
 
+## Quickstart
+
+```
+./mvnw spring-boot:run
+```
+
 ## Exam submission
 
 There are three parts to the exam submission.
