@@ -29,7 +29,6 @@ public class SignupController {
         RedirectAttributes redirectAttributes
     ) {
         try {
-            // Check if email already exists
             if (userRepository.existsByEmail(user.getEmail())) {
                 model.addAttribute(
                     "error",
@@ -38,10 +37,8 @@ public class SignupController {
                 return "signup";
             }
 
-            // Save the user to database
             userRepository.save(user);
 
-            // Add success message
             redirectAttributes.addFlashAttribute(
                 "success",
                 "Registration successful! Welcome, " + user.getFirstName() + "!"
