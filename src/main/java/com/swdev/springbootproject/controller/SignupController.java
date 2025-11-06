@@ -23,13 +23,18 @@ public class SignupController {
     }
 
     @PostMapping("/signup")
-    public String processSignup(@ModelAttribute("user") User user,
-                               Model model,
-                               RedirectAttributes redirectAttributes) {
+    public String processSignup(
+        @ModelAttribute("user") User user,
+        Model model,
+        RedirectAttributes redirectAttributes
+    ) {
         try {
             // Check if email already exists
             if (userRepository.existsByEmail(user.getEmail())) {
-                model.addAttribute("error", "Email already exists. Please use a different email.");
+                model.addAttribute(
+                    "error",
+                    "Email already exists. Please use a different email."
+                );
                 return "signup";
             }
 
@@ -37,12 +42,17 @@ public class SignupController {
             userRepository.save(user);
 
             // Add success message
-            redirectAttributes.addFlashAttribute("success",
-                "Registration successful! Welcome, " + user.getFirstName() + "!");
+            redirectAttributes.addFlashAttribute(
+                "success",
+                "Registration successful! Welcome, " + user.getFirstName() + "!"
+            );
 
             return "redirect:/signup-success";
         } catch (Exception e) {
-            model.addAttribute("error", "Registration failed. Please try again.");
+            model.addAttribute(
+                "error",
+                "Registration failed. Please try again."
+            );
             return "signup";
         }
     }

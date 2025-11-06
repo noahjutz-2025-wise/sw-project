@@ -26,7 +26,12 @@ public class User {
     public User() {}
 
     // Constructor with parameters
-    public User(String firstName, String lastName, String email, String password) {
+    public User(
+        String firstName,
+        String lastName,
+        String email,
+        String password
+    ) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -76,11 +81,20 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+        return (
+            "User{" +
+            "id=" +
+            id +
+            ", firstName='" +
+            firstName +
+            '\'' +
+            ", lastName='" +
+            lastName +
+            '\'' +
+            ", email='" +
+            email +
+            '\'' +
+            '}'
+        );
     }
 }
