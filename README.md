@@ -46,3 +46,4 @@ There are three parts to the exam submission.
 - 2025-11-13
   - [ ] Submit PDF Part
   - [ ] Review code PRs
+  - [ ] Decide formatter (prettier)
