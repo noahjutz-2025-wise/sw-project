@@ -22,10 +22,8 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    // Default constructor
     public User() {}
 
-    // Constructor with parameters
     public User(
         String firstName,
         String lastName,
