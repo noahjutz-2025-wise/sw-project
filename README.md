@@ -48,3 +48,7 @@ There are three parts to the exam submission.
   - [ ] Review code PRs
   - [ ] Decide on formatter (prettier)
   - [ ] Finalize Definition of Done
+
+## Further links
+
+- [Miro Board](https://miro.com/app/board/uXjVJvcdTSM=/?share_link_id=283617943328)
