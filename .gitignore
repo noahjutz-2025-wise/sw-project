@@ -102,3 +102,4 @@ buildNumber.properties
 
 ### Database ###
 *.db
+/src/main/resources/application-local.properties
