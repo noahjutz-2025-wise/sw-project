@@ -2,6 +2,12 @@
 
 Spring Boot web app that provides movie and TV show recommendations. Created in the course of the computer science module "Softwareentwicklung (SW)" at OTH Regensburg.
 
+## Quickstart
+
+```
+./mvnw spring-boot:run
+```
+
 ## Exam submission
 
 There are three parts to the exam submission.
@@ -15,7 +21,7 @@ There are three parts to the exam submission.
 - (V) There is a landing page
 - (N) You can log in and sign up
 - (A) Upon sign up, user can see recommendations and trending movies
-- (V) There is one admin that can access the dashboard and perform some action
+- (V) There is one admin that can access the dashboard and perform some action (action is TBD)
 - (N) The user can search any movie
 - (N) The user can save a watchlist
 - (A) The user can find other users
@@ -41,4 +47,14 @@ There are three parts to the exam submission.
   - [x] Resolve overlaps: F1/F7, F1/F4
   - [x] Assign F17 to A
 - 2025-11-06
-  - [ ] Review PRs
+  - [x] Review PRs
+  - [x] Define SQL Schema
+- 2025-11-13
+  - [ ] Submit PDF Part
+  - [ ] Review code PRs
+  - [ ] Decide on formatter (prettier)
+  - [ ] Finalize Definition of Done
+
+## Further links
+
+- [Miro Board](https://miro.com/app/board/uXjVJvcdTSM=/?share_link_id=283617943328)
