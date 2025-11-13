@@ -21,7 +21,7 @@ public class Movie {
     private String posterPath;
 
     public String getPosterUrl() {
-        String posterBaseUrl = "https://image.tmdb.org/t/p/w500";
+        String posterBaseUrl = "https://image.tmdb.org/t/p/w342";
         return posterBaseUrl + posterPath;
     }
 }
