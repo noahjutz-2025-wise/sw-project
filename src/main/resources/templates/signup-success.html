@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Registration Successful</title>
+        <link
+            href="/webjars/bootstrap/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <div class="text-success mb-3">
+                                <i class="display-1">✓</i>
+                            </div>
+
+                            <h2 class="card-title text-success mb-3">
+                                Registration Successful!
+                            </h2>
+
+                            <!-- Display success message if any -->
+                            <div
+                                th:if="${success}"
+                                class="alert alert-success"
+                                th:text="${success}"
+                            ></div>
+
+                            <p class="text-muted mb-3">
+                                Thank you for signing up! Your account has been
+                                created successfully.
+                            </p>
+                            <p class="text-muted mb-4">
+                                You can now start using our services.
+                            </p>
+
+                            <div>
+                                <a href="/signup" class="btn btn-secondary">
+                                    Register Another User
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="/webjars/bootstrap/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>
