@@ -3,7 +3,7 @@
 Spring Boot web app that provides movie and TV show recommendations. Created in the course of the computer science module "Softwareentwicklung (SW)" at OTH Regensburg.
 
 ## Quickstart
-
+Add your API key `tmdb.api.key` to your `application-local.properties`. And then run the following command:
 ```
 ./mvnw spring-boot:run
 ```
