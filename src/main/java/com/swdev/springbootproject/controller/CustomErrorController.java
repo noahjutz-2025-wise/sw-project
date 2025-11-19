@@ -11,13 +11,13 @@ public class CustomErrorController implements ErrorController {
 
   @RequestMapping("/error")
   public String handleError(HttpServletRequest request, Model model) {
-    Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
-    String errorMessage = (String) request.getAttribute("javax.servlet.error.message");
+    Integer statusCode = (Integer) request.getAttribute("jakarta.servlet.error.status_code");
+    String errorMessage = (String) request.getAttribute("jakarta.servlet.error.message");
 
     model.addAttribute("statusCode", statusCode);
     model.addAttribute("errorMessage", errorMessage);
 
-    return "customError"; // return custom error view
+    return "error"; // return custom error view
   }
 
   public String getErrorPath() {
