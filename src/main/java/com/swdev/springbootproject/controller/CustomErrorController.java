@@ -20,7 +20,6 @@ public class CustomErrorController implements ErrorController {
     return "customError"; // return custom error view
   }
 
-
   public String getErrorPath() {
     return "/error";
   }
