@@ -1,6 +1,6 @@
 package com.swdev.springbootproject.controller;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +20,7 @@ public class CustomErrorController implements ErrorController {
     return "customError"; // return custom error view
   }
 
-  @Override
+
   public String getErrorPath() {
     return "/error";
   }
