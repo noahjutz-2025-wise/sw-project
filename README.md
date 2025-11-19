@@ -4,7 +4,9 @@ Spring Boot web app that provides movie and TV show recommendations. Created in 
 
 ## Quickstart
 
-```
+Add your API key `tmdb.api.key` to your `application-local.properties`. And then run the following command:
+
+```sh
 ./mvnw spring-boot:run
 ```
 
@@ -21,12 +23,12 @@ There are three parts to the exam submission.
 - (V) There is a landing page
 - (N) You can log in and sign up
 - (A) Upon sign up, user can see recommendations and trending movies
-- (V) There is one admin that can access the dashboard and perform some action (action is TBD)
+- (V) There is one admin that can access the dashboard and ban users
 - (N) The user can search any movie
 - (N) The user can save a watchlist
 - (A) The user can find other users
 - (N) There is a published container image for the server
-- (A) The web server sends E-mails to users (context is TBD)
+- (A) The web server sign-up confirmation E-mails to users
 - (V) There is one error page in case of HTTP errors
 
 ## Roadmap
@@ -50,10 +52,14 @@ There are three parts to the exam submission.
   - [x] Review PRs
   - [x] Define SQL Schema
 - 2025-11-13
-  - [ ] Submit PDF Part
-  - [ ] Review code PRs
-  - [ ] Decide on formatter (prettier)
-  - [ ] Finalize Definition of Done
+  - [x] Submit PDF Part
+  - [x] Review code PRs
+  - [x] Decide on formatter - [Spring Java Formatter](https://github.com/spring-io/spring-javaformat)
+  - [x] Finalize Definition of Done
+- 2025-11-20
+  - [ ] Noah: Formatter, Finish F3
+  - [ ] Ana: F1
+  - [ ] Viet: F4, F6
 
 ## Further links
 
