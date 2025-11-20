@@ -1,4 +1,4 @@
-name: Check Formatting
+name: Validate
 
 on:
   pull_request:
@@ -19,3 +19,9 @@ jobs:
 
       - name: Check formatting
         run: ./mvnw spotless:check
+
+      - name: Compile
+        run: ./mvnw compile
+
+      - name: Test
+        run: ./mvnw verify
