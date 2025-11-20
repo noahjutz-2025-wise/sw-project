@@ -16,15 +16,15 @@ public class SpringbootprojectApplication {
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    http.authorizeHttpRequests(
-            (a) ->
+    return http.authorizeHttpRequests(
+            a ->
                 a.requestMatchers("/app/**")
                     .authenticated()
                     .requestMatchers("/signup", "/", "/css/**", "/js/**")
                     .permitAll()
                     .anyRequest()
                     .authenticated())
-        .formLogin(Customizer.withDefaults());
-    return http.build();
+        .formLogin(Customizer.withDefaults())
+        .build();
   }
 }
