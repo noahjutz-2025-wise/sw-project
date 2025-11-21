@@ -20,7 +20,7 @@ public class SpringbootprojectApplication {
             a ->
                 a.requestMatchers("/app/**")
                     .authenticated()
-                    .requestMatchers("/signup", "/", "/css/**", "/js/**", "/error")
+                    .requestMatchers("/signup", "/", "/css/**", "/js/**", "/error", "/webjars/**")
                     .permitAll()
                     .anyRequest()
                     .authenticated())
