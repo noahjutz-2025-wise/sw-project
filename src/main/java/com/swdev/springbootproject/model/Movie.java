@@ -20,6 +20,7 @@ public class Movie {
   }
 
   private String title;
+
   @JsonProperty("poster_path")
   private String posterPath;
 
