@@ -1,11 +1,11 @@
-name: Check Formatting
+name: Validate
 
 on:
   pull_request:
     branches: [main]
 
 jobs:
-  check-formatting:
+  validate:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,3 +19,9 @@ jobs:
 
       - name: Check formatting
         run: ./mvnw spotless:check
+
+      - name: Compile
+        run: ./mvnw compile
+
+      - name: Test
+        run: ./mvnw verify
