@@ -1,5 +1,7 @@
 package com.swdev.springbootproject.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Movie {
   public String getTitle() {
     return title;
@@ -18,6 +20,7 @@ public class Movie {
   }
 
   private String title;
+  @JsonProperty("poster_path")
   private String posterPath;
 
   public String getPosterUrl() {
