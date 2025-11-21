@@ -10,7 +10,8 @@ import org.springframework.web.client.RestClient;
 
 @Service
 public class TMDBService {
-  private final RestClient restClient = RestClient.builder().baseUrl("https://api.themoviedb.org/3").build();
+  private final RestClient restClient =
+      RestClient.builder().baseUrl("https://api.themoviedb.org/3").build();
 
   @Value("${tmdb.api.key:keynotfound}")
   private String apiKey;
