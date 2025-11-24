@@ -5,14 +5,14 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.5.7</version>
+		<version>4.0.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.swdev</groupId>
-	<artifactId>springbootproject</artifactId>
+	<artifactId>certifiedbangers</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>springbootproject</name>
-	<description>Demo project for Spring Boot</description>
+	<name>Certified Bangers</name>
+	<description>Movie and TV show recommendations</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -71,6 +71,10 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-security</artifactId>
+	    </dependency>
 	</dependencies>
 
 	<build>
