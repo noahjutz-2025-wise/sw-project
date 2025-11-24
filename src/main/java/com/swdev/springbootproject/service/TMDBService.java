@@ -10,14 +10,11 @@ import org.springframework.web.client.RestClient;
 
 @Service
 public class TMDBService {
-  private final RestClient restClient;
+  private final RestClient restClient =
+      RestClient.builder().baseUrl("https://api.themoviedb.org/3").build();
 
   @Value("${tmdb.api.key:keynotfound}")
   private String apiKey;
-
-  public TMDBService(RestClient.Builder restClientBuilder) {
-    this.restClient = restClientBuilder.baseUrl("https://api.themoviedb.org/3").build();
-  }
 
   public List<Movie> getPopularMovies() {
     return Objects.requireNonNull(
