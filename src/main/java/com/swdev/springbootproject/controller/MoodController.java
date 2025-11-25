@@ -29,6 +29,7 @@ public class MoodController {
       mood = "happy";
     }
     model.addAttribute("mood", mood);
+    model.addAttribute("pageTitle", "Mood - Genres By Mood");
     model.addAttribute("movies", tmdbService.getMoviesByMood(mood));
     return "mood";
   }

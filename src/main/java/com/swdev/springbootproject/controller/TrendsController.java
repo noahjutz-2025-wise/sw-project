@@ -25,6 +25,7 @@ public class TrendsController {
 
   @GetMapping("/trends")
   public String showTrendingMovies(Model model) {
+    model.addAttribute("pageTitle", "Trending Movies");
     model.addAttribute("movies", tmdbService.getPopularMovies());
     return "trends";
   }
