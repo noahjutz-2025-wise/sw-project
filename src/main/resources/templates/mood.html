@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{fragments/base :: head(${pageTitle})}"></head>
+<body class="bg-light">
+<div class="d-flex">
+    <div th:replace="~{fragments/base :: sidebar('mood')}"></div>
+    <div class="container-fluid p-3 d-flex flex-column">
+        <h2 class="trend-title mb-4">Pick Your Mood Today...</h2>
+
+        <form action="/mood" method="get" class="mb-4" id="mood-form">
+            <div class="row g-3 align-items-center">
+                <div class="col-auto">
+                    <label for="mood" class="col-form-label">Select mood:</label>
+                </div>
+                <div class="col-auto">
+                    <select name="mood" id="mood" class="form-select">
+                        <option value="adventurous" th:selected="${mood == 'adventurous'}">Adventurous</option>
+                        <option value="happy" th:selected="${mood == 'happy'}">Happy</option>
+                        <option value="brave" th:selected="${mood == 'brave'}">Brave</option>
+                        <option value="nostalgic" th:selected="${mood == 'nostalgic'}">Nostalgic</option>
+                        <option value="romantic" th:selected="${mood == 'romantic'}">Romantic</option>
+                        <option value="sad" th:selected="${mood == 'sad'}">Sad</option>
+                        <option value="contemplative" th:selected="${mood == 'contemplative'}">Contemplative</option>
+                        <option value="curious" th:selected="${mood == 'curious'}">Curious</option>
+                        <option value="edgy" th:selected="${mood == 'edgy'}">Edgy</option>
+                        <option value="silly" th:selected="${mood == 'silly'}">Silly</option>
+                        <option value="cozy" th:selected="${mood == 'cozy'}">Cozy</option>
+                        <option value="detective-like" th:selected="${mood == 'detective-like'}">Detective-like</option>
+                        <option value="melodic" th:selected="${mood == 'melodic'}">Melodic</option>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <div class="spinner-border spinner-border-sm text-primary d-none" id="load" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="row">
+            <div th:if="${movies != null}">
+                <h3 class="mb-3">Movies for mood: <span th:text="${mood}"></span></h3>
+            </div>
+
+            <div th:each="movie : ${movies}" class="col-md-2 mb-1">
+                <div class="card movie-card h-100 shadow-sm">
+                    <img th:src="${movie.getPosterUrl}" class="card-img-top" alt="Movie Poster">
+                    <div class="card-body text-center">
+                        <h5 th:text="${movie.title}" class="card-title"></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('mood').addEventListener('change', function () {
+        document.getElementById('load').classList.remove('d-none');
+        document.getElementById('mood-form').submit();
+    });
+</script>
+</body>
+</html>
