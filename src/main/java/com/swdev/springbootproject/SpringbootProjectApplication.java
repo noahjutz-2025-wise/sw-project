@@ -8,10 +8,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
 @SpringBootApplication
-public class SpringbootprojectApplication {
+public class SpringbootProjectApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(SpringbootprojectApplication.class, args);
+    SpringApplication.run(SpringbootProjectApplication.class, args);
   }
 
   @Bean
