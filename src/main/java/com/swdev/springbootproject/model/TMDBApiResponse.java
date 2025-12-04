@@ -1,8 +1,7 @@
 package com.swdev.springbootproject.model;
 
-import lombok.Getter;
-
 import java.util.List;
+import lombok.Getter;
 
 @Getter
 public class TMDBApiResponse {
