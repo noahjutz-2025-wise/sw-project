@@ -1,11 +1,10 @@
 package com.swdev.springbootproject.model;
 
+import lombok.Getter;
+
 import java.util.List;
 
+@Getter
 public class TMDBApiResponse {
-  public List<Movie> getResults() {
-    return results;
-  }
-
   private List<Movie> results;
 }
