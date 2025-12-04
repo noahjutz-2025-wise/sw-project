@@ -13,7 +13,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class SignupController {
 
-  @Autowired private UserRepository userRepository;
+  private final UserRepository userRepository;
+
+  public SignupController(UserRepository userRepository) {
+    this.userRepository = userRepository;
+  }
 
   @GetMapping("/signup")
   public String showSignupForm(Model model) {
