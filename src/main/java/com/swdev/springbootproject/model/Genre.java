@@ -1,5 +1,8 @@
 package com.swdev.springbootproject.model;
 
+import lombok.Getter;
+
+@Getter
 public enum Genre {
   ACTION(28),
   ADVENTURE(12),
@@ -23,9 +26,5 @@ public enum Genre {
 
   Genre(int genreId) {
     this.genreId = genreId;
-  }
-
-  public int getGenreId() {
-    return genreId;
   }
 }
