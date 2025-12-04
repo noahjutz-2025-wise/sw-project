@@ -56,10 +56,9 @@ There are three parts to the exam submission.
   - [x] Review code PRs
   - [x] Decide on formatter - [Spring Java Formatter](https://github.com/spring-io/spring-javaformat)
   - [x] Finalize Definition of Done
-- 2025-11-20
-  - [ ] Noah: Formatter, Finish F3
-  - [ ] Ana: F1
-  - [ ] Viet: F4, F6
+- 2025-12-04
+  - [x] Assign Profile screen to F13 Friends & Profiles
+  - [x] Assign Movie details screen to F7 Catalog & Details
 
 ## Further links
 
