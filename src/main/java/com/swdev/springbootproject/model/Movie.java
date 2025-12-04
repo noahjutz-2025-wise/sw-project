@@ -1,23 +1,12 @@
 package com.swdev.springbootproject.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 public class Movie {
-  public String getTitle() {
-    return title;
-  }
-
-  public String getPosterPath() {
-    return posterPath;
-  }
-
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
-  public void setPosterPath(String posterUrl) {
-    this.posterPath = posterUrl;
-  }
 
   private String title;
 
