@@ -34,7 +34,7 @@ public class SignupController {
       userRepository.save(user);
 
       redirectAttributes.addFlashAttribute(
-          "success", "Registration successful! Welcome, " + user.getFirstName() + "!");
+          "success", "Registration successful! Welcome, " + user.getName() + "!");
 
       return "redirect:/signup-success";
     } catch (Exception e) {
