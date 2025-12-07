@@ -2,6 +2,9 @@ package com.swdev.springbootproject.controller;
 
 import com.swdev.springbootproject.entity.User;
 import com.swdev.springbootproject.repository.UserRepository;
+import com.swdev.springbootproject.service.EmailService;
+import java.time.LocalDateTime;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +18,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class SignupController {
 
   private final UserRepository userRepository;
+
+  private final EmailService emailService;
 
   @GetMapping("/signup")
   public String showSignupForm(Model model) {
@@ -31,13 +36,14 @@ public class SignupController {
         return "signup";
       }
 
-      userRepository.save(user);
+      register(user);
 
       redirectAttributes.addFlashAttribute(
           "success", "Registration successful! Welcome, " + user.getName() + "!");
 
       return "redirect:/signup-success";
     } catch (Exception e) {
+      System.out.println(e.getMessage());
       model.addAttribute("error", "Registration failed. Please try again.");
       return "signup";
     }
@@ -46,5 +52,14 @@ public class SignupController {
   @GetMapping("/signup-success")
   public String showSuccessPage() {
     return "signup-success";
+  }
+
+  public void register(User user) {
+    String token = UUID.randomUUID().toString();
+    user.setVerificationToken(token);
+    user.setTokenExpiryDate(LocalDateTime.now().plusMinutes(30));
+    userRepository.save(user);
+
+    emailService.sendVerificationEmail(user.getEmail(), token);
   }
 }
