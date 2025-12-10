@@ -8,13 +8,12 @@
     </head>
 
     <body>
-        <div th:replace="~{fragments/navbar::navbar}">
+        <div th:replace="~{fragments/landing_page_top_bar::navbar}">
         </div>
         <div class="alert alert-warning">
-            <h1>Upps! Entschuldigung! Etwas schief gelaufen.</h1>
-            <p>Sie sehen diese Meldung, weil es einen Fehler beim Laden der App Dateien gab.
-            <p>Keine Sorge! Wir bearbeiten daran.</p>
-            <p>Mittlerweile können Sie mit einem Mausklick nach der Landing Page zurückkehren.</p>
+            <h1>Ups! Da ist wohl etwas schiefgelaufen.</h1>
+            <p>Die App-Dateien konnten nicht geladen werden – wir sind schon dran!
+            <p>Klicken Sie einfach, um zur Startseite zurückzukehren.</p>
             <button type="button" class="btn btn-info"><a href="/">Landing Page</a></button>
         </div>
 
