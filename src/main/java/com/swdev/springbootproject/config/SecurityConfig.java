@@ -1,6 +1,8 @@
 package com.swdev.springbootproject.config;
 
 import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -14,6 +16,12 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 class SecurityConfig {
+  private final String ownerPassword;
+
+  public SecurityConfig(@Value("${owner_password}") String ownerPassword) {
+    this.ownerPassword = ownerPassword;
+  }
+
   private final PasswordEncoder enc = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
   @Bean
@@ -33,9 +41,16 @@ class SecurityConfig {
   @Bean
   UserDetailsService auth(DataSource ds) {
     final var manager = new JdbcUserDetailsManager(ds);
-    final var admin =
-        User.builder().username("admin").password(enc.encode("admin")).roles("ADMIN").build();
-    manager.createUser(admin);
+    if (ownerPassword != null && !ownerPassword.isEmpty() && !manager.userExists("admin")) {
+      final var admin =
+          User.builder()
+              .username("admin")
+              .password(enc.encode(ownerPassword))
+              .roles("OWNER")
+              .build();
+      manager.createUser(admin);
+    }
+
     return manager;
   }
 }
