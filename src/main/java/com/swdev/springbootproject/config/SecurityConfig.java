@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -39,7 +40,7 @@ class SecurityConfig {
   }
 
   @Bean
-  UserDetailsService auth(DataSource ds) {
+  UserDetailsManager auth(DataSource ds) {
     final var manager = new JdbcUserDetailsManager(ds);
     if (ownerPassword != null && !ownerPassword.isEmpty() && !manager.userExists("admin")) {
       final var admin =
