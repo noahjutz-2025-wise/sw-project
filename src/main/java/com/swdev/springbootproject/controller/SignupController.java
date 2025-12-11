@@ -27,8 +27,7 @@ public class SignupController {
   }
 
   @PostMapping("/signup")
-  public String processSignup(
-      @ModelAttribute("user") CbUser cbUser, Model model, RedirectAttributes redirectAttributes) {
+  public String processSignup(@ModelAttribute("user") CbUser cbUser, Model model) {
 
     if (manager.userExists(cbUser.getEmail())) {
       model.addAttribute("error", "Email already exists. Please use a different email.");
@@ -45,14 +44,6 @@ public class SignupController {
 
     manager.createUser(userDetails);
 
-    redirectAttributes.addFlashAttribute(
-        "success", "Registration successful! Welcome, " + cbUser.getName() + "!");
-
-    return "redirect:/signup-success";
-  }
-
-  @GetMapping("/signup-success")
-  public String showSuccessPage() {
-    return "signup-success";
+    return "redirect:/mood";
   }
 }
