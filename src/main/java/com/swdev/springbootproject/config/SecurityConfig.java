@@ -43,7 +43,7 @@ class SecurityConfig {
                     .permitAll()
                     .anyRequest()
                     .authenticated())
-        .formLogin(form -> form.loginPage("/login"))
+        .formLogin(form -> form.loginPage("/login").permitAll())
         .build();
   }
 
