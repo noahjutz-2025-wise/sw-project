@@ -1,14 +1,12 @@
 package com.swdev.springbootproject.config;
 
 import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
@@ -23,7 +21,10 @@ class SecurityConfig {
     this.ownerPassword = ownerPassword;
   }
 
-  private final PasswordEncoder enc = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+  }
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -40,13 +41,14 @@ class SecurityConfig {
   }
 
   @Bean
-  UserDetailsManager auth(DataSource ds) {
+  UserDetailsManager auth(DataSource ds, PasswordEncoder enc) {
     final var manager = new JdbcUserDetailsManager(ds);
     if (ownerPassword != null && !ownerPassword.isEmpty() && !manager.userExists("admin")) {
       final var admin =
           User.builder()
               .username("admin")
-              .password(enc.encode(ownerPassword))
+              .passwordEncoder(enc::encode)
+              .password(ownerPassword)
               .roles("OWNER")
               .build();
       manager.createUser(admin);
