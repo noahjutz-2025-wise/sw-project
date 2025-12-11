@@ -17,7 +17,7 @@ import org.springframework.security.web.SecurityFilterChain;
 class SecurityConfig {
   private final String ownerPassword;
 
-  public SecurityConfig(@Value("${owner_password}") String ownerPassword) {
+  public SecurityConfig(@Value("${owner_password:#{null}}") String ownerPassword) {
     this.ownerPassword = ownerPassword;
   }
 
