@@ -3,6 +3,9 @@ package com.swdev.springbootproject.controller;
 import com.swdev.springbootproject.entity.CbUser;
 import com.swdev.springbootproject.repository.CbUserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,23 +27,30 @@ public class SignupController {
 
   @PostMapping("/signup")
   public String processSignup(
-          @ModelAttribute("user") CbUser user, Model model, RedirectAttributes redirectAttributes) {
-    try {
-      if (userRepository.existsByEmail(user.getEmail())) {
-        model.addAttribute("error", "Email already exists. Please use a different email.");
-        return "signup";
-      }
+      @ModelAttribute("user") CbUser cbUser,
+      PasswordEncoder enc,
+      UserDetailsManager manager,
+      Model model,
+      RedirectAttributes redirectAttributes) {
 
-      userRepository.save(user);
-
-      redirectAttributes.addFlashAttribute(
-          "success", "Registration successful! Welcome, " + user.getName() + "!");
-
-      return "redirect:/signup-success";
-    } catch (Exception e) {
-      model.addAttribute("error", "Registration failed. Please try again.");
+    if (manager.userExists(cbUser.getEmail())) {
+      model.addAttribute("error", "Email already exists. Please use a different email.");
       return "signup";
     }
+
+    final var userDetails =
+        User.builder()
+            .username(cbUser.getEmail())
+            .passwordEncoder(enc::encode)
+            .password(cbUser.getPassword())
+            .build();
+
+    manager.createUser(userDetails);
+
+    redirectAttributes.addFlashAttribute(
+        "success", "Registration successful! Welcome, " + cbUser.getName() + "!");
+
+    return "redirect:/signup-success";
   }
 
   @GetMapping("/signup-success")
