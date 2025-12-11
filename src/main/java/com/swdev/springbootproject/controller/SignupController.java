@@ -40,6 +40,7 @@ public class SignupController {
             .username(cbUser.getEmail())
             .passwordEncoder(enc::encode)
             .password(cbUser.getPassword())
+            .roles("USER")
             .build();
 
     manager.createUser(userDetails);
