@@ -17,7 +17,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequiredArgsConstructor
 public class SignupController {
 
-  private final CbUserRepository userRepository;
+  private final PasswordEncoder enc;
+  private final UserDetailsManager manager;
 
   @GetMapping("/signup")
   public String showSignupForm(Model model) {
@@ -27,11 +28,7 @@ public class SignupController {
 
   @PostMapping("/signup")
   public String processSignup(
-      @ModelAttribute("user") CbUser cbUser,
-      PasswordEncoder enc,
-      UserDetailsManager manager,
-      Model model,
-      RedirectAttributes redirectAttributes) {
+      @ModelAttribute("user") CbUser cbUser, Model model, RedirectAttributes redirectAttributes) {
 
     if (manager.userExists(cbUser.getEmail())) {
       model.addAttribute("error", "Email already exists. Please use a different email.");
