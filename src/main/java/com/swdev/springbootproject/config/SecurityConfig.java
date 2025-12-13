@@ -15,10 +15,10 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 class SecurityConfig {
-  private final String ownerPassword;
+  private final String defaultOwnerUserPassword;
 
-  public SecurityConfig(@Value("${owner_password:#{null}}") String ownerPassword) {
-    this.ownerPassword = ownerPassword;
+  public SecurityConfig(@Value("${security.owner.default_password:#{null}}") String ownerPassword) {
+    this.defaultOwnerUserPassword = ownerPassword;
   }
 
   @Bean
@@ -43,12 +43,14 @@ class SecurityConfig {
   @Bean
   UserDetailsManager auth(DataSource ds, PasswordEncoder enc) {
     final var manager = new JdbcUserDetailsManager(ds);
-    if (ownerPassword != null && !ownerPassword.isEmpty() && !manager.userExists("admin")) {
+    if (defaultOwnerUserPassword != null
+        && !defaultOwnerUserPassword.isEmpty()
+        && !manager.userExists("admin")) {
       final var admin =
           User.builder()
               .username("admin")
               .passwordEncoder(enc::encode)
-              .password(ownerPassword)
+              .password(defaultOwnerUserPassword)
               .roles("OWNER")
               .build();
       manager.createUser(admin);
