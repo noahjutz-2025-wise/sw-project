@@ -1,6 +1,6 @@
 package com.swdev.springbootproject.controller;
 
-import com.swdev.springbootproject.repository.UserRepository;
+import com.swdev.springbootproject.repository.EmailVerificationRepository;
 import java.time.LocalDateTime;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,29 +9,29 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class VerificationController {
-  private final UserRepository userRepository;
+  private final EmailVerificationRepository emailVerificationRepository;
 
-  public VerificationController(UserRepository userRepository) {
-    this.userRepository = userRepository;
+  public VerificationController(EmailVerificationRepository emailVerificationRepository) {
+    this.emailVerificationRepository = emailVerificationRepository;
   }
 
   @GetMapping("/verify")
   public String verifyEmail(@RequestParam("token") String token, Model model) {
 
-    return userRepository
+    return emailVerificationRepository
         .findByVerificationToken(token)
         .map(
-            user -> {
-              if (user.getTokenExpiryDate() == null
-                  || user.getTokenExpiryDate().isBefore(LocalDateTime.now())) {
+            emailVerification -> {
+              if (emailVerification.getTokenExpiryDate() == null
+                  || emailVerification.getTokenExpiryDate().isBefore(LocalDateTime.now())) {
                 model.addAttribute("title", "Token expired.");
                 model.addAttribute("message", "Your verification link has expired.");
                 return "verify";
               }
-              user.setVerified(true);
-              user.setVerificationToken(null);
-              user.setTokenExpiryDate(null);
-              userRepository.save(user);
+              emailVerification.setVerified(true);
+              emailVerification.setVerificationToken(null);
+              emailVerification.setTokenExpiryDate(null);
+              emailVerificationRepository.save(emailVerification);
 
               model.addAttribute("title", "Email Verified!");
               model.addAttribute("message", "Your email has been successfully verified.");

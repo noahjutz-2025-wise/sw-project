@@ -1,6 +1,8 @@
 package com.swdev.springbootproject.controller;
 
+import com.swdev.springbootproject.entity.EmailVerification;
 import com.swdev.springbootproject.entity.User;
+import com.swdev.springbootproject.repository.EmailVerificationRepository;
 import com.swdev.springbootproject.repository.UserRepository;
 import com.swdev.springbootproject.service.EmailService;
 import java.time.LocalDateTime;
@@ -20,6 +22,8 @@ public class SignupController {
   private final UserRepository userRepository;
 
   private final EmailService emailService;
+
+  private final EmailVerificationRepository emailVerificationRepository;
 
   @GetMapping("/signup")
   public String showSignupForm(Model model) {
@@ -55,11 +59,13 @@ public class SignupController {
   }
 
   public void register(User user) {
+    EmailVerification emailVerification = new EmailVerification();
     String token = UUID.randomUUID().toString();
-    user.setVerificationToken(token);
-    user.setTokenExpiryDate(LocalDateTime.now().plusMinutes(30));
+    emailVerification.setUser(user);
+    emailVerification.setVerificationToken(token);
+    emailVerification.setTokenExpiryDate(LocalDateTime.now().plusMinutes(30));
     userRepository.save(user);
-
+    emailVerificationRepository.save(emailVerification);
     emailService.sendVerificationEmail(user.getEmail(), token);
   }
 }
