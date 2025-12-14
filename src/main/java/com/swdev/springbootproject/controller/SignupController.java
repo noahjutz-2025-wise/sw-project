@@ -57,11 +57,12 @@ public class SignupController {
   }
 
   public void register(CbUser cbUser) {
-    EmailVerification emailVerification = new EmailVerification();
     String token = UUID.randomUUID().toString();
-    emailVerification.setCbUser(cbUser);
-    emailVerification.setVerificationToken(token);
-    emailVerification.setTokenExpiryDate(LocalDateTime.now().plusMinutes(30));
+    EmailVerification emailVerification = new EmailVerification(
+        token,
+        LocalDateTime.now().plusMinutes(30),
+        cbUser
+    );
     emailVerificationRepository.save(emailVerification);
     emailService.sendVerificationEmail(cbUser.getEmail(), token);
   }

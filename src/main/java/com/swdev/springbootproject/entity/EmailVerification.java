@@ -2,10 +2,8 @@ package com.swdev.springbootproject.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+
+import lombok.*;
 
 @Setter
 @Getter
@@ -31,4 +29,10 @@ public class EmailVerification {
   @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id", unique = true)
   private CbUser cbUser;
+
+  public EmailVerification(String verificationToken, LocalDateTime tokenExpiryDate, CbUser cbUser) {
+    this.verificationToken = verificationToken;
+    this.tokenExpiryDate = tokenExpiryDate;
+    this.cbUser = cbUser;
+  }
 }
