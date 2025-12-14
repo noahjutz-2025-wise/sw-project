@@ -25,6 +25,7 @@ public class SignupController {
   private final UserDetailsManager manager;
 
   private final EmailService emailService;
+  private final CbUserRepository cbUserRepository;
   private final EmailVerificationRepository emailVerificationRepository;
 
   @GetMapping("/signup")
@@ -50,8 +51,8 @@ public class SignupController {
             .build();
 
     manager.createUser(userDetails);
-
-    register(cbUser);
+    CbUser userToRegister = cbUserRepository.findByEmail(cbUser.getEmail());
+    register(userToRegister);
     return "redirect:/mood";
   }
 
