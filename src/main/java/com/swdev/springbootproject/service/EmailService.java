@@ -1,5 +1,6 @@
 package com.swdev.springbootproject.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -7,15 +8,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Service
+@RequiredArgsConstructor
 public class EmailService {
   private final JavaMailSender javaMailSender;
 
   @Value("${spring.mail.username:#{null}}")
   private String mailFrom;
-
-  public EmailService(JavaMailSender javaMailSender) {
-    this.javaMailSender = javaMailSender;
-  }
 
   public void sendVerificationEmail(String email, String verificationToken) {
     String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
