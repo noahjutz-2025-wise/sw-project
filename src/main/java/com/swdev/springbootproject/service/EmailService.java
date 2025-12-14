@@ -10,7 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class EmailService {
   private final JavaMailSender javaMailSender;
 
-  @Value("${spring.mail.username:email@example.com}")
+  @Value("${spring.mail.username:#{null}}")
   private String mailFrom;
 
   public EmailService(JavaMailSender javaMailSender) {
