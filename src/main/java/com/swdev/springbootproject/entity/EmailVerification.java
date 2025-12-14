@@ -30,5 +30,5 @@ public class EmailVerification {
 
   @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id", unique = true)
-  private User user;
+  private CbUser cbUser;
 }
