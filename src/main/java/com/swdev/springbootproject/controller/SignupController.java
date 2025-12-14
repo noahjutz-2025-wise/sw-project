@@ -58,11 +58,8 @@ public class SignupController {
 
   public void register(CbUser cbUser) {
     String token = UUID.randomUUID().toString();
-    EmailVerification emailVerification = new EmailVerification(
-        token,
-        LocalDateTime.now().plusMinutes(30),
-        cbUser
-    );
+    EmailVerification emailVerification =
+        new EmailVerification(token, LocalDateTime.now().plusMinutes(30), cbUser);
     emailVerificationRepository.save(emailVerification);
     emailService.sendVerificationEmail(cbUser.getEmail(), token);
   }

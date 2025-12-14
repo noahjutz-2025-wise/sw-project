@@ -2,7 +2,6 @@ package com.swdev.springbootproject.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-
 import lombok.*;
 
 @Setter
