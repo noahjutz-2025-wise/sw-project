@@ -30,7 +30,7 @@ public class VerificationController {
                 model.addAttribute("message", "Your verification link has expired.");
                 return "verify";
               }
-              emailVerification.setVerified(true);
+              emailVerification.getCbUser().setVerified(true);
               emailVerification.setVerificationToken(null);
               emailVerification.setTokenExpiryDate(null);
               emailVerificationRepository.save(emailVerification);

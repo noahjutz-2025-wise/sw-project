@@ -16,9 +16,6 @@ public class EmailVerification {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(nullable = false)
-  private boolean verified = false;
-
   @Column(name = "verification_token", unique = true)
   private String verificationToken;
 
