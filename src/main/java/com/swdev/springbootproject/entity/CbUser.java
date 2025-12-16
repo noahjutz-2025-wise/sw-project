@@ -23,6 +23,6 @@ public class CbUser {
   @Column(nullable = false)
   private boolean enabled = true;
 
-  @Column(nullable = false, columnDefinition="boolean default false")
+  @Column(nullable = false, columnDefinition = "boolean default false")
   private boolean verified = false;
 }
