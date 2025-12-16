@@ -10,6 +10,45 @@ Add your API key `tmdb.api.key` to your `application-local.properties`. And then
 ./mvnw spring-boot:run
 ```
 
+## Email Verification Setup
+
+### Email configuration required
+
+The app uses email verification for new user registration. To enable this feature, you need to configure email settings with your own credentials.
+The setup that I built is suitable **for Gmail only**, so if you want to configure the app with a different email service, the settings would look different.
+
+#### Prerequisites
+- A Gmail account
+- Google App Password
+
+#### Step 1: Generate Google App Password
+1. Go to your Google Account
+2. Enable 2-Step Verification:
+   - Click on `Security` in the left sidebar
+   - Find `2-Step Verification` and turn it ON
+3. Create App Password
+   - In `Security` section, search for `App passwords` or go to: https://myaccount.google.com/apppasswords
+   - Generate a password
+   - Copy the 16-character password (it looks like: xxxx xxxx xxxx xxxx)
+   - **Save this password** - you won't be able to see it again.
+
+#### Step 3: Configure `application.properties`
+```properties
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+```
+
+#### Step 4: Configure `application-local.properties`
+```properties
+spring.mail.username=YOUR_EMAIL@gmail.com
+spring.mail.password=YOUR_16_CHAR_APP_PASSWORD
+```
+### 📌 Important to note:
+- The verification email might end up in your spam folder.
+
+
 ## Exam submission
 
 There are three parts to the exam submission.

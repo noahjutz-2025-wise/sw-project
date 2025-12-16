@@ -1,8 +1,14 @@
 package com.swdev.springbootproject.controller;
 
 import com.swdev.springbootproject.entity.CbUser;
+import com.swdev.springbootproject.entity.EmailVerification;
+import com.swdev.springbootproject.repository.CbUserRepository;
+import com.swdev.springbootproject.repository.EmailVerificationRepository;
+import com.swdev.springbootproject.service.EmailService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -30,6 +36,10 @@ public class SignupController {
   private final SecurityContextRepository securityContextRepository =
       new HttpSessionSecurityContextRepository();
 
+  private final EmailService emailService;
+  private final CbUserRepository cbUserRepository;
+  private final EmailVerificationRepository emailVerificationRepository;
+
   @GetMapping("/signup")
   public String showSignupForm(Model model) {
     model.addAttribute("user", new CbUser());
@@ -51,7 +61,8 @@ public class SignupController {
     userDetailsManager.createUser(createUserDetails(cbUser));
     securityContextRepository.saveContext(
         createAuth(cbUser.getEmail(), cbUser.getPassword()), request, response);
-
+    CbUser userToRegister = cbUserRepository.findByEmail(cbUser.getEmail());
+    register(userToRegister);
     return "redirect:/mood";
   }
 
@@ -70,5 +81,13 @@ public class SignupController {
     final var context = SecurityContextHolder.createEmptyContext();
     context.setAuthentication(authRes);
     return context;
+  }
+
+  public void register(CbUser cbUser) {
+    String token = UUID.randomUUID().toString();
+    EmailVerification emailVerification =
+        new EmailVerification(token, LocalDateTime.now().plusMinutes(30), cbUser);
+    emailVerificationRepository.save(emailVerification);
+    emailService.sendVerificationEmail(cbUser.getEmail(), token);
   }
 }
