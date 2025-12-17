@@ -17,7 +17,6 @@ public class CbUserDetailsService implements UserDetailsService {
   @Override
   @NonNull
   public UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
-    System.out.println("loadByUsername CALLED ============");
     return userRepository
         .findByEmail(username)
         .orElseThrow(() -> new UsernameNotFoundException(username));
