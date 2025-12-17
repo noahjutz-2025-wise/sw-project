@@ -63,10 +63,10 @@ public class SignupController {
             .password(enc.encode(cbUserDto.getPassword()))
             .build());
 
-    // securityContextRepository.saveContext(
-    //    createAuth(cbUserDto.getEmail(), cbUserDto.getPassword()), request, response);
+    securityContextRepository.saveContext(
+        createAuth(cbUserDto.getEmail(), cbUserDto.getPassword()), request, response);
 
-    sendVerificationEmail(cbUserRepository.findByEmail(cbUserDto.getEmail()));
+    cbUserRepository.findByEmail(cbUserDto.getEmail()).ifPresent(this::sendVerificationEmail);
     return "redirect:/mood";
   }
 
