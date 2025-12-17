@@ -60,6 +60,7 @@ public class SignupController {
         CbUser.builder()
             .email(cbUserDto.getEmail())
             .password(enc.encode(cbUserDto.getPassword()))
+            .name(cbUserDto.getName())
             .build());
 
     securityContextRepository.saveContext(
