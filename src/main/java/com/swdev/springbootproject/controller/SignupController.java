@@ -30,7 +30,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class SignupController {
 
   private final PasswordEncoder enc;
-  private final UserDetailsManager userDetailsManager;
   private final AuthenticationManager authenticationManager;
   private final SecurityContextRepository securityContextRepository =
       new HttpSessionSecurityContextRepository();
@@ -52,7 +51,7 @@ public class SignupController {
       HttpServletRequest request,
       HttpServletResponse response) {
 
-    if (userDetailsManager.userExists(cbUserDto.getEmail())) {
+    if (cbUserRepository.existsByEmail(cbUserDto.getEmail())) {
       model.addAttribute("error", "Email already exists. Please use a different email.");
       return "signup";
     }
