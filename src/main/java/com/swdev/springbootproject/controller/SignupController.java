@@ -55,17 +55,18 @@ public class SignupController {
       return "signup";
     }
 
-    cbUserRepository.save(
-        CbUser.builder()
-            .email(cbUserDto.getEmail())
-            .password(enc.encode(cbUserDto.getPassword()))
-            .name(cbUserDto.getName())
-            .build());
+    final var insertedUser =
+        cbUserRepository.save(
+            CbUser.builder()
+                .email(cbUserDto.getEmail())
+                .password(enc.encode(cbUserDto.getPassword()))
+                .name(cbUserDto.getName())
+                .build());
 
     securityContextRepository.saveContext(
         createAuth(cbUserDto.getEmail(), cbUserDto.getPassword()), request, response);
 
-    cbUserRepository.findByEmail(cbUserDto.getEmail()).ifPresent(this::sendVerificationEmail);
+    sendVerificationEmail(insertedUser);
     return "redirect:/mood";
   }
 
