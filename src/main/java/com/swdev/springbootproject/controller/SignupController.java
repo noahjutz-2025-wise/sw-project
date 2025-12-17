@@ -61,8 +61,7 @@ public class SignupController {
     userDetailsManager.createUser(createUserDetails(cbUser));
     securityContextRepository.saveContext(
         createAuth(cbUser.getEmail(), cbUser.getPassword()), request, response);
-    CbUser userToRegister = cbUserRepository.findByEmail(cbUser.getEmail());
-    register(userToRegister);
+    sendVerificationEmail(cbUserRepository.findByEmail(cbUser.getEmail()));
     return "redirect:/mood";
   }
 
@@ -83,7 +82,7 @@ public class SignupController {
     return context;
   }
 
-  public void register(CbUser cbUser) {
+  public void sendVerificationEmail(CbUser cbUser) {
     String token = UUID.randomUUID().toString();
     EmailVerification emailVerification =
         new EmailVerification(token, LocalDateTime.now().plusMinutes(30), cbUser);
