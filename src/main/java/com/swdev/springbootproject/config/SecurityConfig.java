@@ -1,15 +1,16 @@
 package com.swdev.springbootproject.config;
 
-import javax.sql.DataSource;
+import com.swdev.springbootproject.repository.CbUserRepository;
+import com.swdev.springbootproject.service.CbUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
-import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -21,8 +22,10 @@ class SecurityConfig {
 
   @Bean
   public AuthenticationManager authenticationManager(
-      AuthenticationConfiguration authenticationConfiguration) {
-    return authenticationConfiguration.getAuthenticationManager();
+      PasswordEncoder enc, UserDetailsService userDetailsService) {
+    final var authProvider = new DaoAuthenticationProvider(userDetailsService);
+    authProvider.setPasswordEncoder(enc);
+    return new ProviderManager(authProvider);
   }
 
   @Bean
@@ -41,7 +44,7 @@ class SecurityConfig {
   }
 
   @Bean
-  UserDetailsManager auth(DataSource ds) {
-    return new JdbcUserDetailsManager(ds);
+  UserDetailsService userDetailsService(CbUserRepository userRepository) {
+    return new CbUserDetailsService(userRepository);
   }
 }
