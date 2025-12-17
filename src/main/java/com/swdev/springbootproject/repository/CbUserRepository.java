@@ -1,11 +1,10 @@
 package com.swdev.springbootproject.repository;
 
 import com.swdev.springbootproject.entity.CbUser;
+import java.util.Optional;
 import org.jspecify.annotations.NonNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
 
 @Repository
 public interface CbUserRepository extends JpaRepository<@NonNull CbUser, @NonNull Long> {
