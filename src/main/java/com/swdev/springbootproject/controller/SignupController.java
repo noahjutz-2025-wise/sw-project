@@ -2,6 +2,7 @@ package com.swdev.springbootproject.controller;
 
 import com.swdev.springbootproject.entity.CbUser;
 import com.swdev.springbootproject.entity.EmailVerification;
+import com.swdev.springbootproject.model.CbUserDto;
 import com.swdev.springbootproject.repository.CbUserRepository;
 import com.swdev.springbootproject.repository.EmailVerificationRepository;
 import com.swdev.springbootproject.service.EmailService;
@@ -14,8 +15,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
@@ -48,30 +47,27 @@ public class SignupController {
 
   @PostMapping("/signup")
   public String processSignup(
-      @ModelAttribute("user") CbUser cbUser,
+      @ModelAttribute("user") CbUserDto cbUserDto,
       Model model,
       HttpServletRequest request,
       HttpServletResponse response) {
 
-    if (userDetailsManager.userExists(cbUser.getEmail())) {
+    if (userDetailsManager.userExists(cbUserDto.getEmail())) {
       model.addAttribute("error", "Email already exists. Please use a different email.");
       return "signup";
     }
 
-    userDetailsManager.createUser(createUserDetails(cbUser));
-    securityContextRepository.saveContext(
-        createAuth(cbUser.getEmail(), cbUser.getPassword()), request, response);
-    sendVerificationEmail(cbUserRepository.findByEmail(cbUser.getEmail()));
-    return "redirect:/mood";
-  }
+    cbUserRepository.save(
+        CbUser.builder()
+            .email(cbUserDto.getEmail())
+            .password(enc.encode(cbUserDto.getPassword()))
+            .build());
 
-  private UserDetails createUserDetails(CbUser cbUser) {
-    return User.builder()
-        .username(cbUser.getEmail())
-        .passwordEncoder(enc::encode)
-        .password(cbUser.getPassword())
-        .roles("USER")
-        .build();
+    // securityContextRepository.saveContext(
+    //    createAuth(cbUserDto.getEmail(), cbUserDto.getPassword()), request, response);
+
+    sendVerificationEmail(cbUserRepository.findByEmail(cbUserDto.getEmail()));
+    return "redirect:/mood";
   }
 
   private SecurityContext createAuth(String username, String password) {

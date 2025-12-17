@@ -31,12 +31,15 @@ public class CbUser implements UserDetails {
   private String password;
 
   @Column(nullable = false)
+  @Builder.Default
   private boolean enabled = true;
 
   @Column(nullable = false)
+  @Builder.Default
   private String authority = "ROLE_USER";
 
   @Column(nullable = false, columnDefinition = "boolean default false")
+  @Builder.Default
   private boolean verified = false;
 
   @Override
