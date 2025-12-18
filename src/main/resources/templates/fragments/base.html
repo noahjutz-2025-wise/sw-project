@@ -12,11 +12,10 @@
     <div id="sidebar" class="bg-sidebar p-3 d-flex flex-column" style="width: 200px; height: 100vh;">
         <h4>Menu</h4>
         <ul class="nav flex-column">
-            <li class="nav-item"><a href="#" class="nav-link text-white">Home</a></li>
-            <li class="nav-item"><a href="/trends" class="nav-link text-white"
-                                    th:classappend="${activeTab == 'trends'} ? 'active' : ''">Trending</a></li>
             <li class="nav-item"><a href="/mood" class="nav-link text-white"
                                     th:classappend="${activeTab == 'mood'} ? 'active' : ''">Mood</a></li>
+            <li class="nav-item"><a href="/trends" class="nav-link text-white"
+                                    th:classappend="${activeTab == 'trends'} ? 'active' : ''">Trending</a></li>
         </ul>
     </div>
 </div>
