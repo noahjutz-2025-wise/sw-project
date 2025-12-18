@@ -39,7 +39,7 @@ class SecurityConfig {
                     .permitAll()
                     .anyRequest()
                     .authenticated())
-        .formLogin(form -> form.loginPage("/login").permitAll())
+        .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/mood").permitAll())
         .build();
   }
 
