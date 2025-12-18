@@ -7,8 +7,8 @@
 </head>
 <body layout:fragment="content" class="bg-light d-flex">
 <div th:replace="~{fragments/sidebar::sidebar('watchlist')}"></div>
-<header class="d-flex flex-row p-4 w-100">
-    <form role="search" class="flex-grow-1" method="post">
+<header class="d-flex flex-row p-4 w-100 container">
+    <form role="search" class="flex-grow-1" method="get">
         <label for="search" class="visually-hidden">Suchen</label>
         <input id="search" name="search" placeholder="Suchen" class="form-control" type="search"/>
     </form>
