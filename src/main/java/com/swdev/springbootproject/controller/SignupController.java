@@ -2,6 +2,7 @@ package com.swdev.springbootproject.controller;
 
 import com.swdev.springbootproject.entity.CbUser;
 import com.swdev.springbootproject.entity.EmailVerification;
+import com.swdev.springbootproject.model.CbUserDto;
 import com.swdev.springbootproject.repository.CbUserRepository;
 import com.swdev.springbootproject.repository.EmailVerificationRepository;
 import com.swdev.springbootproject.service.EmailService;
@@ -14,10 +15,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Controller;
@@ -31,7 +29,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class SignupController {
 
   private final PasswordEncoder enc;
-  private final UserDetailsManager userDetailsManager;
   private final AuthenticationManager authenticationManager;
   private final SecurityContextRepository securityContextRepository =
       new HttpSessionSecurityContextRepository();
@@ -48,31 +45,29 @@ public class SignupController {
 
   @PostMapping("/signup")
   public String processSignup(
-      @ModelAttribute("user") CbUser cbUser,
+      @ModelAttribute("user") CbUserDto cbUserDto,
       Model model,
       HttpServletRequest request,
       HttpServletResponse response) {
 
-    if (userDetailsManager.userExists(cbUser.getEmail())) {
+    if (cbUserRepository.existsByEmail(cbUserDto.getEmail())) {
       model.addAttribute("error", "Email already exists. Please use a different email.");
       return "signup";
     }
 
-    userDetailsManager.createUser(createUserDetails(cbUser));
-    securityContextRepository.saveContext(
-        createAuth(cbUser.getEmail(), cbUser.getPassword()), request, response);
-    CbUser userToRegister = cbUserRepository.findByEmail(cbUser.getEmail());
-    register(userToRegister);
-    return "redirect:/mood";
-  }
+    final var insertedUser =
+        cbUserRepository.save(
+            CbUser.builder()
+                .email(cbUserDto.getEmail())
+                .password(enc.encode(cbUserDto.getPassword()))
+                .name(cbUserDto.getName())
+                .build());
 
-  private UserDetails createUserDetails(CbUser cbUser) {
-    return User.builder()
-        .username(cbUser.getEmail())
-        .passwordEncoder(enc::encode)
-        .password(cbUser.getPassword())
-        .roles("USER")
-        .build();
+    securityContextRepository.saveContext(
+        createAuth(cbUserDto.getEmail(), cbUserDto.getPassword()), request, response);
+
+    sendVerificationEmail(insertedUser);
+    return "redirect:/mood";
   }
 
   private SecurityContext createAuth(String username, String password) {
@@ -83,7 +78,7 @@ public class SignupController {
     return context;
   }
 
-  public void register(CbUser cbUser) {
+  public void sendVerificationEmail(CbUser cbUser) {
     String token = UUID.randomUUID().toString();
     EmailVerification emailVerification =
         new EmailVerification(token, LocalDateTime.now().plusMinutes(30), cbUser);

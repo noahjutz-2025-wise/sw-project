@@ -1,27 +1,20 @@
 package com.swdev.springbootproject.config;
 
-import javax.sql.DataSource;
-import org.springframework.beans.factory.annotation.Value;
+import com.swdev.springbootproject.repository.CbUserRepository;
+import com.swdev.springbootproject.service.CbUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
-import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 class SecurityConfig {
-  private final String defaultOwnerUserPassword;
-
-  public SecurityConfig(@Value("${security.owner.default_password:#{null}}") String ownerPassword) {
-    this.defaultOwnerUserPassword = ownerPassword;
-  }
-
   @Bean
   public PasswordEncoder passwordEncoder() {
     return PasswordEncoderFactories.createDelegatingPasswordEncoder();
@@ -29,12 +22,14 @@ class SecurityConfig {
 
   @Bean
   public AuthenticationManager authenticationManager(
-      AuthenticationConfiguration authenticationConfiguration) {
-    return authenticationConfiguration.getAuthenticationManager();
+      PasswordEncoder enc, UserDetailsService userDetailsService) {
+    final var authProvider = new DaoAuthenticationProvider(userDetailsService);
+    authProvider.setPasswordEncoder(enc);
+    return new ProviderManager(authProvider);
   }
 
   @Bean
-  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+  public SecurityFilterChain filterChain(HttpSecurity http) {
     return http.authorizeHttpRequests(
             a ->
                 a.requestMatchers("/app/**")
@@ -49,21 +44,7 @@ class SecurityConfig {
   }
 
   @Bean
-  UserDetailsManager auth(DataSource ds, PasswordEncoder enc) {
-    final var manager = new JdbcUserDetailsManager(ds);
-    if (defaultOwnerUserPassword != null
-        && !defaultOwnerUserPassword.isEmpty()
-        && !manager.userExists("admin")) {
-      final var admin =
-          User.builder()
-              .username("admin")
-              .passwordEncoder(enc::encode)
-              .password(defaultOwnerUserPassword)
-              .roles("OWNER")
-              .build();
-      manager.createUser(admin);
-    }
-
-    return manager;
+  UserDetailsService userDetailsService(CbUserRepository userRepository) {
+    return new CbUserDetailsService(userRepository);
   }
 }
