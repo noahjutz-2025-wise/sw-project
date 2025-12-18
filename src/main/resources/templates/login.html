@@ -5,30 +5,54 @@
     <meta charset="UTF-8">
     <title>Login</title>
 </head>
-<body layout:fragment="content">
-<div th:replace="~{fragments/landing_page_top_bar::navbar}"></div>
-<div class="position-absolute top-50 start-50 translate-middle">
-    <form th:action="@{/login}" method="post">
-        <div th:if="${param.error}" class="alert alert-danger">Nutzername oder Passwort ist falsch.</div>
-
-        <div class="mb-3">
-            <label for="username" class="form-label">E-Mail Adresse</label>
-            <input type="text" name="username" id="username" class="form-control"/>
+<body layout:fragment="content" class="d-flex flex-column min-vh-100 mx-4">
+<header class="navbar mb-2">
+    <div class="d-flex w-100 justify-content-center">
+        <div class="navbar-brand me-0 flex-grow-1" style="max-width: 600px">
+            <a class="icon-link nav-link" th:href="@{/}">
+                <i class="bi bi-arrow-left"></i>
+            </a>
         </div>
+    </div>
+</header>
+<header class="d-flex justify-content-center">
+    <div class="flex-grow-1" style="max-width: 600px">
+        <h2>
+            Melde dich bei Certified Bangers an
+        </h2>
+    </div>
+</header>
+<section class="flex-grow-1 d-flex flex-row align-items-center justify-content-center">
+    <div class="w-100" style="max-width: 350px">
+        <form th:action="@{/login}" method="post">
+            <div th:if="${param.error}" class="alert alert-danger">Nutzername oder Passwort ist falsch.</div>
 
-        <div class="mb-3">
-            <label for="password" class="form-label">Passwort</label>
-            <input type="password" name="password" id="password" class="form-control"/>
-        </div>
+            <div class="mb-3">
+                <label for="username" class="form-label">E-Mail Adresse</label>
+                <input type="text" name="username" id="username" class="form-control"/>
+            </div>
 
-        <div class="d-flex gap-1 mb-3">
-            <button type="submit" class="btn btn-primary flex-grow-1">Login</button>
-        </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Passwort</label>
+                <input type="password" name="password" id="password" class="form-control"/>
+            </div>
 
-    </form>
-    <p class="text-center">
-        Neu hier? <a th:href="@{/signup}">Registrieren</a>
-    </p>
-</div>
+            <div class="d-flex gap-1 mb-3">
+                <button type="submit" class="btn btn-primary flex-grow-1">
+                    <i class="bi bi-lock fixed-"></i>
+                    Anmelden
+                </button>
+            </div>
+
+        </form>
+        <p class="text-center">
+            Neu hier?
+
+            <a class="icon-link icon-link-hover d-inline-flex align-items-baseline" th:href="@{/signup}">
+                Registrieren <i class="bi bi-arrow-right"></i>
+            </a>
+        </p>
+    </div>
+</section>
 </body>
 </html>
