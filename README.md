@@ -11,21 +11,26 @@ Add your API key `tmdb.api.key` to your `application-local.properties`. And then
 ./mvnw spring-boot:run
 ```
 
-## Email Verification Setup
+## Required local properties
 
-### Email configuration required
+| Key                    | Content                                                 |
+|------------------------|---------------------------------------------------------|
+| `tmdb.api.key`         | [TMDB API Key](https://www.themoviedb.org/settings/api) |
+| `spring.mail.username` | YOUR_EMAIL@gmail.com                                    |
+| `spring.mail.password` | Google App Password (see below)                         |
+
+## Email Verification Setup
 
 The app uses email verification for new user registration. To enable this feature, you need to configure email settings
 with your own credentials.
 The setup that I built is suitable **for Gmail only**, so if you want to configure the app with a different email
 service, the settings would look different.
 
-#### Prerequisites
+### Prerequisites
 
 - A Gmail account
-- Google App Password
 
-#### Step 1: Generate Google App Password
+### Step 1: Generate Google App Password
 
 1. Go to your Google Account
 2. Enable 2-Step Verification:
@@ -37,16 +42,7 @@ service, the settings would look different.
     - Copy the 16-character password (it looks like: xxxx xxxx xxxx xxxx)
     - **Save this password** - you won't be able to see it again.
 
-#### Step 3: Configure `application.properties`
-
-```properties
-spring.mail.host=smtp.gmail.com
-spring.mail.port=587
-spring.mail.properties.mail.smtp.auth=true
-spring.mail.properties.mail.smtp.starttls.enable=true
-```
-
-#### Step 4: Configure `application-local.properties`
+### Step 3: Configure `application-local.properties`
 
 ```properties
 spring.mail.username=YOUR_EMAIL@gmail.com
