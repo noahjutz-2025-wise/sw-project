@@ -103,6 +103,8 @@ There are three parts to the exam submission.
 - 2025-12-04
     - [x] Assign Profile screen to F13 Friends & Profiles
     - [x] Assign Movie details screen to F7 Catalog & Details
+- 2025-12-18
+    - [x] Design decisions: Dedicated Search page with tabs (movies, shows, users). Replace home page with mood page.
 
 ## Further links
 
