@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head th:replace="~{fragments/base :: head(${pageTitle})}"></head>
+<head th:replace="~{fragments/sidebar :: head(${pageTitle})}"></head>
 <body class="bg-light">
 <div class="d-flex">
-    <div th:replace="~{fragments/base :: sidebar('mood')}"></div>
+    <div th:replace="~{fragments/sidebar :: sidebar('mood')}"></div>
     <div class="container-fluid p-3 d-flex flex-column">
         <h2 class="trend-title mb-4">Pick Your Mood Today...</h2>
 
