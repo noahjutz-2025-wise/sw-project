@@ -5,6 +5,7 @@
     <!--/*@thymesVar id="pageTitle" type=""*/-->
     <title th:text="${title}">Movies</title>
     <link href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="/webjars/bootstrap-icons/1.13.1/font/bootstrap-icons.min.css"/>
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
@@ -19,6 +20,19 @@
             <li class="nav-item"><a href="/app/watchlist" class="nav-link text-white"
                                     th:classappend="${activeTab == 'watchlist'} ? 'active' : ''">Watchlist</a></li>
         </ul>
+
+        <div class="mt-auto mb-3" >
+            <div class="dropdown dropup">
+                <a href="/user/profile" class="text-decoration-none">
+                    <button class="btn btn-outline-light w-100 d-flex align-items-center justify-content-start rounded-pill" type="button">
+                            <span class="bg-light text-dark rounded-circle d-flex align-items-center justify-content-center me-2 p-1">
+                                &#128126;
+                            </span>
+                        <span class="small text-truncate">User</span>
+                    </button>
+                </a>
+            </div>
+        </div>
     </div>
 </div>
 </body>

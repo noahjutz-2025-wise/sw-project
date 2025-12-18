@@ -32,10 +32,9 @@ class SecurityConfig {
   public SecurityFilterChain filterChain(HttpSecurity http) {
     return http.authorizeHttpRequests(
             a ->
-                a.requestMatchers("/app/**")
+                a.requestMatchers("/app/**", "/verify", "/user/profile")
                     .authenticated()
-                    .requestMatchers(
-                        "/signup", "/", "/css/**", "/js/**", "/error", "/webjars/**", "/verify")
+                    .requestMatchers("/signup", "/", "/css/**", "/js/**", "/error", "/webjars/**")
                     .permitAll()
                     .anyRequest()
                     .authenticated())
