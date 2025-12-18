@@ -17,20 +17,24 @@ public class MoodController {
   }
 
   @GetMapping("/api/mood")
-  public List<Movie> getMood(@RequestParam(required = false) String mood) {
-    return tmdbService.getMoviesByMood(mood);
+  public List<Movie> getMood(
+      @RequestParam(required = false) String mood, @RequestParam(defaultValue = "1") int page) {
+    return tmdbService.getMoviesByMood(mood, page);
   }
 
   @GetMapping("/mood")
   public String showMoviesByMood(
-      @RequestParam(name = "mood", required = false) String mood, Model model) {
+      @RequestParam(name = "mood", required = false) String mood,
+      @RequestParam(defaultValue = "1") int page,
+      Model model) {
 
     if (mood == null || mood.isBlank()) {
       mood = "happy";
     }
     model.addAttribute("mood", mood);
     model.addAttribute("pageTitle", "Mood - Genres By Mood");
-    model.addAttribute("movies", tmdbService.getMoviesByMood(mood));
+    model.addAttribute("movies", tmdbService.getMoviesByMood(mood, page));
+    model.addAttribute("currentPage", page);
     return "mood";
   }
 }

@@ -20,19 +20,21 @@ public class TMDBService {
   @Value("${tmdb.api.key:keynotfound}")
   private String apiKey;
 
-  public List<Movie> getPopularMovies() {
+  public List<Movie> getPopularMovies(int page) {
     return Objects.requireNonNull(
             this.restClient
                 .get()
                 .uri(
-                    "/discover/movie?include_adult=false&include_video=false&page=1&sort_by=popularity.desc&certification_country=US&certification.lte=PG-13&api_key="
+                    "/discover/movie?include_adult=false&include_video=false&page="
+                        + page
+                        + "&sort_by=popularity.desc&certification_country=US&certification.lte=PG-13&api_key="
                         + apiKey)
                 .retrieve()
                 .body(TMDBApiResponse.class))
         .getResults();
   }
 
-  public List<Movie> getMoviesByMood(String mood) {
+  public List<Movie> getMoviesByMood(String mood, int page) {
     Map<String, List<Genre>> moodToGenre =
         new HashMap<>(
             Map.ofEntries(
@@ -62,7 +64,9 @@ public class TMDBService {
         this.restClient
             .get()
             .uri(
-                "/discover/movie?include_adult=false&include_video=false&page=1&sort_by=popularity.desc&certification_country=US&certification.gte=G&certification.lte=PG-13&with_genres="
+                "/discover/movie?include_adult=false&include_video=false&page="
+                    + page
+                    + "&sort_by=popularity.desc&certification_country=US&certification.gte=G&certification.lte=PG-13&with_genres="
                     + genreParam
                     + "&api_key="
                     + apiKey)
