@@ -5,13 +5,13 @@ module "Softwareentwicklung (SW)" at OTH Regensburg.
 
 ## Quickstart
 
-Add your API key `tmdb.api.key` to your `application-local.properties`. And then run the following command:
-
 ```sh
 ./mvnw spring-boot:run
 ```
 
 ## Required local properties
+
+Place these secrets in `src/main/resources/application-local.properties`.
 
 | Key                    | Content                                                 |
 |------------------------|---------------------------------------------------------|
