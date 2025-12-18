@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{scaffold}">
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
 </head>
-<body>
+<body layout:fragment="content">
 <form th:action="@{/login}" method="post">
+    <div th:replace="~{fragments/landing_page_top_bar::navbar}"></div>
     <div th:if="${param.error}">Nutzername oder Passwort ist falsch.</div>
 
     <label for="username">Username</label>
