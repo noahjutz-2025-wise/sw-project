@@ -6,20 +6,64 @@
     <title>Movie Details</title>
 </head>
 <body layout:fragment="content">
-<header class="navbar navbar-dark mb-2">
-    <div class="position-absolute top-0 w-100 z-0" >
-        <div class="container overflow-hidden position-relative p-0">
-            <div class="top-gradient"></div>
+<header class="mb-2">
+    <div class="position-absolute top-0 w-100 z-0">
+        <div class="container position-relative p-0">
+            <div class="overflow-hidden">
+                <div class="top-gradient"></div>
+            </div>
             <img width="100%" src="https://image.tmdb.org/t/p/w780/vViRXFnSyGJ2fzMbcc5sqTKswcd.jpg" class="banner-img"/>
+
         </div>
     </div>
-    <div class="container z-1">
-        <div class="navbar-brand me-0 flex-grow-1">
-            <a class="icon-link nav-link" href="javascript:void(0)" th:onclick="history.back()">
-                <i class="bi bi-arrow-left"></i>
-            </a>
-            <span class="me-2"></span>
-            <span th:text="${title ?: 'Movie Details'}">Movie Details</span>
+    <div class="navbar navbar-dark z-1">
+        <div class="container">
+            <div class="navbar-brand me-0 flex-grow-1">
+                <a class="icon-link nav-link" href="javascript:void(0)" th:onclick="history.back()">
+                    <i class="bi bi-arrow-left"></i>
+                </a>
+                <span class="me-2"></span>
+                <span th:text="${title ?: 'Movie Details'}">Movie Details</span>
+            </div>
+        </div>
+    </div>
+    <div class="position-absolute top-0 w-100">
+        <div class="container position-relative">
+            <div style="height:4rem"></div>
+            <div class="row g-4">
+                <div class="col-sm-4 col-12">
+                    <img width="100%" src="https://image.tmdb.org/t/p/w342/gDVgC9jd917NdAcqBdRRDUYi4Tq.jpg"
+                         class=" shadow"/>
+                </div>
+                <div class="col-sm-8 col-12">
+                    <div class="card w-auto">
+                        <div class="card-body">
+                            <h2>Beschreibung</h2>
+                            <p>
+                                In the wake of the devastating war against the RDA and the loss of their eldest son,
+                                Jake Sully and Neytiri face a new threat on Pandora: the Ash People, a violent and
+                                power-hungry Na'vi tribe led by the ruthless Varang. Jake's family must fight for their
+                                survival and the future of Pandora in a conflict that pushes them to their emotional and
+                                physical limits.
+                            </p>
+                            <table class="table">
+                                <tr>
+                                    <th>Veröffentlicht am</th>
+                                    <td>25.12.2025</td>
+                                </tr>
+                                <tr>
+                                    <th>Kategorien</th>
+                                    <td>Action, Fantasy</td>
+                                </tr>
+                                <tr>
+                                    <th>Dauer</th>
+                                    <td>2h 8min</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </header>
