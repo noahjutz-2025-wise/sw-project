@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/app/movie")
 public class MovieController {
-    @GetMapping("/{id}")
-    public String movie(@PathVariable int id, Model model) {
-        model.addAttribute(id);
-        return "movie_details";
-    }
+  @GetMapping("/{id}")
+  public String movie(@PathVariable int id, Model model) {
+    model.addAttribute(id);
+    return "movie_details";
+  }
 }
