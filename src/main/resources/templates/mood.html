@@ -2,15 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:replace="~{fragments/sidebar :: head(${pageTitle})}"></head>
 <body class="bg-light">
+<div th:replace="~{fragments/sidebar :: mobile-navbar('mood')}"></div>
 <div class="d-flex">
     <div th:replace="~{fragments/sidebar :: sidebar('mood')}"></div>
-    <div class="container-fluid p-3 d-flex flex-column">
-        <h2 class="trend-title mb-4">Pick Your Mood Today...</h2>
+    <div class="container-fluid p-3 d-flex flex-column mt-5 mt-md-0">
+
+        <h3 class="trend-title mb-4">Deine Stimmung heute...</h3>
 
         <form action="/mood" method="get" class="mb-4" id="mood-form">
             <div class="row g-3 align-items-center">
                 <div class="col-auto">
-                    <label for="mood" class="col-form-label">Select mood:</label>
+                    <label for="mood" class="col-form-label"><i>Stimmung:</i></label>
                 </div>
                 <div class="col-auto">
                     <select name="mood" id="mood" class="form-select">
@@ -39,7 +41,7 @@
 
         <div class="row">
             <div th:if="${movies != null}">
-                <h3 class="mb-3">Movies for mood: <span th:text="${mood}"></span></h3>
+                <h5 class="mb-4">Filme für Stimmung: <span class="px-3 py-2 bg-info text-white rounded-pill" th:text="${mood}"></span></h5>
             </div>
 
             <div th:each="movie : ${movies}" class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
