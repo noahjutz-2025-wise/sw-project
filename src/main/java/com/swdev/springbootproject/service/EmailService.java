@@ -1,5 +1,10 @@
 package com.swdev.springbootproject.service;
 
+import com.swdev.springbootproject.entity.CbUser;
+import com.swdev.springbootproject.entity.EmailVerification;
+import com.swdev.springbootproject.repository.EmailVerificationRepository;
+import java.time.LocalDateTime;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -11,6 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequiredArgsConstructor
 public class EmailService {
   private final JavaMailSender javaMailSender;
+  private final EmailVerificationRepository emailVerificationRepository;
 
   @Value("${spring.mail.username:#{null}}")
   private String mailFrom;
@@ -36,5 +42,13 @@ public class EmailService {
     mailMessage.setFrom(mailFrom);
 
     javaMailSender.send(mailMessage);
+  }
+
+  public void sendVerificationEmail(CbUser cbUser) {
+    String token = UUID.randomUUID().toString();
+    EmailVerification emailVerification =
+        new EmailVerification(token, LocalDateTime.now().plusMinutes(30), cbUser);
+    emailVerificationRepository.save(emailVerification);
+    sendVerificationEmail(cbUser.getEmail(), token);
   }
 }

@@ -22,8 +22,8 @@ public class EmailVerification {
   @Column(name = "token_expiry_date")
   private LocalDateTime tokenExpiryDate;
 
-  @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "user_id", unique = true)
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id")
   private CbUser cbUser;
 
   public EmailVerification(String verificationToken, LocalDateTime tokenExpiryDate, CbUser cbUser) {

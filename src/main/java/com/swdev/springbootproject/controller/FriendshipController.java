@@ -7,7 +7,6 @@ import com.swdev.springbootproject.repository.FriendshipRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -70,7 +69,10 @@ public class FriendshipController {
   }
 
   @PostMapping("/friends/add/{friendId}")
-  public ResponseEntity<@NonNull String> addFriend(@PathVariable Long friendId, Authentication authentication, RedirectAttributes redirectAttributes) {
+  public ResponseEntity<@NonNull String> addFriend(
+      @PathVariable Long friendId,
+      Authentication authentication,
+      RedirectAttributes redirectAttributes) {
     HttpHeaders headers = new HttpHeaders();
     CbUser currentCbUser = (CbUser) authentication.getPrincipal();
 
@@ -80,10 +82,14 @@ public class FriendshipController {
       return ResponseEntity.badRequest().build();
     }
 
-    boolean befriended = friendshipRepository.findByCbUser1_IdOrCbUser2_Id(currentCbUser.getId(), currentCbUser.getId())
-        .stream()
-        .anyMatch(f ->
-            f.getCbUser1().getId().equals(friendId) || f.getCbUser2().getId().equals(friendId));
+    boolean befriended =
+        friendshipRepository
+            .findByCbUser1_IdOrCbUser2_Id(currentCbUser.getId(), currentCbUser.getId())
+            .stream()
+            .anyMatch(
+                f ->
+                    f.getCbUser1().getId().equals(friendId)
+                        || f.getCbUser2().getId().equals(friendId));
 
     if (befriended) {
       return ResponseEntity.badRequest().build();
@@ -91,7 +97,8 @@ public class FriendshipController {
 
     Optional<@NonNull CbUser> cbUser = cbUserRepository.findById(friendId);
     if (cbUser.isPresent()) {
-      friendshipRepository.save(Friendship.builder().cbUser1(currentCbUser).cbUser2(cbUser.get()).build());
+      friendshipRepository.save(
+          Friendship.builder().cbUser1(currentCbUser).cbUser2(cbUser.get()).build());
     } else {
       return ResponseEntity.badRequest().build();
     }
