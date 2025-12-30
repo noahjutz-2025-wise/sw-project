@@ -21,9 +21,12 @@
             <div class="collapse navbar-collapse" id="mobileMenu">
                 <ul class="navbar-nav mt-3">
                     <li class="nav-item"><a href="/mood" class="nav-link text-white"
-                           th:classappend="${activeTab == 'mood'} ? 'active' : ''">Stimmung</a></li>
+                            th:classappend="${activeTab == 'mood'} ? 'active' : ''">Stimmung</a></li>
                     <li class="nav-item"><a href="/trends" class="nav-link text-white"
-                           th:classappend="${activeTab == 'trends'} ? 'active' : ''">Trends</a>
+                            th:classappend="${activeTab == 'trends'} ? 'active' : ''">Trends</a>
+                    </li>
+                    <li class="nav-item"><a href="/app/watchlist" class="nav-link text-white"
+                            th:classappend="${activeTab == 'watchlist'} ? 'active' : ''">Watchlist</a>
                     </li>
                 </ul>
             </div>
@@ -40,7 +43,6 @@
                                     th:classappend="${activeTab == 'mood'} ? 'active' : ''">Stimmung</a></li>
             <li class="nav-item"><a href="/trends" class="nav-link text-white"
                                     th:classappend="${activeTab == 'trends'} ? 'active' : ''">Trends</a></li>
-                                    th:classappend="${activeTab == 'trends'} ? 'active' : ''">Trending</a></li>
             <li class="nav-item"><a href="/app/watchlist" class="nav-link text-white"
                                     th:classappend="${activeTab == 'watchlist'} ? 'active' : ''">Watchlist</a></li>
         </ul>
