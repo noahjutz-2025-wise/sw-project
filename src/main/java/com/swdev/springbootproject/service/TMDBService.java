@@ -8,9 +8,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import com.swdev.springbootproject.model.tmdb.MovieDetails;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
+import org.springframework.web.util.UriBuilder;
 
 @Service
 public class TMDBService {
@@ -90,5 +93,15 @@ public class TMDBService {
 
     assert discoverResults != null;
     return discoverResults.getResults();
+  }
+
+  public MovieDetails getMovieDetails(int movieId) {
+    return restClient
+        .get()
+        .uri(
+            uriBuilder ->
+                uriBuilder.path("/movie/{id}").queryParam("api_key", apiKey).build(movieId))
+        .retrieve()
+        .body(MovieDetails.class);
   }
 }
