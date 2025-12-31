@@ -1,4 +1,4 @@
-package com.swdev.springbootproject.model;
+package com.swdev.springbootproject.model.tmdb;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

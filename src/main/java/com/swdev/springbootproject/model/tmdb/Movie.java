@@ -1,4 +1,4 @@
-package com.swdev.springbootproject.model;
+package com.swdev.springbootproject.model.tmdb;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
