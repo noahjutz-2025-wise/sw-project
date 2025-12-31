@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head th:replace="~{fragments/sidebar :: head('Find Friends')}"></head>
-
-<body class="bg-light">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="@{scaffold}">
+<head>
+    <title layout:fragment="title">Friend Search</title>
+</head>
+<section layout:fragment="content">
 <div class="d-flex">
+    <div th:replace="~{fragments/mobile-nav :: mobile-navbar('profile')}"></div>
     <div th:replace="~{fragments/sidebar :: sidebar('profile')}"></div>
-
     <div class="container mt-4">
         <div class="row justify-content-start">
             <div class="col-12 col-md-10 col-lg-8 col-xl-6">
@@ -53,5 +57,5 @@
         </div>
     </div>
 </div>
-</body>
+</section>
 </html>

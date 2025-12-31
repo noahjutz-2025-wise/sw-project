@@ -1,8 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head th:replace="~{fragments/sidebar :: head(${pageTitle})}"></head>
-<body class="bg-light">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="@{scaffold}">
+<head>
+    <title layout:fragment="title">User Profile</title>
+</head>
+<section layout:fragment="content">
 <div class="d-flex">
+    <div th:replace="~{fragments/mobile-nav :: mobile-navbar('profile')}"></div>
     <div th:replace="~{fragments/sidebar :: sidebar('profile')}"></div>
     <div class="container mt-4">
         <div class="row justify-content-start">
@@ -70,6 +76,5 @@
 
     </div>
 </div>
-
-</body>
+</section>
 </html>

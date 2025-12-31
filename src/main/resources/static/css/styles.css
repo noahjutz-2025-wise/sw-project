@@ -30,7 +30,6 @@ body, html {
 }
 
 .trend-title {
-    font-size: 2rem;
     font-weight: 700;
     color: #495867;
     letter-spacing: 0.5px;
@@ -60,3 +59,6 @@ body, html {
     padding: 0.75rem;
 }
 
+.bg-sidebar {
+    background-color: #879ba6;
+}

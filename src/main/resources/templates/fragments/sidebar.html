@@ -1,22 +1,12 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head th:fragment="head(title)">
-    <meta charset="UTF-8">
-    <!--/*@thymesVar id="pageTitle" type=""*/-->
-    <title th:text="${title}">Movies</title>
-    <link href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="/webjars/bootstrap-icons/1.13.1/font/bootstrap-icons.min.css"/>
-    <link rel="stylesheet" href="/css/styles.css">
-</head>
-<body>
 <div th:fragment="sidebar(activeTab)">
-    <div id="sidebar" class="bg-sidebar p-3 d-flex flex-column" style="width: 200px; height: 100vh;">
-        <h4>Menu</h4>
+    <div id="sidebar" class="bg-sidebar p-3 collapse d-md-flex flex-column d-none d-md-block"
+         style="width: 200px; height: 100vh;">
+        <h5>Menu</h5>
         <ul class="nav flex-column">
             <li class="nav-item"><a href="/mood" class="nav-link text-white"
-                                    th:classappend="${activeTab == 'mood'} ? 'active' : ''">Mood</a></li>
+                                    th:classappend="${activeTab == 'mood'} ? 'active' : ''">Stimmung</a></li>
             <li class="nav-item"><a href="/trends" class="nav-link text-white"
-                                    th:classappend="${activeTab == 'trends'} ? 'active' : ''">Trending</a></li>
+                                    th:classappend="${activeTab == 'trends'} ? 'active' : ''">Trends</a></li>
             <li class="nav-item"><a href="/app/watchlist" class="nav-link text-white"
                                     th:classappend="${activeTab == 'watchlist'} ? 'active' : ''">Watchlist</a></li>
         </ul>
@@ -35,5 +25,3 @@
         </div>
     </div>
 </div>
-</body>
-</html>
