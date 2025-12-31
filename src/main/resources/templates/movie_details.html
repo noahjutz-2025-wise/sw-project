@@ -23,7 +23,7 @@
                     <i class="bi bi-arrow-left"></i>
                 </a>
                 <span class="me-2"></span>
-                <span th:text="${title ?: 'Movie Details'}">Movie Details</span>
+                <span th:text="${movieDetails.title}">Movie Details</span>
             </div>
         </div>
     </div>
@@ -58,26 +58,20 @@
                                 </ul>
                             </div>
 
-                            <h2>Beschreibung</h2>
-                            <p>
-                                In the wake of the devastating war against the RDA and the loss of their eldest son,
-                                Jake Sully and Neytiri face a new threat on Pandora: the Ash People, a violent and
-                                power-hungry Na'vi tribe led by the ruthless Varang. Jake's family must fight for their
-                                survival and the future of Pandora in a conflict that pushes them to their emotional and
-                                physical limits.
-                            </p>
+                            <h2 th:text="${movieDetails.title}"></h2>
+                            <p th:text="${movieDetails.overview}"></p>
                             <table class="table">
                                 <tr>
                                     <th>Veröffentlicht am</th>
-                                    <td>25.12.2025</td>
+                                    <td th:text="${movieDetails.releaseDate}"></td>
                                 </tr>
                                 <tr>
                                     <th>Kategorien</th>
-                                    <td>Action, Fantasy</td>
+                                    <td>Todo</td>
                                 </tr>
                                 <tr>
                                     <th>Dauer</th>
-                                    <td>2h 8min</td>
+                                    <td th:text="${movieDetails.runtime + 'min'}"></td>
                                 </tr>
                             </table>
                         </div>
