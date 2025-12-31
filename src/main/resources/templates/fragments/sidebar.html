@@ -1,39 +1,3 @@
-<head th:fragment="head(title)">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--/*@thymesVar id="pageTitle" type=""*/-->
-    <title th:text="${title}">Movies</title>
-    <link href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="/webjars/bootstrap-icons/1.13.1/font/bootstrap-icons.min.css"/>
-    <link rel="stylesheet" href="/css/styles.css">
-    <script src="/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-</head>
-
-<div th:fragment="mobile-navbar(activeTab)">
-    <nav class="navbar navbar-dark bg-sidebar fixed-top d-md-none">
-        <div class="container-fluid">
-            <h6 class="navbar-brand">Menu</h6>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="mobileMenu">
-                <ul class="navbar-nav mt-3">
-                    <li class="nav-item"><a href="/mood" class="nav-link text-white"
-                            th:classappend="${activeTab == 'mood'} ? 'active' : ''">Stimmung</a></li>
-                    <li class="nav-item"><a href="/trends" class="nav-link text-white"
-                            th:classappend="${activeTab == 'trends'} ? 'active' : ''">Trends</a>
-                    </li>
-                    <li class="nav-item"><a href="/app/watchlist" class="nav-link text-white"
-                            th:classappend="${activeTab == 'watchlist'} ? 'active' : ''">Watchlist</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</div>
-
 <div th:fragment="sidebar(activeTab)">
     <div id="sidebar" class="bg-sidebar p-3 collapse d-md-flex flex-column d-none d-md-block"
          style="width: 200px; height: 100vh;">
