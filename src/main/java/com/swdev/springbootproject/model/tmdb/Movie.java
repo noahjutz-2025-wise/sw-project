@@ -9,6 +9,7 @@ import lombok.Setter;
 public class Movie {
 
   private String title;
+  private int id;
 
   @JsonProperty("poster_path")
   private String posterPath;
