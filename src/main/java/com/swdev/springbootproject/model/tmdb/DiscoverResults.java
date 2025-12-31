@@ -1,7 +1,6 @@
 package com.swdev.springbootproject.model.tmdb;
 
 import java.util.List;
-
 import lombok.Getter;
 
 @Getter

@@ -1,8 +1,8 @@
 package com.swdev.springbootproject.service;
 
+import com.swdev.springbootproject.model.tmdb.DiscoverResults;
 import com.swdev.springbootproject.model.tmdb.Genre;
 import com.swdev.springbootproject.model.tmdb.Movie;
-import com.swdev.springbootproject.model.tmdb.DiscoverResults;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
