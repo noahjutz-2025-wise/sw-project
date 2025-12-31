@@ -14,8 +14,9 @@ import org.springframework.web.client.RestClient;
 
 @Service
 public class TMDBService {
-  private final RestClient restClient =
-      RestClient.builder().baseUrl("https://api.themoviedb.org/3").build();
+  public static String TMDB_API_URL = "https://api.themoviedb.org/3/";
+
+  private final RestClient restClient = RestClient.builder().baseUrl(TMDB_API_URL).build();
 
   @Value("${tmdb.api.key:keynotfound}")
   private String apiKey;
@@ -25,10 +26,17 @@ public class TMDBService {
             this.restClient
                 .get()
                 .uri(
-                    "/discover/movie?include_adult=false&include_video=false&page="
-                        + page
-                        + "&sort_by=popularity.desc&certification_country=US&certification.lte=PG-13&api_key="
-                        + apiKey)
+                    uriBuilder ->
+                        uriBuilder
+                            .path("/discover/movie")
+                            .queryParam("include_adult", false)
+                            .queryParam("include_video", false)
+                            .queryParam("page", page)
+                            .queryParam("sort_by", "popularity.desc")
+                            .queryParam("certification_country", "US")
+                            .queryParam("certification.lte", "PG-13")
+                            .queryParam("api_key", apiKey)
+                            .build())
                 .retrieve()
                 .body(TMDBApiResponse.class))
         .getResults();
@@ -64,12 +72,19 @@ public class TMDBService {
         this.restClient
             .get()
             .uri(
-                "/discover/movie?include_adult=false&include_video=false&page="
-                    + page
-                    + "&sort_by=popularity.desc&certification_country=US&certification.gte=G&certification.lte=PG-13&with_genres="
-                    + genreParam
-                    + "&api_key="
-                    + apiKey)
+                uriBuilder ->
+                    uriBuilder
+                        .path("/discover/movie")
+                        .queryParam("include_adult", false)
+                        .queryParam("include_video", false)
+                        .queryParam("page", page)
+                        .queryParam("sort_by", "popularity.desc")
+                        .queryParam("certification_country", "US")
+                        .queryParam("certification.gte", "G")
+                        .queryParam("certification.lte", "PG-13")
+                        .queryParam("with_genres", genreParam)
+                        .queryParam("api_key", apiKey)
+                        .build())
             .retrieve()
             .body(TMDBApiResponse.class);
 
