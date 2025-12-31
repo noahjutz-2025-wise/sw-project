@@ -4,6 +4,6 @@ import java.util.List;
 import lombok.Getter;
 
 @Getter
-public class TMDBApiResponse {
+public class DiscoverResults {
   private List<Movie> results;
 }

@@ -2,7 +2,7 @@ package com.swdev.springbootproject.service;
 
 import com.swdev.springbootproject.model.Genre;
 import com.swdev.springbootproject.model.Movie;
-import com.swdev.springbootproject.model.TMDBApiResponse;
+import com.swdev.springbootproject.model.DiscoverResults;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +38,7 @@ public class TMDBService {
                             .queryParam("api_key", apiKey)
                             .build())
                 .retrieve()
-                .body(TMDBApiResponse.class))
+                .body(DiscoverResults.class))
         .getResults();
   }
 
@@ -68,7 +68,7 @@ public class TMDBService {
             .map(String::valueOf)
             .collect(Collectors.joining(","));
 
-    TMDBApiResponse tmdbApiResponse =
+    DiscoverResults discoverResults =
         this.restClient
             .get()
             .uri(
@@ -86,9 +86,9 @@ public class TMDBService {
                         .queryParam("api_key", apiKey)
                         .build())
             .retrieve()
-            .body(TMDBApiResponse.class);
+            .body(DiscoverResults.class);
 
-    assert tmdbApiResponse != null;
-    return tmdbApiResponse.getResults();
+    assert discoverResults != null;
+    return discoverResults.getResults();
   }
 }
