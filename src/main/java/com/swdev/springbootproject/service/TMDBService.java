@@ -3,17 +3,15 @@ package com.swdev.springbootproject.service;
 import com.swdev.springbootproject.model.tmdb.DiscoverResults;
 import com.swdev.springbootproject.model.tmdb.Genre;
 import com.swdev.springbootproject.model.tmdb.Movie;
+import com.swdev.springbootproject.model.tmdb.MovieDetails;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
-import com.swdev.springbootproject.model.tmdb.MovieDetails;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
-import org.springframework.web.util.UriBuilder;
 
 @Service
 public class TMDBService {
