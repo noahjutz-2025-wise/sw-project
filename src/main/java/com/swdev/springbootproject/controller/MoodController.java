@@ -1,6 +1,6 @@
 package com.swdev.springbootproject.controller;
 
-import com.swdev.springbootproject.model.Movie;
+import com.swdev.springbootproject.model.tmdb.Movie;
 import com.swdev.springbootproject.service.TMDBService;
 import java.util.List;
 import org.springframework.stereotype.Controller;

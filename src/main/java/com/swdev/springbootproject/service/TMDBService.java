@@ -1,8 +1,9 @@
 package com.swdev.springbootproject.service;
 
-import com.swdev.springbootproject.model.Genre;
-import com.swdev.springbootproject.model.Movie;
-import com.swdev.springbootproject.model.TMDBApiResponse;
+import com.swdev.springbootproject.model.tmdb.DiscoverResults;
+import com.swdev.springbootproject.model.tmdb.Genre;
+import com.swdev.springbootproject.model.tmdb.Movie;
+import com.swdev.springbootproject.model.tmdb.MovieDetails;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,8 +15,9 @@ import org.springframework.web.client.RestClient;
 
 @Service
 public class TMDBService {
-  private final RestClient restClient =
-      RestClient.builder().baseUrl("https://api.themoviedb.org/3").build();
+  public static String TMDB_API_URL = "https://api.themoviedb.org/3/";
+
+  private final RestClient restClient = RestClient.builder().baseUrl(TMDB_API_URL).build();
 
   @Value("${tmdb.api.key:keynotfound}")
   private String apiKey;
@@ -25,12 +27,19 @@ public class TMDBService {
             this.restClient
                 .get()
                 .uri(
-                    "/discover/movie?include_adult=false&include_video=false&page="
-                        + page
-                        + "&sort_by=popularity.desc&certification_country=US&certification.lte=PG-13&api_key="
-                        + apiKey)
+                    uriBuilder ->
+                        uriBuilder
+                            .path("/discover/movie")
+                            .queryParam("include_adult", false)
+                            .queryParam("include_video", false)
+                            .queryParam("page", page)
+                            .queryParam("sort_by", "popularity.desc")
+                            .queryParam("certification_country", "US")
+                            .queryParam("certification.lte", "PG-13")
+                            .queryParam("api_key", apiKey)
+                            .build())
                 .retrieve()
-                .body(TMDBApiResponse.class))
+                .body(DiscoverResults.class))
         .getResults();
   }
 
@@ -60,20 +69,37 @@ public class TMDBService {
             .map(String::valueOf)
             .collect(Collectors.joining(","));
 
-    TMDBApiResponse tmdbApiResponse =
+    DiscoverResults discoverResults =
         this.restClient
             .get()
             .uri(
-                "/discover/movie?include_adult=false&include_video=false&page="
-                    + page
-                    + "&sort_by=popularity.desc&certification_country=US&certification.gte=G&certification.lte=PG-13&with_genres="
-                    + genreParam
-                    + "&api_key="
-                    + apiKey)
+                uriBuilder ->
+                    uriBuilder
+                        .path("/discover/movie")
+                        .queryParam("include_adult", false)
+                        .queryParam("include_video", false)
+                        .queryParam("page", page)
+                        .queryParam("sort_by", "popularity.desc")
+                        .queryParam("certification_country", "US")
+                        .queryParam("certification.gte", "G")
+                        .queryParam("certification.lte", "PG-13")
+                        .queryParam("with_genres", genreParam)
+                        .queryParam("api_key", apiKey)
+                        .build())
             .retrieve()
-            .body(TMDBApiResponse.class);
+            .body(DiscoverResults.class);
 
-    assert tmdbApiResponse != null;
-    return tmdbApiResponse.getResults();
+    assert discoverResults != null;
+    return discoverResults.getResults();
+  }
+
+  public MovieDetails getMovieDetails(int movieId) {
+    return restClient
+        .get()
+        .uri(
+            uriBuilder ->
+                uriBuilder.path("/movie/{id}").queryParam("api_key", apiKey).build(movieId))
+        .retrieve()
+        .body(MovieDetails.class);
   }
 }

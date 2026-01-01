@@ -1,4 +1,4 @@
-package com.swdev.springbootproject.model;
+package com.swdev.springbootproject.model.tmdb;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -9,6 +9,7 @@ import lombok.Setter;
 public class Movie {
 
   private String title;
+  private int id;
 
   @JsonProperty("poster_path")
   private String posterPath;

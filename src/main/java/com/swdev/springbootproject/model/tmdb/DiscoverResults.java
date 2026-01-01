@@ -1,9 +1,9 @@
-package com.swdev.springbootproject.model;
+package com.swdev.springbootproject.model.tmdb;
 
 import java.util.List;
 import lombok.Getter;
 
 @Getter
-public class TMDBApiResponse {
+public class DiscoverResults {
   private List<Movie> results;
 }

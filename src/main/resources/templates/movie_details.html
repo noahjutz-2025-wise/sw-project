@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{scaffold}">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Details</title>
+</head>
+<body layout:fragment="content">
+<header class="mb-2">
+    <div class="position-absolute top-0 w-100 z-0">
+        <div class="container position-relative p-0">
+            <div class="overflow-hidden">
+                <div class="top-gradient"></div>
+            </div>
+            <img width="100%" src="https://image.tmdb.org/t/p/w780/vViRXFnSyGJ2fzMbcc5sqTKswcd.jpg" class="banner-img"/>
+
+        </div>
+    </div>
+    <div class="navbar navbar-dark z-1">
+        <div class="container">
+            <div class="navbar-brand me-0 flex-grow-1">
+                <a class="icon-link nav-link" href="javascript:void(0)" th:onclick="history.back()">
+                    <i class="bi bi-arrow-left"></i>
+                </a>
+                <span class="me-2"></span>
+                <span th:text="${movieDetails.title}">Movie Details</span>
+            </div>
+        </div>
+    </div>
+    <div class="position-absolute top-0 w-100">
+        <div class="container position-relative">
+            <div style="height:4rem"></div>
+            <div class="row g-4">
+                <div class="col-sm-4 col-12">
+                    <img width="100%" src="https://image.tmdb.org/t/p/w342/gDVgC9jd917NdAcqBdRRDUYi4Tq.jpg"
+                         class=" shadow"/>
+                </div>
+                <div class="col-sm-8 col-12">
+                    <div class="card w-auto">
+                        <div class="card-body">
+                            <div class="dropdown">
+                                <a href="#" data-bs-toggle="dropdown">
+                                    <i class="bi bi-bookmark fs-2"></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a th:href="@{/app/movie/{id}/bookmark(id=${id}, category='watch-later')}"
+                                           class="dropdown-item">Später anschauen</a>
+                                    </li>
+                                    <li>
+                                        <a th:href="@{/app/movie/{id}/bookmark(id=${id}, category='in-progress')}"
+                                           class="dropdown-item">Schaue gerade</a>
+                                    </li>
+                                    <li>
+                                        <a th:href="@{/app/movie/{id}/bookmark(id=${id}, category='done')}"
+                                           class="dropdown-item">Gesehen</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <h2 th:text="${movieDetails.title}"></h2>
+                            <p th:text="${movieDetails.overview}"></p>
+                            <table class="table">
+                                <tr>
+                                    <th>Veröffentlicht am</th>
+                                    <td th:text="${movieDetails.releaseDate}"></td>
+                                </tr>
+                                <tr>
+                                    <th>Kategorien</th>
+                                    <td>Todo</td>
+                                </tr>
+                                <tr>
+                                    <th>Dauer</th>
+                                    <td th:text="${movieDetails.runtime + 'min'}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<main>
+
+</main>
+</body>
+</html>
