@@ -60,20 +60,29 @@
 
 <div class="dropdown" th:fragment="bookmark">
     <a href="#" data-bs-toggle="dropdown" class="link-light">
-        <i class="bi bi-bookmark-fill fs-2"></i>
+        <i class="bi bi-bookmark-plus fs-1"></i>
     </a>
     <ul class="dropdown-menu">
         <li>
             <a th:href="@{/app/movie/{id}/bookmark(id=${id}, category='watch-later')}"
-               class="dropdown-item">Später anschauen</a>
+               class="dropdown-item">
+                <i class="bi bi-calendar-heart-fill pe-1"></i>
+                Später anschauen
+            </a>
         </li>
         <li>
             <a th:href="@{/app/movie/{id}/bookmark(id=${id}, category='in-progress')}"
-               class="dropdown-item">Schaue gerade</a>
+               class="dropdown-item">
+                <i class="bi bi-eye-fill pe-1"></i>
+                Schaue gerade
+            </a>
         </li>
         <li>
             <a th:href="@{/app/movie/{id}/bookmark(id=${id}, category='done')}"
-               class="dropdown-item">Gesehen</a>
+               class="dropdown-item">
+                <i class="bi bi-check-circle-fill pe-1"></i>
+                Gesehen
+            </a>
         </li>
     </ul>
 </div>
