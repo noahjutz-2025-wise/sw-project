@@ -1,8 +1,11 @@
 package com.swdev.springbootproject.model.tmdb;
 
 import lombok.Data;
+import tools.jackson.databind.PropertyNamingStrategies;
+import tools.jackson.databind.annotation.JsonNaming;
 
 @Data
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class MovieDetails {
   private String id;
   private String title;
