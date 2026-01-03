@@ -21,6 +21,8 @@ public class MovieController {
   public String movie(@PathVariable int id, Model model) {
     final var movie = tmdbService.getMovieDetails(id);
     model.addAttribute(movie);
+    model.addAttribute("poster", TMDBService.IMAGE_BASE_URL + movie.getPosterPath());
+    model.addAttribute("backdrop", TMDBService.IMAGE_BASE_URL + movie.getBackdropPath());
     model.addAttribute(id);
     return "movie_details";
   }
