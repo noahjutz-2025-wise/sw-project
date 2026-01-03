@@ -25,16 +25,12 @@ public class MovieController {
   private final QueryParamToBookmarkStatusConverter queryParamToBookmarkStatusConverter;
 
   @GetMapping("/{id}")
-  public String movie(@PathVariable Long id, Model model, Authentication authentication) {
+  public String movie(@PathVariable Long id, Model model) {
     final var movie = tmdbService.getMovieDetails(id);
-    final var bookmark =
-        movieBookmarkRepository.findByUserAndMovie(
-            (CbUser) authentication.getPrincipal(), new Movie(id));
     model.addAttribute(movie);
     model.addAttribute("poster", TMDBService.POSTER_BASE_URL + movie.getPosterPath());
     model.addAttribute("backdrop", TMDBService.BACKDROP_BASE_URL + movie.getBackdropPath());
     model.addAttribute("id", id);
-    model.addAttribute("bookmarkStatus", bookmark.map(MovieBookmark::getStatus).orElse(null));
     return "movie_details";
   }
 
