@@ -64,32 +64,32 @@
     </a>
     <ul class="dropdown-menu">
         <li>
-            <a th:href="@{/app/movie/{id}/bookmark(id=${id}, category='watch-later')}"
+            <button th:hx-post="@{/app/movie/{id}/bookmark(id=${id}, category='watch-later')}"
                class="dropdown-item">
                 <i class="bi bi-calendar-heart-fill pe-1"></i>
                 Später anschauen
-            </a>
+            </button>
         </li>
         <li>
-            <a th:href="@{/app/movie/{id}/bookmark(id=${id}, category='in-progress')}"
+            <button th:hx-post="@{/app/movie/{id}/bookmark(id=${id}, category='in-progress')}"
                class="dropdown-item">
                 <i class="bi bi-eye-fill pe-1"></i>
                 Schaue gerade
-            </a>
+            </button>
         </li>
         <li>
-            <a th:href="@{/app/movie/{id}/bookmark(id=${id}, category='done')}"
+            <button th:hx-post="@{/app/movie/{id}/bookmark(id=${id}, category='done')}"
                class="dropdown-item">
                 <i class="bi bi-check-circle-fill pe-1"></i>
                 Gesehen
-            </a>
+            </button>
         </li>
         <li>
-            <a th:href="@{/app/movie/{id}/bookmark(id=${id}, category='done')}"
+            <button th:hx-post="@{/app/movie/{id}/bookmark(id=${id}, category='abandoned')}"
                class="dropdown-item">
                 <i class="bi bi-x-octagon-fill pe-1"></i>
                 Abgebrochen
-            </a>
+            </button>
         </li>
     </ul>
 </div>
