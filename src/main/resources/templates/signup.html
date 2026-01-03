@@ -1,87 +1,87 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet"/>
-    </head>
-    <body>
-        <div th:replace="~{fragments/landing_page_top_bar::navbar}">
-        </div>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body>
+<div th:replace="~{fragments/landing_page_top_bar::navbar}">
+</div>
 
-        <div class="container mt-5">
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h2 class="card-title text-center mb-4">
-                                Create Your Account
-                            </h2>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">
+                        Create Your Account
+                    </h2>
 
-                            <div
-                                th:if="${error}"
-                                class="alert alert-danger"
-                                th:text="${error}"
-                            ></div>
+                    <div
+                            th:if="${error}"
+                            class="alert alert-danger"
+                            th:text="${error}"
+                    ></div>
 
-                            <form
-                                th:action="@{/signup}"
-                                th:object="${user}"
-                                method="post"
+                    <form
+                            th:action="@{/signup}"
+                            th:object="${user}"
+                            method="post"
+                    >
+                        <div class="mb-3">
+                            <label for="name" class="form-label"
+                            >Name</label
                             >
-                                <div class="mb-3">
-                                    <label for="name" class="form-label"
-                                        >Name</label
-                                    >
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="name"
-                                        th:field="*{name}"
-                                        required
-                                    />
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="email" class="form-label"
-                                        >Email</label
-                                    >
-                                    <input
-                                        type="email"
-                                        class="form-control"
-                                        id="email"
-                                        th:field="*{email}"
-                                        required
-                                    />
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="password" class="form-label"
-                                        >Password</label
-                                    >
-                                    <input
-                                        type="password"
-                                        class="form-control"
-                                        id="password"
-                                        th:field="*{password}"
-                                        required
-                                        minlength="6"
-                                    />
-                                </div>
-
-                                <button
-                                    type="submit"
-                                    class="btn btn-primary w-100"
-                                >
-                                    Sign Up
-                                </button>
-                            </form>
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    id="name"
+                                    th:field="*{name}"
+                                    required
+                            />
                         </div>
-                    </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label"
+                            >Email</label
+                            >
+                            <input
+                                    type="email"
+                                    class="form-control"
+                                    id="email"
+                                    th:field="*{email}"
+                                    required
+                            />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label"
+                            >Password</label
+                            >
+                            <input
+                                    type="password"
+                                    class="form-control"
+                                    id="password"
+                                    th:field="*{password}"
+                                    required
+                                    minlength="6"
+                            />
+                        </div>
+
+                        <button
+                                type="submit"
+                                class="btn btn-primary w-100"
+                        >
+                            Sign Up
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
-        <script src="/webjars/bootstrap/js/bootstrap.bundle.min.js"></script>
-    </body>
+<script src="/webjars/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
