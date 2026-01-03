@@ -49,11 +49,11 @@
                 <h5 class="mb-4">Filme für Stimmung: <span class="px-3 py-2 bg-info text-white rounded-pill" th:text="${mood}"></span></h5>
             </div>
 
-            <a th:each="movie : ${movies}" class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3" th:href="@{/app/movie/{id}(id=${movie.id})}">
+            <a th:each="movie : ${movies}" class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3 text-decoration-none" th:href="@{/app/movie/{id}(id=${movie.id})}" hx-boost="false">
                 <div class="card movie-card h-100 shadow-sm">
                     <img th:src="${movie.getPosterUrl}" class="card-img-top" alt="Movie Poster">
                     <div class="card-body text-center d-flex align-items-center justify-content-center">
-                        <h5 th:text="${movie.title}" class="card-title"></h5>
+                        <h5 th:text="${movie.title}" class="card-title "></h5>
                     </div>
                 </div>
             </a>
