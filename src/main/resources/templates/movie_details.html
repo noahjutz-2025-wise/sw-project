@@ -84,6 +84,13 @@
                 Gesehen
             </a>
         </li>
+        <li>
+            <a th:href="@{/app/movie/{id}/bookmark(id=${id}, category='done')}"
+               class="dropdown-item">
+                <i class="bi bi-x-octagon-fill pe-1"></i>
+                Abgebrochen
+            </a>
+        </li>
     </ul>
 </div>
 
