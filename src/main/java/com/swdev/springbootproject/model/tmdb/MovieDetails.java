@@ -14,7 +14,7 @@ public class MovieDetails {
   private String backdropPath;
   private String posterPath;
   private String releaseDate;
-  private int revenue;
+  private long revenue;
   private int runtime;
   private float popularity;
   private float voteAverage;
