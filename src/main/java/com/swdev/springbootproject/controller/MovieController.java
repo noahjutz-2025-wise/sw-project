@@ -20,13 +20,13 @@ public class MovieController {
     model.addAttribute(movie);
     model.addAttribute("poster", TMDBService.POSTER_BASE_URL + movie.getPosterPath());
     model.addAttribute("backdrop", TMDBService.BACKDROP_BASE_URL + movie.getBackdropPath());
-    model.addAttribute(id);
+    model.addAttribute("id", id);
     return "movie_details";
   }
 
   @PostMapping("/{id}/bookmark")
-  public String bookmark(@PathVariable int id, @RequestParam String category, Model model) {
+  public String bookmark(@PathVariable int id, @RequestParam String category) {
     // TODO insert to db
-    return movie(id, model);
+    return "redirect:/app/movie/" + id;
   }
 }
