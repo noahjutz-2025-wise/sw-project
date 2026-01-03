@@ -57,4 +57,17 @@ public class MovieController {
 
     return "redirect:/app/movie/" + id;
   }
+
+  @GetMapping("/bookmarkDropdown")
+  public String bookmarkDropdown(
+      @RequestParam Long id, Model model, Authentication authentication) {
+    final var bookmark =
+        movieBookmarkRepository.findByUserAndMovie(
+            (CbUser) authentication.getPrincipal(), new Movie(id));
+
+    model.addAttribute("id", id);
+    model.addAttribute("activeTab", bookmark.map(MovieBookmark::getStatus).orElse(null));
+
+    return "movie_details :: bookmarkDropdown";
+  }
 }
