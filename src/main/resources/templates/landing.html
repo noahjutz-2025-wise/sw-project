@@ -1,18 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{scaffold}">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Certified Bangers</title>
-    <link href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
 
-<body>
-<div th:replace="~{fragments/landing_page_top_bar::navbar}">
-</div>
-<div class="alert alert-info">
-    <h1>Willkommen zu Certified Bangers, Ihrem neuen Movies-Empfehlungsportal! </h1>
-</div>
+<section layout:fragment="content">
+    <div th:replace="~{fragments/landing_page_top_bar::navbar}"></div>
+    <div class="alert alert-info">
+        <h1>Willkommen zu Certified Bangers, Ihrem neuen Movies-Empfehlungsportal! </h1>
+    </div>
 
-</body>
+</section>
 </html>
