@@ -5,10 +5,7 @@ import com.swdev.springbootproject.service.TMDBService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @Controller
@@ -27,10 +24,9 @@ public class MovieController {
     return "movie_details";
   }
 
-  // TODO make post mapping instead (add htmx)
-  @GetMapping("/{id}/bookmark")
-  public String bookmark(@PathVariable int id, @RequestParam String category) {
+  @PostMapping("/{id}/bookmark")
+  public String bookmark(@PathVariable int id, @RequestParam String category, Model model) {
     // TODO insert to db
-    return "movie_details";
+    return movie(id, model);
   }
 }
