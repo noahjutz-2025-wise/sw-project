@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{scaffold}">
 <head>
@@ -23,6 +22,7 @@
                 </div>
             </div>
         </div>
+        <div class="position-absolute bottom-0 end-0 m-4" th:insert="::bookmark"></div>
     </div>
 </header>
 <main>
@@ -35,26 +35,6 @@
             <div class="col-sm-8 col-12">
                 <div class="card w-auto">
                     <div class="card-body">
-                        <div class="dropdown">
-                            <a href="#" data-bs-toggle="dropdown">
-                                <i class="bi bi-bookmark fs-2"></i>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a th:href="@{/app/movie/{id}/bookmark(id=${id}, category='watch-later')}"
-                                       class="dropdown-item">Später anschauen</a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/app/movie/{id}/bookmark(id=${id}, category='in-progress')}"
-                                       class="dropdown-item">Schaue gerade</a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/app/movie/{id}/bookmark(id=${id}, category='done')}"
-                                       class="dropdown-item">Gesehen</a>
-                                </li>
-                            </ul>
-                        </div>
-
                         <h2 th:text="${movieDetails.title}"></h2>
                         <p th:text="${movieDetails.overview}"></p>
                         <table class="table">
@@ -77,8 +57,26 @@
         </div>
     </div>
 </main>
-<main>
 
-</main>
+<div class="dropdown" th:fragment="bookmark">
+    <a href="#" data-bs-toggle="dropdown" class="link-light">
+        <i class="bi bi-bookmark-fill fs-2"></i>
+    </a>
+    <ul class="dropdown-menu">
+        <li>
+            <a th:href="@{/app/movie/{id}/bookmark(id=${id}, category='watch-later')}"
+               class="dropdown-item">Später anschauen</a>
+        </li>
+        <li>
+            <a th:href="@{/app/movie/{id}/bookmark(id=${id}, category='in-progress')}"
+               class="dropdown-item">Schaue gerade</a>
+        </li>
+        <li>
+            <a th:href="@{/app/movie/{id}/bookmark(id=${id}, category='done')}"
+               class="dropdown-item">Gesehen</a>
+        </li>
+    </ul>
+</div>
+
 </body>
 </html>
