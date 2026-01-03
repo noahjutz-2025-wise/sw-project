@@ -59,7 +59,9 @@
     </div>
 </main>
 
-<div class="dropdown" th:fragment="bookmark" hx-swap="none">
+</body>
+
+<div class="dropdown" th:fragment="bookmark" hx-target="this" hx-swap="outerHTML">
     <a href="#" data-bs-toggle="dropdown" class="link-light">
         <i class="bi bi-bookmark-plus fs-1"></i>
     </a>
@@ -94,6 +96,4 @@
         </li>
     </ul>
 </div>
-
-</body>
 </html>
