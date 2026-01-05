@@ -13,7 +13,7 @@
     <div class="container mt-4">
         <div class="row justify-content-start">
             <div class="col-12 col-md-10 col-lg-8 col-xl-6">
-                <h2 class="trend-title mb-4">User Profile</h2>
+                <h2 class="trend-title mb-4" th:text="#{profile.title}">Benutzerprofil</h2>
 
                 <div class="card shadow-sm mb-4">
                     <div class="card-body d-flex align-items-center">
@@ -25,9 +25,12 @@
                         <div>
                             <h5 class="mb-1" th:text="${ name}"></h5>
                             <p class="text-muted small">
-                                <strong>Email:</strong> <span th:text="${email}"></span>
-                                <span th:if="${verified}" class="badge bg-success ms-2">verifiziert</span>
-                                <span th:unless="${verified}" class="badge bg-danger ms-2">nicht verifiziert</span>
+                                <strong th:text="#{profile.email}">E-Mail:</strong> <span th:text="${email}"></span>
+                                <span class="badge ms-2"
+                                      th:classappend="${verified} ? 'bg-success' : 'bg-danger'"
+                                      th:text="${verified} ? #{profile.verified} : #{profile.notVerified}">
+                                    verifiziert
+                                </span>
                             </p>
                         </div>
 
@@ -40,11 +43,11 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h6 class="text-uppercase text-muted mb-0">Freunde</h6>
+                            <h6 class="text-uppercase text-muted mb-0" th:text="#{profile.friends}">Freunde</h6>
 
                             <a href="/friends/search"
                                 class="btn btn-sm btn-outline-primary"
-                                title="Freunde finden...">
+                                th:title="#{profile.friends.search}">
                                 <i class="bi bi-search"></i>
                             </a>
                         </div>
@@ -56,16 +59,16 @@
                                     <div class="rounded-circle bg-light border d-flex align-items-center justify-content-center me-3 fw-bold" style="width: 40px; height: 40px;">
                                         &#127916;
                                     </div>
-                                    <span th:text="${friend.name}">Boonie</span>
+                                    <span th:text="${friend.name}"></span>
                                 </div>
-                                <a href="#" class="text-muted small">Profil ansehen</a>
+                                <a href="#" class="text-muted small" th:text="#{profile.friend-link}">Profil ansehen</a>
                             </div>
                         </div>
 
                         <div class="text-center text-muted py-4"
                              th:if="${#lists.isEmpty(friends)}">
                             <i class="bi bi-emoji-frown-fill fs-2 mb-1 d-block"></i>
-                            <p class="mb-0">Noch keine Freunde</p>
+                            <p class="mb-0" th:text="#{profile.noFriends}">Noch keine Freunde</p>
                         </div>
 
                     </div>

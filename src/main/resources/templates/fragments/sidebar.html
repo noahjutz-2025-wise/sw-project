@@ -1,14 +1,26 @@
 <div th:fragment="sidebar(activeTab)">
     <div id="sidebar" class="bg-sidebar p-3 collapse d-md-flex flex-column d-none d-md-block"
          style="width: 200px; height: 100vh;">
-        <h5>Menu</h5>
+        <div class="language-switcher d-flex gap-2 pb-3 mb-0 border-bottom border-white border-opacity-25">
+            <a th:href="@{''(lang='en')}"
+                class="btn btn-sm flex-fill text-white lang-btn"
+                th:classappend="${#locale.toString() == 'en' ? 'active' : ''}">
+                🇬🇧 EN
+            </a>
+            <a th:href="@{''(lang='de')}"
+               class="btn btn-sm flex-fill text-white lang-btn"
+               th:classappend="${#locale.toString() == 'de' ? 'active' : ''}">
+                🇩🇪 DE
+            </a>
+        </div>
+        <br>
         <ul class="nav flex-column">
             <li class="nav-item"><a href="/mood" class="nav-link text-white"
-                                    th:classappend="${activeTab == 'mood'} ? 'active' : ''">Stimmung</a></li>
+                                    th:classappend="${activeTab == 'mood'} ? 'active' : ''" th:text="#{nav.mood}">Stimmung</a></li>
             <li class="nav-item"><a href="/trends" class="nav-link text-white"
-                                    th:classappend="${activeTab == 'trends'} ? 'active' : ''">Trends</a></li>
+                                    th:classappend="${activeTab == 'trends'} ? 'active' : ''" th:text="#{nav.trends}">Trends</a></li>
             <li class="nav-item"><a href="/app/watchlist" class="nav-link text-white"
-                                    th:classappend="${activeTab == 'watchlist'} ? 'active' : ''">Watchlist</a></li>
+                                    th:classappend="${activeTab == 'watchlist'} ? 'active' : ''" th:text="#{nav.watchlist}">Watchlist</a></li>
         </ul>
 
         <div class="mt-auto mb-3" >
@@ -18,7 +30,7 @@
                             <span class="bg-light text-dark rounded-circle d-flex align-items-center justify-content-center me-2 p-1">
                                 &#128126;
                             </span>
-                        <span class="small text-truncate">User</span>
+                        <span class="small text-truncate" th:text="#{nav.profile}">Profil</span>
                     </button>
                 </a>
             </div>

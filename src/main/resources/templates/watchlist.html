@@ -10,8 +10,8 @@
     <div th:replace="~{fragments/sidebar::sidebar('watchlist')}"></div>
     <header class="d-flex flex-row p-4 w-100 container p-3 mt-5 mt-md-0">
         <form role="search" class="flex-grow-1" method="get">
-            <label for="search" class="visually-hidden">Suchen</label>
-            <input id="search" name="search" placeholder="Suchen" class="form-control" type="search"/>
+            <label for="search" class="visually-hidden" th:text="#{watchlist.search.label}">Suchen</label>
+            <input id="search" name="search" th:placeholder="#{watchlist.search.placeholder}" class="form-control" type="search"/>
         </form>
     </header>
 </section>
