@@ -29,6 +29,24 @@ body, html {
     color: #1c1c1c;
 }
 
+.lang-btn {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.lang-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #ffffff !important;
+    transform: translateY(-1px);
+}
+
+.lang-btn.active {
+    background-color: #c0d8d6;
+    color: #1c1c1c !important;
+    border-color: #a8c5c3;
+}
+
 .trend-title {
     font-weight: 700;
     color: #495867;
