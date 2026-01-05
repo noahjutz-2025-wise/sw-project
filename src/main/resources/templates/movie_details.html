@@ -4,62 +4,62 @@
     <meta charset="UTF-8">
     <title>Movie Details</title>
 </head>
-<body layout:fragment="content">
-<header class="mb-4">
-    <div class="container position-relative p-0">
-        <div class="overflow-hidden">
-            <div class="top-gradient"></div>
+<section layout:fragment="content">
+    <header class="mb-4">
+        <div class="container position-relative p-0">
+            <div class="overflow-hidden">
+                <div class="top-gradient"></div>
+            </div>
+            <img width="100%" th:src="${backdrop}" class="banner-img"/>
+            <div class="position-absolute top-0 navbar navbar-dark z-1">
+                <div class="container">
+                    <div class="navbar-brand me-0 flex-grow-1">
+                        <a class="icon-link nav-link" href="javascript:void(0)" th:onclick="history.back()">
+                            <i class="bi bi-arrow-left"></i>
+                        </a>
+                        <span class="me-2"></span>
+                        <span th:text="${movieDetails.title}">Movie Details</span>
+                    </div>
+                </div>
+            </div>
+            <div class="position-absolute bottom-0 end-0 m-4" th:insert="::bookmark"></div>
         </div>
-        <img width="100%" th:src="${backdrop}" class="banner-img"/>
-        <div class="position-absolute top-0 navbar navbar-dark z-1">
-            <div class="container">
-                <div class="navbar-brand me-0 flex-grow-1">
-                    <a class="icon-link nav-link" href="javascript:void(0)" th:onclick="history.back()">
-                        <i class="bi bi-arrow-left"></i>
-                    </a>
-                    <span class="me-2"></span>
-                    <span th:text="${movieDetails.title}">Movie Details</span>
+    </header>
+    <main>
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-sm-4 col-12">
+                    <img width="100%" th:src="${poster}"
+                         class="shadow mb-4"/>
+                    <p th:text="${'&quot;' + movieDetails.tagline + '&quot;'}"></p>
+                </div>
+                <div class="col-sm-8 col-12">
+                    <table class="table">
+                        <tr>
+                            <th>Veröffentlicht am</th>
+                            <td th:text="${movieDetails.releaseDate}"></td>
+                        </tr>
+                        <tr>
+                            <th>Umsatz</th>
+                            <td th:text="${movieDetails.revenue} + ' USD'"></td>
+                        </tr>
+                        <tr>
+                            <th>Bewertung</th>
+                            <td th:text="${movieDetails.voteAverage + ' / 10 (' + movieDetails.voteCount + ' Bewertungen)'}"></td>
+                        </tr>
+                        <tr>
+                            <th>Dauer</th>
+                            <td th:text="${movieDetails.runtime + 'min'}"></td>
+                        </tr>
+                    </table>
+                    <h2>Kurzbeschreibung</h2>
+                    <p th:text="${movieDetails.overview}"></p>
                 </div>
             </div>
         </div>
-        <div class="position-absolute bottom-0 end-0 m-4" th:insert="::bookmark"></div>
-    </div>
-</header>
-<main>
-    <div class="container">
-        <div class="row g-4">
-            <div class="col-sm-4 col-12">
-                <img width="100%" th:src="${poster}"
-                     class="shadow mb-4"/>
-                <p th:text="${'&quot;' + movieDetails.tagline + '&quot;'}"></p>
-            </div>
-            <div class="col-sm-8 col-12">
-                <table class="table">
-                    <tr>
-                        <th>Veröffentlicht am</th>
-                        <td th:text="${movieDetails.releaseDate}"></td>
-                    </tr>
-                    <tr>
-                        <th>Umsatz</th>
-                        <td th:text="${movieDetails.revenue} + ' USD'"></td>
-                    </tr>
-                    <tr>
-                        <th>Bewertung</th>
-                        <td th:text="${movieDetails.voteAverage + ' / 10 (' + movieDetails.voteCount + ' Bewertungen)'}"></td>
-                    </tr>
-                    <tr>
-                        <th>Dauer</th>
-                        <td th:text="${movieDetails.runtime + 'min'}"></td>
-                    </tr>
-                </table>
-                <h2>Kurzbeschreibung</h2>
-                <p th:text="${movieDetails.overview}"></p>
-            </div>
-        </div>
-    </div>
-</main>
+    </main>
 
-</body>
+</section>
 
 <div class="dropdown" th:fragment="bookmark" hx-swap="none">
     <a href="#" data-bs-toggle="dropdown" class="link-light" hx-boost="false">
