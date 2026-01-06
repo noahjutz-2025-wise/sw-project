@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface FriendshipRepository extends JpaRepository<@NonNull Friendship, @NonNull Long> {
   List<@NonNull Friendship> findByCbUser1_IdOrCbUser2_Id(
       @NonNull Long userId1, @NonNull Long userId2);
+
+  boolean existsByCbUser1_IdAndCbUser2_Id(@NonNull Long userId1, @NonNull Long userId2);
 }

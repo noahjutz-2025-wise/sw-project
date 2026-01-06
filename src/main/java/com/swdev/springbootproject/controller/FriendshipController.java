@@ -50,14 +50,10 @@ public class FriendshipController {
               .filter(
                   cbUser -> {
                     if (!cbUser.getId().equals(currentCbUser.getId())) {
-                      return friendshipRepository
-                          .findByCbUser1_IdOrCbUser2_Id(
-                              currentCbUser.getId(), currentCbUser.getId())
-                          .stream()
-                          .noneMatch(
-                              f ->
-                                  f.getCbUser1().getId().equals(currentCbUser.getId())
-                                      || f.getCbUser2().getId().equals(currentCbUser.getId()));
+                      return !friendshipRepository.existsByCbUser1_IdAndCbUser2_Id(
+                              cbUser.getId(), currentCbUser.getId())
+                          && !friendshipRepository.existsByCbUser1_IdAndCbUser2_Id(
+                              currentCbUser.getId(), cbUser.getId());
                     }
                     return false;
                   })
