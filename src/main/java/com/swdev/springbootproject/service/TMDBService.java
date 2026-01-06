@@ -3,7 +3,6 @@ package com.swdev.springbootproject.service;
 import com.swdev.springbootproject.model.tmdb.DiscoverResults;
 import com.swdev.springbootproject.model.tmdb.Genre;
 import com.swdev.springbootproject.model.tmdb.Movie;
-import com.swdev.springbootproject.model.tmdb.MovieDetails;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -95,13 +94,13 @@ public class TMDBService {
     return discoverResults.getResults();
   }
 
-  public MovieDetails getMovieDetails(Long movieId) {
+  public Movie getMovieDetails(Long movieId) {
     return restClient
         .get()
         .uri(
             uriBuilder ->
                 uriBuilder.path("/movie/{id}").queryParam("api_key", apiKey).build(movieId))
         .retrieve()
-        .body(MovieDetails.class);
+        .body(Movie.class);
   }
 }
