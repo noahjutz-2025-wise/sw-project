@@ -109,4 +109,20 @@ public class TMDBService {
         .retrieve()
         .body(Movie.class);
   }
+
+  public List<Movie> searchMovies(String query) {
+    return Objects.requireNonNull(
+            restClient
+                .get()
+                .uri(
+                    uriBuilder ->
+                        uriBuilder
+                            .path(ENDPOINT_SEARCH_MOVIE)
+                            .queryParam("query", query)
+                            .queryParam("api_key", apiKey)
+                            .build())
+                .retrieve()
+                .body(new ParameterizedTypeReference<PaginatedResults<Movie>>() {}))
+        .getResults();
+  }
 }
