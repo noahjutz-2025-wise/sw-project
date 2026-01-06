@@ -95,7 +95,7 @@ public class TMDBService {
     return discoverResults.getResults();
   }
 
-  public MovieDetails getMovieDetails(int movieId) {
+  public MovieDetails getMovieDetails(Long movieId) {
     return restClient
         .get()
         .uri(
