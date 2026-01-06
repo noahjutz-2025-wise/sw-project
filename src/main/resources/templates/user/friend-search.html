@@ -7,10 +7,10 @@
     <title layout:fragment="title">Friend Search</title>
 </head>
 <section layout:fragment="content">
-<div class="d-flex">
     <div th:replace="~{fragments/mobile-nav :: mobile-navbar('profile')}"></div>
     <div th:replace="~{fragments/sidebar :: sidebar('profile')}"></div>
-    <div class="container-fluid p-3 d-flex flex-column mt-5 mt-md-0">
+<div class="d-flex">
+    <div class="container-fluid p-3 d-flex flex-column">
         <div class="row justify-content-start">
             <div class="col-12 col-md-10 col-lg-8 col-xl-6">
                 <h2 class="trend-title mb-4" th:text="#{friends.search.title}">Freunde finden...</h2>
