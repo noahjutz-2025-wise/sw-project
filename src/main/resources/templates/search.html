@@ -3,7 +3,7 @@
       layout:decorate="@{scaffold}">
 <head>
     <meta charset="UTF-8">
-    <title>Watchlist</title>
+    <title>Suche</title>
 </head>
 <section layout:fragment="content" class="bg-light">
     <div th:replace="~{fragments/mobile-nav :: mobile-navbar('search')}"></div>
@@ -38,21 +38,64 @@
             </ul>
         </header>
     </div>
-    <div class="modal fade" id="filterModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Filtern</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div th:replace="~{::filterModal}"></div>
+</section>
+<div class="modal fade" id="filterModal" tabindex="-1" th:fragment="filterModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Filtern</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-2 form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="isIncludeSeen" checked>
+                    <label class="form-check-label" for="isIncludeSeen">Bereits gesehene Filme anzeigen</label>
                 </div>
-                <div class="modal-body">
-                    ...
+                <div class="mb-2">
+                    <label for="genre" class="form-label">Genre</label>
+                    <select class="form-select" id="genre">
+                        <option selected>Alle</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary">Zurücksetzen</button>
+                <div class="mb-2">
+                    <label for="durationMin" class="form-label">Dauer (min)</label>
+                    <div class="d-flex flex-row gap-2">
+                        <input type="number" class="form-control" id="durationMin" placeholder="Mind.">
+                        <input type="number" class="form-control" id="durationMax" placeholder="Max.">
+                    </div>
                 </div>
+                <div class="mb-2">
+                    <label for="fsk" class="form-label">FSK</label>
+                    <select class="form-select" id="fsk">
+                        <option selected>Alle</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+                <div class="mb-2">
+                    <label for="ratingMin" class="form-label">Bewertung</label>
+                    <div class="d-flex flex-row gap-2">
+                        <input type="number" class="form-control" id="ratingMin" placeholder="Mind.">
+                        <input type="number" class="form-control" id="ratingMax" placeholder="Max.">
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <label for="yearMin" class="form-label">Erscheinungsjahr</label>
+                    <div class="d-flex flex-row gap-2">
+                        <input type="number" class="form-control" id="yearMin" placeholder="Mind.">
+                        <input type="number" class="form-control" id="yearMax" placeholder="Max.">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary">Zurücksetzen</button>
             </div>
         </div>
     </div>
-</section>
+</div>
 </html>
