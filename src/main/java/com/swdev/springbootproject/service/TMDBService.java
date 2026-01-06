@@ -1,14 +1,15 @@
 package com.swdev.springbootproject.service;
 
-import com.swdev.springbootproject.model.tmdb.DiscoverResults;
 import com.swdev.springbootproject.model.tmdb.Genre;
 import com.swdev.springbootproject.model.tmdb.Movie;
+import com.swdev.springbootproject.model.tmdb.PaginatedResults;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
@@ -45,7 +46,7 @@ public class TMDBService {
                             .queryParam("api_key", apiKey)
                             .build())
                 .retrieve()
-                .body(DiscoverResults.class))
+                .body(new ParameterizedTypeReference<PaginatedResults<Movie>>() {}))
         .getResults();
   }
 
@@ -75,7 +76,7 @@ public class TMDBService {
             .map(String::valueOf)
             .collect(Collectors.joining(","));
 
-    DiscoverResults discoverResults =
+    final var discoverResults =
         this.restClient
             .get()
             .uri(
@@ -93,7 +94,7 @@ public class TMDBService {
                         .queryParam("api_key", apiKey)
                         .build())
             .retrieve()
-            .body(DiscoverResults.class);
+            .body(new ParameterizedTypeReference<PaginatedResults<Movie>>() {});
 
     assert discoverResults != null;
     return discoverResults.getResults();
