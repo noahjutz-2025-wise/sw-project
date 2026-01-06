@@ -50,9 +50,9 @@ public class FriendshipController {
               .filter(
                   cbUser -> {
                     if (!cbUser.getId().equals(currentCbUser.getId())) {
-                      return !friendshipRepository.existsByCbUser1_IdAndCbUser2_Id(
+                      return !friendshipRepository.existsBySender_IdAndReceiver_Id(
                               cbUser.getId(), currentCbUser.getId())
-                          && !friendshipRepository.existsByCbUser1_IdAndCbUser2_Id(
+                          && !friendshipRepository.existsBySender_IdAndReceiver_Id(
                               currentCbUser.getId(), cbUser.getId());
                     }
                     return false;
@@ -80,12 +80,12 @@ public class FriendshipController {
 
     boolean befriended =
         friendshipRepository
-            .findByCbUser1_IdOrCbUser2_Id(currentCbUser.getId(), currentCbUser.getId())
+            .findBySender_IdOrReceiver_Id(currentCbUser.getId(), currentCbUser.getId())
             .stream()
             .anyMatch(
                 f ->
-                    f.getCbUser1().getId().equals(friendId)
-                        || f.getCbUser2().getId().equals(friendId));
+                    f.getSender().getId().equals(friendId)
+                        || f.getReceiver().getId().equals(friendId));
 
     if (befriended) {
       return ResponseEntity.badRequest().build();
@@ -94,7 +94,7 @@ public class FriendshipController {
     Optional<@NonNull CbUser> cbUser = cbUserRepository.findById(friendId);
     if (cbUser.isPresent()) {
       friendshipRepository.save(
-          Friendship.builder().cbUser1(currentCbUser).cbUser2(cbUser.get()).build());
+          Friendship.builder().sender(currentCbUser).receiver(cbUser.get()).build());
     } else {
       return ResponseEntity.badRequest().build();
     }

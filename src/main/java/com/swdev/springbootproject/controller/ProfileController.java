@@ -41,15 +41,15 @@ public class ProfileController {
     model.addAttribute("verified", updatedUser.isVerified());
 
     List<Friendship> friendships =
-        friendshipRepository.findByCbUser1_IdOrCbUser2_Id(
+        friendshipRepository.findBySender_IdOrReceiver_Id(
             currentCbUser.getId(), currentCbUser.getId());
     List<CbUser> friendsMapped =
         friendships.stream()
             .map(
                 f ->
-                    f.getCbUser1().getId().equals(currentCbUser.getId())
-                        ? f.getCbUser2()
-                        : f.getCbUser1())
+                    f.getSender().getId().equals(currentCbUser.getId())
+                        ? f.getReceiver()
+                        : f.getSender())
             .toList();
 
     model.addAttribute("friends", friendsMapped);
