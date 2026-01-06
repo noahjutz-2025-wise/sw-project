@@ -28,5 +28,9 @@ public class Friendship {
 
   @Column(nullable = false)
   @Builder.Default
+  private boolean accepted = false;
+
+  @Column(nullable = false)
+  @Builder.Default
   private LocalDateTime createdAt = LocalDateTime.now();
 }
