@@ -1,0 +1,6 @@
+<div th:fragment="movieCard(posterUrl, title)" class="card movie-card h-100 shadow-sm">
+    <img th:src="${posterUrl}" class="card-img-top" alt="Movie Poster">
+    <div class="card-body text-center d-flex align-items-center justify-content-center">
+        <h5 th:text="${title}" class="card-title"></h5>
+    </div>
+</div>
