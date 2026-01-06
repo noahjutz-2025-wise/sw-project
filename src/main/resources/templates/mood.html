@@ -52,9 +52,7 @@
                 </h5>
             </div>
 
-            <a th:each="movie : ${movies}" class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3 text-decoration-none" th:href="@{/app/movie/{id}(id=${movie.id})}" hx-boost="false">
-                <div th:replace="~{fragments/movie_card :: movieCard(title=${movie.title}, posterUrl=${movie.getPosterUrl})}"></div>
-            </a>
+            <div th:replace="~{fragments/movie_card_grid :: movieCardGrid(movies=${movies})}"></div>
         </div>
 
         <nav aria-label="Seitennavigation" class="mt-5">
