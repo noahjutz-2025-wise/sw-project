@@ -14,7 +14,7 @@
             <div class="input-group mb-4">
                 <input id="search" name="search" th:placeholder="#{watchlist.search.placeholder}" class="form-control"
                        type="search"/>
-                <button type="button" class="btn btn-secondary">
+                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#filterModal">
                     <i class="bi bi-filter"></i>
                     Filtern
                 </button>
@@ -39,6 +39,22 @@
                 </ul>
             </div>
         </header>
+    </div>
+    <div class="modal fade" id="filterModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Filtern</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary">Zurücksetzen</button>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 </html>
