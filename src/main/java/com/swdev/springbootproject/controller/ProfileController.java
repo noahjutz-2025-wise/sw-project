@@ -45,28 +45,35 @@ public class ProfileController {
         friendshipRepository.findBySender_IdOrReceiver_Id(
             currentCbUser.getId(), currentCbUser.getId());
 
-    List<Friendship> receivedRequests = friendships.stream()
-        .filter(friendship -> !friendship.isAccepted() && friendship.getReceiver().getId().equals(currentCbUser.getId()))
-        .toList();
+    List<Friendship> receivedRequests =
+        friendships.stream()
+            .filter(
+                friendship ->
+                    !friendship.isAccepted()
+                        && friendship.getReceiver().getId().equals(currentCbUser.getId()))
+            .toList();
 
-    List<Friendship> pendingRequests = friendships.stream()
-        .filter(friendship -> !friendship.isAccepted() && friendship.getSender().getId().equals(currentCbUser.getId()))
-        .toList();
+    List<Friendship> pendingRequests =
+        friendships.stream()
+            .filter(
+                friendship ->
+                    !friendship.isAccepted()
+                        && friendship.getSender().getId().equals(currentCbUser.getId()))
+            .toList();
 
-    List<Friendship> acceptedRequests = friendships.stream()
-        .filter(Friendship::isAccepted)
-        .toList();
+    List<Friendship> acceptedRequests =
+        friendships.stream().filter(Friendship::isAccepted).toList();
 
     List<Friend> friendsMapped =
         acceptedRequests.stream()
             .map(
                 f -> {
-                    CbUser friend = f.getSender().getId().equals(currentCbUser.getId())
-                        ? f.getReceiver()
-                        : f.getSender();
-                    return Friend.builder().friendshipId(f.getId()).friend(friend).build();
-                }
-            )
+                  CbUser friend =
+                      f.getSender().getId().equals(currentCbUser.getId())
+                          ? f.getReceiver()
+                          : f.getSender();
+                  return Friend.builder().friendshipId(f.getId()).friend(friend).build();
+                })
             .toList();
 
     model.addAttribute("friends", friendsMapped);

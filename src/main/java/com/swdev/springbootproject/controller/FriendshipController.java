@@ -104,7 +104,10 @@ public class FriendshipController {
   }
 
   @PostMapping("/friends/accept/{friendshipId}")
-  public String acceptFriendship(@PathVariable Long friendshipId, Authentication authentication, RedirectAttributes redirectAttributes) {
+  public String acceptFriendship(
+      @PathVariable Long friendshipId,
+      Authentication authentication,
+      RedirectAttributes redirectAttributes) {
     CbUser currentCbUser = (CbUser) authentication.getPrincipal();
     assert currentCbUser != null;
 
@@ -168,7 +171,9 @@ public class FriendshipController {
 
     if (friendship.isPresent()) {
       Friendship f = friendship.get();
-      if (f.isAccepted() && (f.getSender().getId().equals(currentCbUser.getId()) || f.getReceiver().getId().equals(currentCbUser.getId()))) {
+      if (f.isAccepted()
+          && (f.getSender().getId().equals(currentCbUser.getId())
+              || f.getReceiver().getId().equals(currentCbUser.getId()))) {
         friendshipRepository.delete(f);
       }
     }
