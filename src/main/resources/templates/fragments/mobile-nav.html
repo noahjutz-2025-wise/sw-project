@@ -10,18 +10,18 @@
             <div class="collapse navbar-collapse" id="mobileMenu">
                 <ul class="navbar-nav mt-3">
                     <li class="nav-item"><a href="/mood" class="nav-link text-white"
-                                            th:classappend="${activeTab == 'mood'} ? 'active' : ''">Stimmung</a></li>
+                                            th:classappend="${activeTab == 'mood'} ? 'active' : ''" th:text="#{nav.mood}">Stimmung</a></li>
                     <li class="nav-item"><a href="/trends" class="nav-link text-white"
-                                            th:classappend="${activeTab == 'trends'} ? 'active' : ''">Trends</a>
+                                            th:classappend="${activeTab == 'trends'} ? 'active' : ''" th:text="#{nav.trends}">Trends</a>
                     </li>
                     <li class="nav-item"><a href="/app/watchlist" class="nav-link text-white"
-                                            th:classappend="${activeTab == 'watchlist'} ? 'active' : ''">Watchlist</a>
+                                            th:classappend="${activeTab == 'watchlist'} ? 'active' : ''" th:text="#{nav.watchlist}">Watchlist</a>
                     </li>
                     <li class="nav-item"><a href="/app/search" class="nav-link text-white"
                                             th:classappend="${activeTab == 'search'} ? 'active' : ''" th:text="#{nav.search}">Suche</a>
                     </li>
                     <li class="nav-item"><a href="/user/profile" class="nav-link text-white"
-                                            th:classappend="${activeTab == 'profile'} ? 'active' : ''">Profil</a>
+                                            th:classappend="${activeTab == 'profile'} ? 'active' : ''" th:text="#{nav.profile}">Profil</a>
                     </li>
                 </ul>
             </div>
