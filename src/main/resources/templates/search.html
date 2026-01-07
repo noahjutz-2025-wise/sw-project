@@ -26,17 +26,18 @@
                     </button>
                 </div>
                 <ul class="nav nav-pills">
+                    <input type="hidden" id="searchType" name="searchType" value="movies">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#"
-                           data-script="on click take .active from .nav-link">Filme</a>
+                        <button class="nav-link active"
+                           data-script="on click take .active from .nav-link then set #searchType.value to 'movies'">Filme</button>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"
-                           data-script="on click take .active from .nav-link">Serien</a>
+                        <button class="nav-link"
+                           data-script="on click take .active from .nav-link then set #searchType.value to 'tv'">Serien</button>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"
-                           data-script="on click take .active from .nav-link">Nutzer</a>
+                        <button class="nav-link"
+                           data-script="on click take .active from .nav-link then set #searchType.value to 'users'">Nutzer</button>
                     </li>
                 </ul>
             </header>
@@ -44,7 +45,7 @@
                 <div id="results"
                      hx-get="/app/search/results"
                      hx-trigger="change from:#search, change from:#filterForm, click from:.nav-pills"
-                     hx-include="#search, #filterForm, .nav-pills"
+                     hx-include="#search, #filterForm, #searchType"
                      hx-target="this"></div>
             </main>
         </div>
