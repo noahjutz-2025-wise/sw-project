@@ -1,19 +1,19 @@
 package com.swdev.springbootproject.component;
 
-import com.swdev.springbootproject.model.dto.CbMovieDto;
-import com.swdev.springbootproject.model.tmdb.TmdbMovie;
+import com.swdev.springbootproject.model.dto.MovieDto;
+import com.swdev.springbootproject.model.tmdb.TmdbTv;
 import org.jspecify.annotations.Nullable;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TmdbMovieToCbMovieDtoConverter implements Converter<TmdbMovie, CbMovieDto> {
+public class TmdbTvToMovieDtoConverter implements Converter<TmdbTv, MovieDto> {
 
   @Override
-  public @Nullable CbMovieDto convert(TmdbMovie source) {
-    return CbMovieDto.builder()
+  public @Nullable MovieDto convert(TmdbTv source) {
+    return MovieDto.builder()
         .id(source.getId())
-        .title(source.getTitle())
+        .title(source.getName())
         .posterPath(source.getPosterPath())
         .backdropPath(source.getBackdropPath())
         .overview(source.getOverview())

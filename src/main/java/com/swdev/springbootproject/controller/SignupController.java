@@ -1,7 +1,7 @@
 package com.swdev.springbootproject.controller;
 
 import com.swdev.springbootproject.entity.CbUser;
-import com.swdev.springbootproject.model.dto.CbUserDto;
+import com.swdev.springbootproject.model.dto.UserDto;
 import com.swdev.springbootproject.repository.CbUserRepository;
 import com.swdev.springbootproject.service.EmailService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -48,12 +48,12 @@ public class SignupController {
 
   @PostMapping("/signup")
   public String processSignup(
-      @ModelAttribute("user") CbUserDto cbUserDto,
+      @ModelAttribute("user") UserDto userDto,
       Model model,
       HttpServletRequest request,
       HttpServletResponse response) {
 
-    if (cbUserRepository.existsByEmail(cbUserDto.getEmail())) {
+    if (cbUserRepository.existsByEmail(userDto.getEmail())) {
       model.addAttribute("error", "Email already exists. Please use a different email.");
       return "signup";
     }
@@ -61,13 +61,13 @@ public class SignupController {
     final var insertedUser =
         cbUserRepository.save(
             CbUser.builder()
-                .email(cbUserDto.getEmail())
-                .password(enc.encode(cbUserDto.getPassword()))
-                .name(cbUserDto.getName())
+                .email(userDto.getEmail())
+                .password(enc.encode(userDto.getPassword()))
+                .name(userDto.getName())
                 .build());
 
     securityContextRepository.saveContext(
-        createAuth(cbUserDto.getEmail(), cbUserDto.getPassword()), request, response);
+        createAuth(userDto.getEmail(), userDto.getPassword()), request, response);
 
     emailService.sendVerificationEmail(insertedUser);
     return "redirect:/mood";

@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class CbUserDto {
+public class UserDto {
   private final String name;
   private final String email;
   private final String password;
