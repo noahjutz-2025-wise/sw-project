@@ -1,5 +1,26 @@
 <div th:fragment="movieCard(posterUrl, title)" class="card movie-card h-100 shadow-sm">
-    <img th:src="${posterUrl}" class="card-img-top" alt="Movie Poster">
+    <div class="ratio d-flex align-items-center justify-content-center" style="--bs-aspect-ratio: 150%;">
+        <img th:src="${posterUrl}"
+             class="card-img-top object-fit-cover h-100 w-100 opacity-0"
+             alt="Movie Poster"
+             data-script="
+             on load
+                call me.decode()
+                log 'load'
+                add .d-none to the next .placeholder-glow then
+                remove .opacity-0 from me
+             end
+
+             on error
+                log 'error'
+                remove .placeholder-glow from the next .placeholder-glow
+             end"
+        >
+
+        <p class="placeholder-glow w-100 h-100 position-absolute top-0 start-0 rounded-top">
+            <span class="placeholder col-12 h-100 rounded-top"></span>
+        </p>
+    </div>
     <div class="card-body text-center d-flex align-items-center justify-content-center">
         <h5 th:text="${title}" class="card-title"></h5>
     </div>
