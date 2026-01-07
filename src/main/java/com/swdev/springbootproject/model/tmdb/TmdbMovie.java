@@ -6,7 +6,7 @@ import tools.jackson.databind.annotation.JsonNaming;
 
 @Data
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class Movie {
+public class TmdbMovie {
   private long id;
   private String title;
   private String tagline;

@@ -1,10 +1,9 @@
 package com.swdev.springbootproject.controller;
 
-import com.swdev.springbootproject.model.tmdb.Movie;
 import com.swdev.springbootproject.service.TMDBService;
 
 import java.util.List;
-import java.util.Random;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

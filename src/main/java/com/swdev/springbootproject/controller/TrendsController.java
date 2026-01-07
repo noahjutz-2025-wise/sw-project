@@ -1,6 +1,6 @@
 package com.swdev.springbootproject.controller;
 
-import com.swdev.springbootproject.model.tmdb.Movie;
+import com.swdev.springbootproject.model.tmdb.TmdbMovie;
 import com.swdev.springbootproject.service.TMDBService;
 import java.util.List;
 import org.springframework.stereotype.Controller;
@@ -20,7 +20,7 @@ public class TrendsController {
 
   @GetMapping("/api/trends")
   @ResponseBody
-  public List<Movie> getTrends(@RequestParam(defaultValue = "1") int page) {
+  public List<TmdbMovie> getTrends(@RequestParam(defaultValue = "1") int page) {
     return tmdbService.getPopularMovies(page);
   }
 

@@ -1,6 +1,6 @@
 package com.swdev.springbootproject.controller;
 
-import com.swdev.springbootproject.model.tmdb.Movie;
+import com.swdev.springbootproject.model.tmdb.TmdbMovie;
 import com.swdev.springbootproject.service.TMDBService;
 import java.util.List;
 import org.springframework.stereotype.Controller;
@@ -17,7 +17,7 @@ public class MoodController {
   }
 
   @GetMapping("/api/mood")
-  public List<Movie> getMood(
+  public List<TmdbMovie> getMood(
       @RequestParam(required = false) String mood, @RequestParam(defaultValue = "1") int page) {
     return tmdbService.getMoviesByMood(mood, page);
   }
