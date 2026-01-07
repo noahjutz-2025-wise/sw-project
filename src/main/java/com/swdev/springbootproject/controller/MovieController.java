@@ -54,6 +54,21 @@ public class MovieController {
     return "redirect:/app/movie/" + id;
   }
 
+  @DeleteMapping("/{id}/unbookmark")
+  public String unbookmark(@PathVariable Long id, Authentication authentication) {
+    var currentUser = (CbUser) authentication.getPrincipal();
+
+    if (currentUser == null) {
+      throw new IllegalArgumentException("User is not logged in");
+    }
+
+    movieBookmarkRepository
+        .findByUserAndMovie(currentUser, new CbMovie(id))
+        .ifPresent(movieBookmarkRepository::delete);
+
+    return "redirect:/app/movie/" + id;
+  }
+
   @GetMapping("/bookmarkDropdown")
   public String bookmarkDropdown(
       @RequestParam Long id, Model model, Authentication authentication) {
