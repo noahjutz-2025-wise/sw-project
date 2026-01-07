@@ -39,7 +39,7 @@ class SearchController {
       Model model) {
     return switch (searchType) {
       case "movies" -> {
-        final var movies = tmdbService.getPopularMovies(1).subList(0, new Random().nextInt(10));
+        final var movies = search.isBlank() ? List.of() : tmdbService.searchMovies(search);
         model.addAttribute("movies", movies);
         yield "fragments/movie_card_grid :: movieCardGrid(movies=${movies})";
       }
