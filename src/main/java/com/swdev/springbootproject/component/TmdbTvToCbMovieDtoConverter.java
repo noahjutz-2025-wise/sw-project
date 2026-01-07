@@ -12,11 +12,11 @@ public class TmdbTvToCbMovieDtoConverter implements Converter<TmdbTv, CbMovieDto
   @Override
   public @Nullable CbMovieDto convert(TmdbTv source) {
     return CbMovieDto.builder()
-            .id(source.getId())
-            .title(source.getName())
-            .posterPath(source.getPosterPath())
-            .backdropPath(source.getBackdropPath())
-            .overview(source.getOverview())
-            .build();
+        .id(source.getId())
+        .title(source.getName())
+        .posterPath(source.getPosterPath())
+        .backdropPath(source.getBackdropPath())
+        .overview(source.getOverview())
+        .build();
   }
 }

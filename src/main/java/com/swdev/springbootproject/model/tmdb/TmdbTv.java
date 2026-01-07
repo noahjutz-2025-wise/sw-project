@@ -7,9 +7,9 @@ import tools.jackson.databind.annotation.JsonNaming;
 @Data
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class TmdbTv {
-    private long id;
-    private String name;
-    private String posterPath;
-    private String backdropPath;
-    private String overview;
+  private long id;
+  private String name;
+  private String posterPath;
+  private String backdropPath;
+  private String overview;
 }

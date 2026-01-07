@@ -3,10 +3,8 @@ package com.swdev.springbootproject.controller;
 import com.swdev.springbootproject.component.TmdbMovieToCbMovieDtoConverter;
 import com.swdev.springbootproject.component.TmdbTvToCbMovieDtoConverter;
 import com.swdev.springbootproject.service.TMDBService;
-
 import java.util.List;
 import java.util.stream.Collectors;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
