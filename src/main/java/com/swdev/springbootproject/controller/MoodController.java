@@ -1,20 +1,21 @@
 package com.swdev.springbootproject.controller;
 
+import com.swdev.springbootproject.component.TmdbMovieToMovieDtoConverter;
 import com.swdev.springbootproject.model.tmdb.TmdbMovie;
 import com.swdev.springbootproject.service.TMDBService;
 import java.util.List;
+import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@RequiredArgsConstructor
 public class MoodController {
   private final TMDBService tmdbService;
-
-  public MoodController(TMDBService tmdbService) {
-    this.tmdbService = tmdbService;
-  }
+  private final TmdbMovieToMovieDtoConverter tmdbMovieToMovieDto;
 
   @GetMapping("/api/mood")
   public List<TmdbMovie> getMood(
@@ -33,7 +34,11 @@ public class MoodController {
     }
     model.addAttribute("mood", mood);
     model.addAttribute("pageTitle", "Mood - Genres By Mood");
-    model.addAttribute("movies", tmdbService.getMoviesByMood(mood, page));
+    model.addAttribute(
+        "movies",
+        tmdbService.getMoviesByMood(mood, page).stream()
+            .map(tmdbMovieToMovieDto::convert)
+            .collect(Collectors.toList()));
     model.addAttribute("currentPage", page);
     return "mood";
   }
