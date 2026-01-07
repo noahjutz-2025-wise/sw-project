@@ -29,19 +29,19 @@
                     </li>
                     <li class="nav-item">
                         <button class="nav-link"
-                                data-script="on click take .active from .nav-link then set #selectedTab.value to 'watching' then send refreshResults to #results">
+                                data-script="on click take .active from .nav-link then set #selectedTab.value to 'in-progress' then send refreshResults to #results">
                             Schaue gerade
                         </button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link"
-                                data-script="on click take .active from .nav-link then set #selectedTab.value to 'watched' then send refreshResults to #results">
+                                data-script="on click take .active from .nav-link then set #selectedTab.value to 'done' then send refreshResults to #results">
                             Gesehen
                         </button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link"
-                                data-script="on click take .active from .nav-link then set #selectedTab.value to 'dropped' then send refreshResults to #results">
+                                data-script="on click take .active from .nav-link then set #selectedTab.value to 'abandoned' then send refreshResults to #results">
                             Abgebrochen
                         </button>
                     </li>
@@ -51,7 +51,7 @@
             <main>
                 <div id="results"
                      hx-get="/app/watchlist/results"
-                     hx-trigger="input from:#search delay:500ms, click from:.nav-pills, load"
+                     hx-trigger="input from:#search delay:500ms, refreshResults, load"
                      hx-include="#search, #selectedTab"
                      hx-target="this"></div>
             </main>
