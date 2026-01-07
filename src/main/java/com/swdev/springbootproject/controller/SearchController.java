@@ -25,21 +25,33 @@ class SearchController {
 
   @GetMapping("results")
   public String searchResults(
-          @RequestParam(defaultValue = "") String search,
-          @RequestParam(defaultValue = "movies") String searchType,
-          @RequestParam(defaultValue = "false") boolean isIncludeSeen,
-          @RequestParam(required = false) String genre,
-          @RequestParam(required = false) Integer durationMin,
-          @RequestParam(required = false) Integer durationMax,
-          @RequestParam(required = false) Integer fsk,
-          @RequestParam(required = false) Integer ratingMin,
-          @RequestParam(required = false) Integer ratingMax,
-          @RequestParam(required = false) Integer yearMin,
-          @RequestParam(required = false) Integer yearMax,
-          Model model
-  ) {
-    final var movies = tmdbService.getPopularMovies(1).subList(0, new Random().nextInt(10));
-    model.addAttribute("movies", movies);
-    return "fragments/movie_card_grid :: movieCardGrid(movies=${movies})";
+      @RequestParam(defaultValue = "") String search,
+      @RequestParam(defaultValue = "movies") String searchType,
+      @RequestParam(defaultValue = "false") boolean isIncludeSeen,
+      @RequestParam(required = false) String genre,
+      @RequestParam(required = false) Integer durationMin,
+      @RequestParam(required = false) Integer durationMax,
+      @RequestParam(required = false) Integer fsk,
+      @RequestParam(required = false) Integer ratingMin,
+      @RequestParam(required = false) Integer ratingMax,
+      @RequestParam(required = false) Integer yearMin,
+      @RequestParam(required = false) Integer yearMax,
+      Model model) {
+    return switch (searchType) {
+      case "movies" -> {
+        final var movies = tmdbService.getPopularMovies(1).subList(0, new Random().nextInt(10));
+        model.addAttribute("movies", movies);
+        yield "fragments/movie_card_grid :: movieCardGrid(movies=${movies})";
+      }
+      case "tv" -> {
+        throw new IllegalStateException("Not yet implemented");
+      }
+      case "users" -> {
+        throw new IllegalStateException("Not yet implemented");
+      }
+      default -> {
+        throw new IllegalArgumentException();
+      }
+    };
   }
 }
