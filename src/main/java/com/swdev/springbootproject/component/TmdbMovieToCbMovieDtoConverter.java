@@ -1,6 +1,6 @@
 package com.swdev.springbootproject.component;
 
-import com.swdev.springbootproject.model.CbMovieDto;
+import com.swdev.springbootproject.model.dto.CbMovieDto;
 import com.swdev.springbootproject.model.tmdb.TmdbMovie;
 import org.jspecify.annotations.Nullable;
 import org.springframework.core.convert.converter.Converter;

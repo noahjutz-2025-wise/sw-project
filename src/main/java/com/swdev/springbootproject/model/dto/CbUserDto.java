@@ -1,4 +1,4 @@
-package com.swdev.springbootproject.model;
+package com.swdev.springbootproject.model.dto;
 
 import lombok.Builder;
 import lombok.Data;

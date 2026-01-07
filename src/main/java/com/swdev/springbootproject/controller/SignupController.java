@@ -1,7 +1,7 @@
 package com.swdev.springbootproject.controller;
 
 import com.swdev.springbootproject.entity.CbUser;
-import com.swdev.springbootproject.model.CbUserDto;
+import com.swdev.springbootproject.model.dto.CbUserDto;
 import com.swdev.springbootproject.repository.CbUserRepository;
 import com.swdev.springbootproject.service.EmailService;
 import jakarta.servlet.http.HttpServletRequest;
