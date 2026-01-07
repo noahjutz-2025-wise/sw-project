@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import com.swdev.springbootproject.model.tmdb.TmdbTv;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ public class TMDBService {
   public static final String ENDPOINT_DISCOVER_MOVIE = "/discover/movie";
   public static final String ENDPOINT_MOVIE = "/movie/{id}";
   public static final String ENDPOINT_SEARCH_MOVIE = "/search/movie";
+  public static final String ENDPOINT_SEARCH_TV = "/search/tv";
 
   public static final String POSTER_BASE_URL = "https://image.tmdb.org/t/p/w342/";
   public static final String BACKDROP_BASE_URL = "https://image.tmdb.org/t/p/w1280/";
@@ -123,6 +126,22 @@ public class TMDBService {
                             .build())
                 .retrieve()
                 .body(new ParameterizedTypeReference<TmdbResults<TmdbMovie>>() {}))
+        .getResults();
+  }
+
+  public List<TmdbTv> searchTv(String query) {
+    return Objects.requireNonNull(
+            restClient
+                .get()
+                .uri(
+                    uriBuilder ->
+                        uriBuilder
+                            .path(ENDPOINT_SEARCH_TV)
+                            .queryParam("query", query)
+                            .queryParam("api_key", apiKey)
+                            .build())
+                .retrieve()
+                .body(new ParameterizedTypeReference<TmdbResults<TmdbTv>>() {}))
         .getResults();
   }
 }
