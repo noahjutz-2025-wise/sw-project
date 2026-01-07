@@ -98,8 +98,80 @@ public class FriendshipController {
     } else {
       return ResponseEntity.badRequest().build();
     }
-    redirectAttributes.addFlashAttribute("message", "Freund erfolgreich hinzugefügt!");
+    redirectAttributes.addFlashAttribute("message", "Freundschaftsanfrage gesendet!");
     headers.add("Location", "/user/profile");
     return new ResponseEntity<@NonNull String>(headers, HttpStatus.FOUND);
+  }
+
+  @PostMapping("/friends/accept/{friendshipId}")
+  public String acceptFriendship(@PathVariable Long friendshipId, Authentication authentication, RedirectAttributes redirectAttributes) {
+    CbUser currentCbUser = (CbUser) authentication.getPrincipal();
+    assert currentCbUser != null;
+
+    Optional<Friendship> friendship = friendshipRepository.findById(friendshipId);
+
+    if (friendship.isPresent()) {
+      Friendship f = friendship.get();
+
+      if (f.getReceiver().getId().equals(currentCbUser.getId()) && !f.isAccepted()) {
+        f.setAccepted(true);
+        friendshipRepository.save(f);
+        redirectAttributes.addFlashAttribute("message", "Freundschaftsanfrage akzeptiert!");
+      }
+    }
+    return "redirect:/user/profile";
+  }
+
+  @PostMapping("/friends/decline/{friendshipId}")
+  public String declineFriendship(@PathVariable Long friendshipId, Authentication authentication) {
+
+    CbUser currentCbUser = (CbUser) authentication.getPrincipal();
+    assert currentCbUser != null;
+
+    Optional<Friendship> friendship = friendshipRepository.findById(friendshipId);
+    if (friendship.isPresent()) {
+      Friendship f = friendship.get();
+
+      if (f.getReceiver().getId().equals(currentCbUser.getId()) && !f.isAccepted()) {
+        friendshipRepository.delete(f);
+      }
+    }
+
+    return "redirect:/user/profile";
+  }
+
+  @PostMapping("/friends/cancel/{friendshipId}")
+  public String cancelFriendship(@PathVariable Long friendshipId, Authentication authentication) {
+
+    CbUser currentCbUser = (CbUser) authentication.getPrincipal();
+    assert currentCbUser != null;
+
+    Optional<Friendship> friendship = friendshipRepository.findById(friendshipId);
+    if (friendship.isPresent()) {
+      Friendship f = friendship.get();
+
+      if (f.getSender().getId().equals(currentCbUser.getId()) && !f.isAccepted()) {
+        friendshipRepository.delete(f);
+      }
+    }
+
+    return "redirect:/user/profile";
+  }
+
+  @PostMapping("/friends/delete/{friendshipId}")
+  public String deleteFriendship(@PathVariable Long friendshipId, Authentication authentication) {
+
+    CbUser currentCbUser = (CbUser) authentication.getPrincipal();
+    assert currentCbUser != null;
+
+    Optional<Friendship> friendship = friendshipRepository.findById(friendshipId);
+
+    if (friendship.isPresent()) {
+      Friendship f = friendship.get();
+      if (f.isAccepted() && (f.getSender().getId().equals(currentCbUser.getId()) || f.getReceiver().getId().equals(currentCbUser.getId()))) {
+        friendshipRepository.delete(f);
+      }
+    }
+    return "redirect:/user/profile";
   }
 }

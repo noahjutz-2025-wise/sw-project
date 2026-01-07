@@ -2,6 +2,7 @@ package com.swdev.springbootproject.controller;
 
 import com.swdev.springbootproject.entity.CbUser;
 import com.swdev.springbootproject.entity.Friendship;
+import com.swdev.springbootproject.model.Friend;
 import com.swdev.springbootproject.repository.CbUserRepository;
 import com.swdev.springbootproject.repository.FriendshipRepository;
 import com.swdev.springbootproject.service.EmailService;
@@ -43,17 +44,34 @@ public class ProfileController {
     List<Friendship> friendships =
         friendshipRepository.findBySender_IdOrReceiver_Id(
             currentCbUser.getId(), currentCbUser.getId());
-    List<CbUser> friendsMapped =
-        friendships.stream()
+
+    List<Friendship> receivedRequests = friendships.stream()
+        .filter(friendship -> !friendship.isAccepted() && friendship.getReceiver().getId().equals(currentCbUser.getId()))
+        .toList();
+
+    List<Friendship> pendingRequests = friendships.stream()
+        .filter(friendship -> !friendship.isAccepted() && friendship.getSender().getId().equals(currentCbUser.getId()))
+        .toList();
+
+    List<Friendship> acceptedRequests = friendships.stream()
+        .filter(Friendship::isAccepted)
+        .toList();
+
+    List<Friend> friendsMapped =
+        acceptedRequests.stream()
             .map(
-                f ->
-                    f.getSender().getId().equals(currentCbUser.getId())
+                f -> {
+                    CbUser friend = f.getSender().getId().equals(currentCbUser.getId())
                         ? f.getReceiver()
-                        : f.getSender())
+                        : f.getSender();
+                    return Friend.builder().friendshipId(f.getId()).friend(friend).build();
+                }
+            )
             .toList();
 
     model.addAttribute("friends", friendsMapped);
-
+    model.addAttribute("receivedRequests", receivedRequests);
+    model.addAttribute("pendingRequests", pendingRequests);
     return "/user/profile";
   }
 

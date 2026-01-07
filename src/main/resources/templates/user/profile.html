@@ -10,7 +10,7 @@
 <div th:replace="~{fragments/mobile-nav :: mobile-navbar('profile')}"></div>
 <div class="d-flex">
     <div th:replace="~{fragments/sidebar :: sidebar('profile')}"></div>
-    <div class="container mt-4">
+    <div class="container p-3 mt-5 mt-md-0">
         <div class="row justify-content-start">
             <div class="col-12 col-md-10 col-lg-8 col-xl-6">
                 <h2 class="trend-title mb-4" th:text="#{profile.title}">Benutzerprofil</h2>
@@ -40,6 +40,67 @@
                     </div>
                 </div>
 
+                <div>
+                    <div class="card mb-4" th:unless="${#lists.isEmpty(receivedRequests) && #lists.isEmpty(pendingRequests)}">
+                        <div class="card-body">
+                            <h6 class="text-uppercase text-muted mb-3">
+                                <i class="bi bi-person-plus-fill me-1"></i>
+                                Freundschaftsanfragen
+                            </h6>
+
+                            <div class="list-group list-group-flush">
+                                <div th:each="f : ${receivedRequests}" class="list-group-item border-0 px-0 d-flex justify-content-between align-items-center border-bottom">
+                                    <div class="d-flex align-items-center">
+                                        <div class="rounded-circle bg-light border d-flex align-items-center justify-content-center me-3 fw-bold"
+                                             style="width: 40px; height: 40px;">
+                                            &#128075;
+                                        </div>
+                                        <span th:text="${f.sender.name}"></span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <form th:action="@{/friends/accept/{friendshipId}(friendshipId=${f.getId()})}" method="post">
+                                            <button class="btn btn-sm btn-outline-success" th:text="#{profile.friends.btn-accept}">
+                                                Akzeptieren
+                                            </button>
+                                        </form>
+                                        <form th:action="@{/friends/decline/{friendshipId}(friendshipId=${f.getId()})}" method="post">
+                                            <button class="btn btn-sm btn-outline-danger">
+                                                Ablehnen
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="list-group list-group-flush">
+                                <div th:each="f : ${pendingRequests}" class="list-group-item border-0 px-0 d-flex justify-content-between align-items-center border-bottom">
+                                    <div class="d-flex align-items-center">
+                                        <div class="rounded-circle bg-light border d-flex align-items-center justify-content-center me-3 fw-bold"
+                                             style="width: 40px; height: 40px;">
+                                            &#128640;
+                                        </div>
+                                        <span th:text="${f.receiver.name}"></span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <span class="badge bg-secondary" th:text="#{profile.friends.pending}">versandt</span>
+                                        <form th:action="@{/friends/cancel/{friendshipId}(friendshipId=${f.getId()})}" method="post">
+                                            <button class="btn btn-sm btn-outline-danger">
+                                                Abbrechen
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4 text-center text-muted py-4"
+                         th:if="${#lists.isEmpty(receivedRequests) && #lists.isEmpty(pendingRequests)}">
+                        <i class="bi bi-envelope-slash-fill fs-2 mb-1 d-block"></i>
+                        <p class="mb-0" th:text="#{profile.friends.noRequests}">Keine Freundschaftsanfragen</p>
+                    </div>
+                </div>
+
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-3">
@@ -53,15 +114,24 @@
                         </div>
 
                         <div class="list-group list-group-flush">
-                            <div th:each="friend: ${friends}"
+                            <div th:each="f: ${friends}"
                                  class="list-group-item border-0 px-0 d-flex justify-content-between align-items-center border-bottom">
                                 <div class="d-flex align-items-center">
-                                    <div class="rounded-circle bg-light border d-flex align-items-center justify-content-center me-3 fw-bold" style="width: 40px; height: 40px;">
+                                    <div class="rounded-circle bg-light border d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
                                         &#127916;
                                     </div>
-                                    <span th:text="${friend.name}"></span>
+                                    <span th:text="${f.friend.name}"></span>
                                 </div>
-                                <a href="#" class="text-muted small" th:text="#{profile.friend-link}">Profil ansehen</a>
+                                <div class="d-flex align-items-center gap-3">
+                                    <a href="#" class="text-muted small" th:text="#{profile.friend-link}">Profil ansehen</a>
+                                    <form th:action="@{/friends/delete/{friendshipId}(friendshipId=${f.friendshipId})}" method="post">
+                                        <button type="submit" class="btn btn-link p-0 text-danger" onclick="return confirm('Freund wirklich entfernen?');">
+                                            <i class="bi bi-x-circle"></i>
+                                        </button>
+                                    </form>
+
+                                </div>
+
                             </div>
                         </div>
 
