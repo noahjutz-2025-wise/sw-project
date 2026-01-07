@@ -1,6 +1,7 @@
 package com.swdev.springbootproject.component;
 
 import com.swdev.springbootproject.model.dto.MovieDto;
+import com.swdev.springbootproject.model.dto.MovieDtoType;
 import com.swdev.springbootproject.model.tmdb.TmdbTv;
 import org.jspecify.annotations.Nullable;
 import org.springframework.core.convert.converter.Converter;
@@ -17,6 +18,7 @@ public class TmdbTvToMovieDtoConverter implements Converter<TmdbTv, MovieDto> {
         .posterPath(source.getPosterPath())
         .backdropPath(source.getBackdropPath())
         .overview(source.getOverview())
+        .type(MovieDtoType.TV)
         .build();
   }
 }
