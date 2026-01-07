@@ -1,18 +1,24 @@
 package com.swdev.springbootproject.model.tmdb;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import tools.jackson.databind.PropertyNamingStrategies;
+import tools.jackson.databind.annotation.JsonNaming;
 
-@Setter
-@Getter
+@Data
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class Movie {
-
+  private long id;
   private String title;
-  private int id;
-
-  @JsonProperty("poster_path")
+  private String tagline;
+  private String overview;
+  private String backdropPath;
   private String posterPath;
+  private String releaseDate;
+  private long revenue;
+  private int runtime;
+  private float popularity;
+  private float voteAverage;
+  private int voteCount;
 
   public String getPosterUrl() {
     String posterBaseUrl = "https://image.tmdb.org/t/p/w342";

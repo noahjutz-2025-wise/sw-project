@@ -27,7 +27,7 @@ public class MovieController {
   @GetMapping("/{id}")
   public String movie(@PathVariable Long id, Model model) {
     final var movie = tmdbService.getMovieDetails(id);
-    model.addAttribute(movie);
+    model.addAttribute("movieDetails", movie);
     model.addAttribute("poster", TMDBService.POSTER_BASE_URL + movie.getPosterPath());
     model.addAttribute("backdrop", TMDBService.BACKDROP_BASE_URL + movie.getBackdropPath());
     model.addAttribute("id", id);

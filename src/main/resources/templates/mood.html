@@ -10,7 +10,7 @@
 <div th:replace="~{fragments/mobile-nav :: mobile-navbar('mood')}"></div>
 <div class="d-flex">
     <div th:replace="~{fragments/sidebar :: sidebar('mood')}"></div>
-    <div class="container-fluid p-3 d-flex flex-column mt-5 mt-md-0">
+    <div class="container-fluid p-3 d-flex flex-column">
 
         <h3 class="trend-title mb-4" th:text="#{mood.title}">Filmempfehlungen nach Stimmung</h3>
 
@@ -52,14 +52,7 @@
                 </h5>
             </div>
 
-            <a th:each="movie : ${movies}" class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3 text-decoration-none" th:href="@{/app/movie/{id}(id=${movie.id})}" hx-boost="false">
-                <div class="card movie-card h-100 shadow-sm">
-                    <img th:src="${movie.getPosterUrl}" class="card-img-top" alt="Movie Poster">
-                    <div class="card-body text-center d-flex align-items-center justify-content-center">
-                        <h5 th:text="${movie.title}" class="card-title "></h5>
-                    </div>
-                </div>
-            </a>
+            <div th:replace="~{fragments/movie_card_grid :: movieCardGrid(movies=${movies})}"></div>
         </div>
 
         <nav aria-label="Seitennavigation" class="mt-5">

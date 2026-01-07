@@ -17,6 +17,9 @@
                     <li class="nav-item"><a href="/app/watchlist" class="nav-link text-white"
                                             th:classappend="${activeTab == 'watchlist'} ? 'active' : ''">Watchlist</a>
                     </li>
+                    <li class="nav-item"><a href="/app/search" class="nav-link text-white"
+                                            th:classappend="${activeTab == 'search'} ? 'active' : ''" th:text="#{nav.search}">Suche</a>
+                    </li>
                     <li class="nav-item"><a href="/user/profile" class="nav-link text-white"
                                             th:classappend="${activeTab == 'profile'} ? 'active' : ''">Profil</a>
                     </li>
@@ -24,4 +27,5 @@
             </div>
         </div>
     </nav>
+    <div class="d-md-none" style="height: 80px;"></div>
 </div>

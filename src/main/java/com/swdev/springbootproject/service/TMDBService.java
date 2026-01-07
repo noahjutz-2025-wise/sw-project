@@ -1,21 +1,26 @@
 package com.swdev.springbootproject.service;
 
-import com.swdev.springbootproject.model.tmdb.DiscoverResults;
 import com.swdev.springbootproject.model.tmdb.Genre;
 import com.swdev.springbootproject.model.tmdb.Movie;
-import com.swdev.springbootproject.model.tmdb.MovieDetails;
+import com.swdev.springbootproject.model.tmdb.PaginatedResults;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 @Service
 public class TMDBService {
   public static final String API_URL = "https://api.themoviedb.org/3/";
+
+  public static final String ENDPOINT_DISCOVER_MOVIE = "/discover/movie";
+  public static final String ENDPOINT_MOVIE = "/movie/{id}";
+  public static final String ENDPOINT_SEARCH_MOVIE = "/search/movie";
+
   public static final String POSTER_BASE_URL = "https://image.tmdb.org/t/p/w342/";
   public static final String BACKDROP_BASE_URL = "https://image.tmdb.org/t/p/w1280/";
 
@@ -31,7 +36,7 @@ public class TMDBService {
                 .uri(
                     uriBuilder ->
                         uriBuilder
-                            .path("/discover/movie")
+                            .path(ENDPOINT_DISCOVER_MOVIE)
                             .queryParam("include_adult", false)
                             .queryParam("include_video", false)
                             .queryParam("page", page)
@@ -41,7 +46,7 @@ public class TMDBService {
                             .queryParam("api_key", apiKey)
                             .build())
                 .retrieve()
-                .body(DiscoverResults.class))
+                .body(new ParameterizedTypeReference<PaginatedResults<Movie>>() {}))
         .getResults();
   }
 
@@ -71,13 +76,13 @@ public class TMDBService {
             .map(String::valueOf)
             .collect(Collectors.joining(","));
 
-    DiscoverResults discoverResults =
+    final var discoverResults =
         this.restClient
             .get()
             .uri(
                 uriBuilder ->
                     uriBuilder
-                        .path("/discover/movie")
+                        .path(ENDPOINT_DISCOVER_MOVIE)
                         .queryParam("include_adult", false)
                         .queryParam("include_video", false)
                         .queryParam("page", page)
@@ -89,19 +94,35 @@ public class TMDBService {
                         .queryParam("api_key", apiKey)
                         .build())
             .retrieve()
-            .body(DiscoverResults.class);
+            .body(new ParameterizedTypeReference<PaginatedResults<Movie>>() {});
 
     assert discoverResults != null;
     return discoverResults.getResults();
   }
 
-  public MovieDetails getMovieDetails(Long movieId) {
+  public Movie getMovieDetails(Long movieId) {
     return restClient
         .get()
         .uri(
             uriBuilder ->
-                uriBuilder.path("/movie/{id}").queryParam("api_key", apiKey).build(movieId))
+                uriBuilder.path(ENDPOINT_MOVIE).queryParam("api_key", apiKey).build(movieId))
         .retrieve()
-        .body(MovieDetails.class);
+        .body(Movie.class);
+  }
+
+  public List<Movie> searchMovies(String query) {
+    return Objects.requireNonNull(
+            restClient
+                .get()
+                .uri(
+                    uriBuilder ->
+                        uriBuilder
+                            .path(ENDPOINT_SEARCH_MOVIE)
+                            .queryParam("query", query)
+                            .queryParam("api_key", apiKey)
+                            .build())
+                .retrieve()
+                .body(new ParameterizedTypeReference<PaginatedResults<Movie>>() {}))
+        .getResults();
   }
 }

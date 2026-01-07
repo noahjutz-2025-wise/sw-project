@@ -4,6 +4,6 @@ import java.util.List;
 import lombok.Getter;
 
 @Getter
-public class DiscoverResults {
-  private List<Movie> results;
+public class PaginatedResults<T> {
+  private List<T> results;
 }
