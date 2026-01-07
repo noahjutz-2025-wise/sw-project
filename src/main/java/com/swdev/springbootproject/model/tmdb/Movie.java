@@ -19,9 +19,4 @@ public class Movie {
   private float popularity;
   private float voteAverage;
   private int voteCount;
-
-  public String getPosterUrl() {
-    String posterBaseUrl = "https://image.tmdb.org/t/p/w342";
-    return posterBaseUrl + posterPath;
-  }
 }
