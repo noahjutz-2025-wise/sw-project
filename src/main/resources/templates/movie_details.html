@@ -48,7 +48,12 @@
                         </tr>
                         <tr>
                             <th th:text="#{movie.details.rating}">Bewertung</th>
-                            <td th:text="#{movie.details.ratings(${movieDetails.voteAverage}, ${movieDetails.voteCount})}"></td>
+                            <td>
+                                <span th:text="#{movie.details.ratings(${movieDetails.voteAverage}, ${movieDetails.voteCount})}"></span>
+                                <a class="icon-link nav-link" th:href="@{/app/movie/{id}/vote(id=${id})}">
+                                    <i class="bi bi-envelope-paper-heart"></i>
+                                </a>
+                            </td>
                         </tr>
                         <tr>
                             <th th:text="#{movie.details.duration}">Dauer</th>
