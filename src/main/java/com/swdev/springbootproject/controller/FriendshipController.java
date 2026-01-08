@@ -7,6 +7,8 @@ import com.swdev.springbootproject.repository.FriendshipRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import jakarta.persistence.PostUpdate;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -15,10 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -161,7 +160,7 @@ public class FriendshipController {
     return "redirect:/user/profile";
   }
 
-  @PostMapping("/friends/delete/{friendshipId}")
+  @DeleteMapping("/friends/delete/{friendshipId}")
   public String deleteFriendship(@PathVariable Long friendshipId, Authentication authentication) {
 
     CbUser currentCbUser = (CbUser) authentication.getPrincipal();
