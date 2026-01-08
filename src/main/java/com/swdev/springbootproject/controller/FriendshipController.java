@@ -124,11 +124,13 @@ public class FriendshipController {
     return "redirect:/user/profile";
   }
 
-  @PostMapping("/friends/decline/{friendshipId}")
-  public String declineFriendship(@PathVariable Long friendshipId, Authentication authentication) {
+  @DeleteMapping("/friends/decline/{friendshipId}")
+  public ResponseEntity<@NonNull Void> declineFriendship(@PathVariable Long friendshipId, Authentication authentication) {
 
     CbUser currentCbUser = (CbUser) authentication.getPrincipal();
-    assert currentCbUser != null;
+    if (currentCbUser == null) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
 
     Optional<Friendship> friendship = friendshipRepository.findById(friendshipId);
     if (friendship.isPresent()) {
@@ -136,17 +138,20 @@ public class FriendshipController {
 
       if (f.getReceiver().getId().equals(currentCbUser.getId()) && !f.isAccepted()) {
         friendshipRepository.delete(f);
+        return ResponseEntity.ok().build();
       }
     }
 
-    return "redirect:/user/profile";
+    return ResponseEntity.notFound().build();
   }
 
-  @PostMapping("/friends/cancel/{friendshipId}")
-  public String cancelFriendship(@PathVariable Long friendshipId, Authentication authentication) {
+  @DeleteMapping("/friends/cancel/{friendshipId}")
+  public ResponseEntity<@NonNull Void> cancelFriendship(@PathVariable Long friendshipId, Authentication authentication) {
 
     CbUser currentCbUser = (CbUser) authentication.getPrincipal();
-    assert currentCbUser != null;
+    if (currentCbUser == null) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
 
     Optional<Friendship> friendship = friendshipRepository.findById(friendshipId);
     if (friendship.isPresent()) {
@@ -154,17 +159,19 @@ public class FriendshipController {
 
       if (f.getSender().getId().equals(currentCbUser.getId()) && !f.isAccepted()) {
         friendshipRepository.delete(f);
+        return ResponseEntity.ok().build();
       }
     }
-
-    return "redirect:/user/profile";
+    return ResponseEntity.ok().build();
   }
 
   @DeleteMapping("/friends/delete/{friendshipId}")
-  public String deleteFriendship(@PathVariable Long friendshipId, Authentication authentication) {
+  public ResponseEntity<@NonNull Void> deleteFriendship(@PathVariable Long friendshipId, Authentication authentication) {
 
     CbUser currentCbUser = (CbUser) authentication.getPrincipal();
-    assert currentCbUser != null;
+    if (currentCbUser == null) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
 
     Optional<Friendship> friendship = friendshipRepository.findById(friendshipId);
 
@@ -174,8 +181,9 @@ public class FriendshipController {
           && (f.getSender().getId().equals(currentCbUser.getId())
               || f.getReceiver().getId().equals(currentCbUser.getId()))) {
         friendshipRepository.delete(f);
+        return ResponseEntity.ok().build();
       }
     }
-    return "redirect:/user/profile";
+    return ResponseEntity.ok().build();
   }
 }

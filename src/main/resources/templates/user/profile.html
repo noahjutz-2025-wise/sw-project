@@ -49,7 +49,9 @@
                             </h6>
 
                             <div class="list-group list-group-flush">
-                                <div th:each="f : ${receivedRequests}" class="list-group-item border-0 px-0 d-flex justify-content-between align-items-center border-bottom">
+                                <div th:each="f : ${receivedRequests}"
+                                     th:id="'friendship-' + ${f.getId()}"
+                                     class="list-group-item border-0 px-0 d-flex justify-content-between align-items-center border-bottom">
                                     <div class="d-flex align-items-center">
                                         <div class="rounded-circle bg-light border d-flex align-items-center justify-content-center me-3 fw-bold"
                                              style="width: 40px; height: 40px;">
@@ -63,17 +65,22 @@
                                                 Akzeptieren
                                             </button>
                                         </form>
-                                        <form th:action="@{/friends/decline/{friendshipId}(friendshipId=${f.getId()})}" method="post">
-                                            <button class="btn btn-sm btn-outline-danger" th:text="#{profile.friends.btn-decline}">
-                                                Ablehnen
-                                            </button>
-                                        </form>
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline-danger"
+                                                th:text="#{profile.friends.btn-decline}"
+                                                th:hx-delete="@{/friends/decline/{friendshipId}(friendshipId=${f.getId()})}"
+                                                th:hx-target="'#friendship-' + ${f.getId()}"
+                                                hx-swap="outerHTML">
+                                            Ablehnen
+                                        </button>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="list-group list-group-flush">
-                                <div th:each="f : ${pendingRequests}" class="list-group-item border-0 px-0 d-flex justify-content-between align-items-center border-bottom">
+                                <div th:each="f : ${pendingRequests}"
+                                     th:id="'friendship-' + ${f.getId()}"
+                                     class="list-group-item border-0 px-0 d-flex justify-content-between align-items-center border-bottom">
                                     <div class="d-flex align-items-center">
                                         <div class="rounded-circle bg-light border d-flex align-items-center justify-content-center me-3 fw-bold"
                                              style="width: 40px; height: 40px;">
@@ -83,11 +90,14 @@
                                     </div>
                                     <div class="d-flex align-items-center gap-3">
                                         <span class="badge bg-secondary" th:text="#{profile.friends.pending}">versandt</span>
-                                        <form th:action="@{/friends/cancel/{friendshipId}(friendshipId=${f.getId()})}" method="post">
-                                            <button class="btn btn-sm btn-outline-danger" th:text="#{profile.friends.btn-cancel}">
-                                                Abbrechen
-                                            </button>
-                                        </form>
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline-danger"
+                                                th:text="#{profile.friends.btn-cancel}"
+                                                th:hx-delete="@{/friends/cancel/{friendshipId}(friendshipId=${f.getId()})}"
+                                                th:hx-target="'#friendship-' + ${f.getId()}"
+                                                hx-swap="outerHTML">
+                                            Abbrechen
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -115,6 +125,7 @@
 
                         <div class="list-group list-group-flush">
                             <div th:each="f: ${friends}"
+                                 th:id="'friendship-' + ${f.friendshipId}"
                                  class="list-group-item border-0 px-0 d-flex justify-content-between align-items-center border-bottom">
                                 <div class="d-flex align-items-center">
                                     <div class="rounded-circle bg-light border d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
@@ -124,14 +135,15 @@
                                 </div>
                                 <div class="d-flex align-items-center gap-3">
                                     <a href="#" class="text-muted small" th:text="#{profile.friend-link}">Profil ansehen</a>
-                                    <form th:action="@{/friends/delete/{friendshipId}(friendshipId=${f.friendshipId})}" method="post">
-                                        <button type="submit" class="btn btn-link p-0 text-danger" th:attr="onclick='return confirm(\'' + ${#messages.msg('profile.friends.delete.confirmation')} + '\');'">
-                                            <i class="bi bi-x-circle"></i>
-                                        </button>
-                                    </form>
-
+                                    <button type="button"
+                                            class="btn btr-link p-0 text-danger"
+                                            th:hx-delete="@{/friends/delete/{friendshipId}(friendshipId=${f.friendshipId})}"
+                                            th:hx-confirm="${#messages.msg('profile.friends.delete.confirmation')}"
+                                            th:hx-target="'#friendship-' + ${f.friendshipId}"
+                                            hx-swap="outerHTML">
+                                        <i class="bi bi-x-circle"></i>
+                                    </button>
                                 </div>
-
                             </div>
                         </div>
 
