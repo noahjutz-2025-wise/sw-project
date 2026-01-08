@@ -26,7 +26,7 @@ public class Friendship {
   @JoinColumn(name = "receiver_id", nullable = false)
   private CbUser receiver;
 
-  @Column(nullable = false)
+  @Column(nullable = false, columnDefinition = "boolean default false")
   @Builder.Default
   private boolean accepted = false;
 
