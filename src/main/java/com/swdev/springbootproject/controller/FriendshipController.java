@@ -7,8 +7,6 @@ import com.swdev.springbootproject.repository.FriendshipRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import jakarta.persistence.PostUpdate;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -125,7 +123,8 @@ public class FriendshipController {
   }
 
   @DeleteMapping("/friends/decline/{friendshipId}")
-  public ResponseEntity<@NonNull Void> declineFriendship(@PathVariable Long friendshipId, Authentication authentication) {
+  public ResponseEntity<@NonNull Void> declineFriendship(
+      @PathVariable Long friendshipId, Authentication authentication) {
 
     CbUser currentCbUser = (CbUser) authentication.getPrincipal();
     if (currentCbUser == null) {
@@ -146,7 +145,8 @@ public class FriendshipController {
   }
 
   @DeleteMapping("/friends/cancel/{friendshipId}")
-  public ResponseEntity<@NonNull Void> cancelFriendship(@PathVariable Long friendshipId, Authentication authentication) {
+  public ResponseEntity<@NonNull Void> cancelFriendship(
+      @PathVariable Long friendshipId, Authentication authentication) {
 
     CbUser currentCbUser = (CbUser) authentication.getPrincipal();
     if (currentCbUser == null) {
@@ -166,7 +166,8 @@ public class FriendshipController {
   }
 
   @DeleteMapping("/friends/delete/{friendshipId}")
-  public ResponseEntity<@NonNull Void> deleteFriendship(@PathVariable Long friendshipId, Authentication authentication) {
+  public ResponseEntity<@NonNull Void> deleteFriendship(
+      @PathVariable Long friendshipId, Authentication authentication) {
 
     CbUser currentCbUser = (CbUser) authentication.getPrincipal();
     if (currentCbUser == null) {
