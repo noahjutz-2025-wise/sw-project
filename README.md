@@ -19,6 +19,62 @@ Place these secrets in `src/main/resources/application-local.properties`.
 | `spring.mail.username` | YOUR_EMAIL@gmail.com                                    |
 | `spring.mail.password` | Google App Password (see below)                         |
 
+## Class Diagram
+
+```mermaid
+classDiagram
+    class CbUser {
+        long id
+        String name
+        String email
+        String password
+        boolean enabled
+        String authority
+        boolean verified
+    }
+
+    class CbMovie {
+        long id
+    }
+
+    class Friendship {
+        long id
+        boolean accepted
+    }
+    Friendship "1..*" -- "1" CbUser : sender
+    Friendship "1..*" -- "1" CbUser : receiver
+
+    class MovieBookmark {
+        
+    }
+    MovieBookmark "*" -- "1" BookmarkStatus : status
+    MovieBookmark "*" -- "1" CbMovie : movie
+    MovieBookmark "*" -- "1" CbUser : user    
+
+    class BookmarkStatus {
+        <<enumeration>>
+        WATCH_LATER
+        IN_PROGRESS
+        DONE
+        ABANDONED
+    }
+
+    class EmailVerification {
+        long id
+        String verificationToken
+        LocalDateTime tokenExpiryDate
+    }
+    EmailVerification "*" -- "1" CbUser : user
+
+    class UserMovieRating {
+        long id
+        int rating
+        LocalDateTime ratedAt
+    }
+    UserMovieRating "*" -- "1" CbUser : user
+    UserMovieRating "*" -- "1" CbMovie : movie
+```
+
 ## Email Verification Setup
 
 The app uses email verification for new user registration. To enable this feature, you need to configure email settings
