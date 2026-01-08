@@ -19,12 +19,16 @@ public class Friendship {
   private Long id;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "cbuser1_id", nullable = false)
-  private CbUser cbUser1;
+  @JoinColumn(name = "sender_id", nullable = false)
+  private CbUser sender;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "cbuser2_id", nullable = false)
-  private CbUser cbUser2;
+  @JoinColumn(name = "receiver_id", nullable = false)
+  private CbUser receiver;
+
+  @Column(nullable = false, columnDefinition = "boolean default false")
+  @Builder.Default
+  private boolean accepted = false;
 
   @Column(nullable = false)
   @Builder.Default
