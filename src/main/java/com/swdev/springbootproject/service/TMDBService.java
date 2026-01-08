@@ -1,8 +1,9 @@
 package com.swdev.springbootproject.service;
 
-import com.swdev.springbootproject.model.tmdb.Genre;
-import com.swdev.springbootproject.model.tmdb.Movie;
-import com.swdev.springbootproject.model.tmdb.PaginatedResults;
+import com.swdev.springbootproject.model.tmdb.TmdbGenre;
+import com.swdev.springbootproject.model.tmdb.TmdbMovie;
+import com.swdev.springbootproject.model.tmdb.TmdbResults;
+import com.swdev.springbootproject.model.tmdb.TmdbTv;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ public class TMDBService {
   public static final String ENDPOINT_DISCOVER_MOVIE = "/discover/movie";
   public static final String ENDPOINT_MOVIE = "/movie/{id}";
   public static final String ENDPOINT_SEARCH_MOVIE = "/search/movie";
+  public static final String ENDPOINT_SEARCH_TV = "/search/tv";
 
   public static final String POSTER_BASE_URL = "https://image.tmdb.org/t/p/w342/";
   public static final String BACKDROP_BASE_URL = "https://image.tmdb.org/t/p/w1280/";
@@ -29,7 +31,7 @@ public class TMDBService {
   @Value("${tmdb.api.key:keynotfound}")
   private String apiKey;
 
-  public List<Movie> getPopularMovies(int page) {
+  public List<TmdbMovie> getPopularMovies(int page) {
     return Objects.requireNonNull(
             this.restClient
                 .get()
@@ -46,33 +48,33 @@ public class TMDBService {
                             .queryParam("api_key", apiKey)
                             .build())
                 .retrieve()
-                .body(new ParameterizedTypeReference<PaginatedResults<Movie>>() {}))
+                .body(new ParameterizedTypeReference<TmdbResults<TmdbMovie>>() {}))
         .getResults();
   }
 
-  public List<Movie> getMoviesByMood(String mood, int page) {
-    Map<String, List<Genre>> moodToGenre =
+  public List<TmdbMovie> getMoviesByMood(String mood, int page) {
+    Map<String, List<TmdbGenre>> moodToGenre =
         new HashMap<>(
             Map.ofEntries(
-                Map.entry("adventurous", List.of(Genre.ACTION, Genre.FANTASY)),
-                Map.entry("happy", List.of(Genre.COMEDY, Genre.FAMILY)),
-                Map.entry("brave", List.of(Genre.HORROR)),
-                Map.entry("nostalgic", List.of(Genre.HISTORY)),
-                Map.entry("romantic", List.of(Genre.COMEDY, Genre.ROMANCE)),
-                Map.entry("sad", List.of(Genre.DRAMA)),
-                Map.entry("contemplative", List.of(Genre.SCIFI, Genre.ACTION)),
-                Map.entry("curious", List.of(Genre.DOCUMENTARY)),
-                Map.entry("edgy", List.of(Genre.CRIME)),
-                Map.entry("silly", List.of(Genre.ANIMATION, Genre.COMEDY)),
-                Map.entry("cozy", List.of(Genre.FAMILY, Genre.ANIMATION)),
-                Map.entry("detective-like", List.of(Genre.MYSTERY)),
-                Map.entry("melodic", List.of(Genre.MUSIC))));
+                Map.entry("adventurous", List.of(TmdbGenre.ACTION, TmdbGenre.FANTASY)),
+                Map.entry("happy", List.of(TmdbGenre.COMEDY, TmdbGenre.FAMILY)),
+                Map.entry("brave", List.of(TmdbGenre.HORROR)),
+                Map.entry("nostalgic", List.of(TmdbGenre.HISTORY)),
+                Map.entry("romantic", List.of(TmdbGenre.COMEDY, TmdbGenre.ROMANCE)),
+                Map.entry("sad", List.of(TmdbGenre.DRAMA)),
+                Map.entry("contemplative", List.of(TmdbGenre.SCIFI, TmdbGenre.ACTION)),
+                Map.entry("curious", List.of(TmdbGenre.DOCUMENTARY)),
+                Map.entry("edgy", List.of(TmdbGenre.CRIME)),
+                Map.entry("silly", List.of(TmdbGenre.ANIMATION, TmdbGenre.COMEDY)),
+                Map.entry("cozy", List.of(TmdbGenre.FAMILY, TmdbGenre.ANIMATION)),
+                Map.entry("detective-like", List.of(TmdbGenre.MYSTERY)),
+                Map.entry("melodic", List.of(TmdbGenre.MUSIC))));
 
-    List<Genre> genres = moodToGenre.getOrDefault(mood, List.of(Genre.ADVENTURE));
+    List<TmdbGenre> genres = moodToGenre.getOrDefault(mood, List.of(TmdbGenre.ADVENTURE));
 
     String genreParam =
         genres.stream()
-            .map(Genre::getGenreId)
+            .map(TmdbGenre::getGenreId)
             .map(String::valueOf)
             .collect(Collectors.joining(","));
 
@@ -94,23 +96,23 @@ public class TMDBService {
                         .queryParam("api_key", apiKey)
                         .build())
             .retrieve()
-            .body(new ParameterizedTypeReference<PaginatedResults<Movie>>() {});
+            .body(new ParameterizedTypeReference<TmdbResults<TmdbMovie>>() {});
 
     assert discoverResults != null;
     return discoverResults.getResults();
   }
 
-  public Movie getMovieDetails(Long movieId) {
+  public TmdbMovie getMovieDetails(Long movieId) {
     return restClient
         .get()
         .uri(
             uriBuilder ->
                 uriBuilder.path(ENDPOINT_MOVIE).queryParam("api_key", apiKey).build(movieId))
         .retrieve()
-        .body(Movie.class);
+        .body(TmdbMovie.class);
   }
 
-  public List<Movie> searchMovies(String query) {
+  public List<TmdbMovie> searchMovies(String query) {
     return Objects.requireNonNull(
             restClient
                 .get()
@@ -122,7 +124,23 @@ public class TMDBService {
                             .queryParam("api_key", apiKey)
                             .build())
                 .retrieve()
-                .body(new ParameterizedTypeReference<PaginatedResults<Movie>>() {}))
+                .body(new ParameterizedTypeReference<TmdbResults<TmdbMovie>>() {}))
+        .getResults();
+  }
+
+  public List<TmdbTv> searchTv(String query) {
+    return Objects.requireNonNull(
+            restClient
+                .get()
+                .uri(
+                    uriBuilder ->
+                        uriBuilder
+                            .path(ENDPOINT_SEARCH_TV)
+                            .queryParam("query", query)
+                            .queryParam("api_key", apiKey)
+                            .build())
+                .retrieve()
+                .body(new ParameterizedTypeReference<TmdbResults<TmdbTv>>() {}))
         .getResults();
   }
 }

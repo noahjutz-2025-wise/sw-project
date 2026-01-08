@@ -4,6 +4,6 @@ import java.util.List;
 import lombok.Getter;
 
 @Getter
-public class PaginatedResults<T> {
+public class TmdbResults<T> {
   private List<T> results;
 }

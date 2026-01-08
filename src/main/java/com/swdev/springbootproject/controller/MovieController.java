@@ -1,8 +1,8 @@
 package com.swdev.springbootproject.controller;
 
 import com.swdev.springbootproject.component.QueryParamToBookmarkStatusConverter;
+import com.swdev.springbootproject.entity.CbMovie;
 import com.swdev.springbootproject.entity.CbUser;
-import com.swdev.springbootproject.entity.Movie;
 import com.swdev.springbootproject.entity.MovieBookmark;
 import com.swdev.springbootproject.repository.CbUserRepository;
 import com.swdev.springbootproject.repository.MovieBookmarkRepository;
@@ -45,7 +45,7 @@ public class MovieController {
 
     currentUser = cbUserRepository.findById(currentUser.getId()).orElseThrow();
 
-    final var movie = movieRepository.save(new Movie(id));
+    final var movie = movieRepository.save(new CbMovie(id));
 
     movieBookmarkRepository.save(
         new MovieBookmark(
@@ -59,7 +59,7 @@ public class MovieController {
       @RequestParam Long id, Model model, Authentication authentication) {
     final var bookmark =
         movieBookmarkRepository.findByUserAndMovie(
-            (CbUser) authentication.getPrincipal(), new Movie(id));
+            (CbUser) authentication.getPrincipal(), new CbMovie(id));
 
     model.addAttribute("id", id);
     model.addAttribute("activeTab", bookmark.map(MovieBookmark::getStatus).orElse(null));

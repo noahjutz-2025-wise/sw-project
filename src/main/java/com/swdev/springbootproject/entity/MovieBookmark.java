@@ -22,7 +22,7 @@ public class MovieBookmark {
   @Id
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "movie_id", nullable = false)
-  private Movie movie;
+  private CbMovie movie;
 
   @Enumerated(EnumType.STRING)
   private BookmarkStatus status;

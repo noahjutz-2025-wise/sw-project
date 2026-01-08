@@ -26,17 +26,18 @@
                     </button>
                 </div>
                 <ul class="nav nav-pills">
+                    <input type="hidden" id="searchType" name="searchType" value="movies">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#"
-                           data-script="on click take .active from .nav-link">Filme</a>
+                        <button class="nav-link active"
+                           data-script="on click take .active from .nav-link then set #searchType.value to 'movies'">Filme</button>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"
-                           data-script="on click take .active from .nav-link">Serien</a>
+                        <button class="nav-link"
+                           data-script="on click take .active from .nav-link then set #searchType.value to 'tv'">Serien</button>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"
-                           data-script="on click take .active from .nav-link">Nutzer</a>
+                        <button class="nav-link"
+                           data-script="on click take .active from .nav-link then set #searchType.value to 'users'">Nutzer</button>
                     </li>
                 </ul>
             </header>
@@ -44,7 +45,7 @@
                 <div id="results"
                      hx-get="/app/search/results"
                      hx-trigger="change from:#search, change from:#filterForm, click from:.nav-pills"
-                     hx-include="#search, #filterForm, .nav-pills"
+                     hx-include="#search, #filterForm, #searchType"
                      hx-target="this"></div>
             </main>
         </div>
@@ -60,7 +61,7 @@
             </div>
             <form class="modal-body" id="filterForm">
                 <div class="mb-2 form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="isIncludeSeen" checked>
+                    <input class="form-check-input" type="checkbox" value="true" id="isIncludeSeen" name="isIncludeSeen" checked>
                     <label class="form-check-label" for="isIncludeSeen">Bereits gesehene Filme anzeigen</label>
                 </div>
                 <div class="mb-2">
@@ -75,14 +76,14 @@
                 <div class="mb-2">
                     <label for="durationMin" class="form-label">Dauer (min)</label>
                     <div class="d-flex flex-row gap-2">
-                        <input type="number" class="form-control" id="durationMin" placeholder="Mind.">
-                        <input type="number" class="form-control" id="durationMax" placeholder="Max.">
+                        <input type="number" class="form-control" id="durationMin" name="durationMin" placeholder="Mind.">
+                        <input type="number" class="form-control" id="durationMax" name="durationMax" placeholder="Max.">
                     </div>
                 </div>
                 <div class="mb-2">
                     <label for="fsk" class="form-label">FSK</label>
-                    <select class="form-select" id="fsk">
-                        <option selected>Alle</option>
+                    <select class="form-select" id="fsk" name="fsk">
+                        <option selected value="">Alle</option>
                         <option value="1">One</option>
                         <option value="2">Two</option>
                         <option value="3">Three</option>
@@ -91,15 +92,15 @@
                 <div class="mb-2">
                     <label for="ratingMin" class="form-label">Bewertung</label>
                     <div class="d-flex flex-row gap-2">
-                        <input type="number" class="form-control" id="ratingMin" placeholder="Mind.">
-                        <input type="number" class="form-control" id="ratingMax" placeholder="Max.">
+                        <input type="number" class="form-control" id="ratingMin" name="ratingMin" placeholder="Mind.">
+                        <input type="number" class="form-control" id="ratingMax" name="ratingMax" placeholder="Max.">
                     </div>
                 </div>
                 <div class="mb-2">
                     <label for="yearMin" class="form-label">Erscheinungsjahr</label>
                     <div class="d-flex flex-row gap-2">
-                        <input type="number" class="form-control" id="yearMin" placeholder="Mind.">
-                        <input type="number" class="form-control" id="yearMax" placeholder="Max.">
+                        <input type="number" class="form-control" id="yearMin" name="yearMin" placeholder="Mind.">
+                        <input type="number" class="form-control" id="yearMax" name="yearMax" placeholder="Max.">
                     </div>
                 </div>
             </form>

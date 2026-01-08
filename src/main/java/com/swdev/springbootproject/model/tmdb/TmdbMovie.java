@@ -6,7 +6,7 @@ import tools.jackson.databind.annotation.JsonNaming;
 
 @Data
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class Movie {
+public class TmdbMovie {
   private long id;
   private String title;
   private String tagline;
@@ -19,9 +19,4 @@ public class Movie {
   private float popularity;
   private float voteAverage;
   private int voteCount;
-
-  public String getPosterUrl() {
-    String posterBaseUrl = "https://image.tmdb.org/t/p/w342";
-    return posterBaseUrl + posterPath;
-  }
 }

@@ -17,6 +17,6 @@ import org.jspecify.annotations.NonNull;
 @AllArgsConstructor
 @Entity
 @Table(name = "movies")
-public class Movie {
+public class CbMovie {
   @NonNull @Id private Long id;
 }

@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum Genre {
+public enum TmdbGenre {
   ACTION(28),
   ADVENTURE(12),
   ANIMATION(16),
