@@ -11,149 +11,146 @@
 <div class="d-flex">
     <div th:replace="~{fragments/sidebar :: sidebar('profile')}"></div>
     <div class="container">
-        <div class="row justify-content-start">
-            <div class="col-12 col-md-10 col-lg-8 col-xl-6">
-                <h1 class="trend-title mb-4" th:text="#{profile.title}">Benutzerprofil</h1>
-
-                <div class="card shadow-sm mb-4">
-                    <div class="card-body d-flex align-items-center">
-                        <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center me-3 display-3"
-                             style="width: 100px; height: 100px;">
-                            &#128126;
-                        </div>
-
-                        <div>
-                            <h5 class="mb-1" th:text="${name}"></h5>
-                            <p class="text-muted small">
-                                <strong th:text="#{profile.email}">E-Mail:</strong> <span th:text="${email}"></span>
-                                <span class="badge ms-2"
-                                      th:classappend="${verified} ? 'bg-success' : 'bg-danger'"
-                                      th:text="${verified} ? #{profile.verified} : #{profile.notVerified}">
-                                    verifiziert
-                                </span>
-                            </p>
-                        </div>
-
-                        <a th:href="@{/user/profile/edit}" class="btn btn-link position-absolute top-0 end-0 m-2">
-                            <i class="bi bi-pencil-square"></i>
-                        </a>
+        <div class="container-fluid p-3 d-flex flex-column">
+            <h1 class="trend-title mb-4" th:text="#{profile.title}">Benutzerprofil</h1>
+            <div class="card shadow-sm mb-4">
+                <div class="card-body d-flex align-items-center">
+                    <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center me-3 display-3"
+                         style="width: 100px; height: 100px;">
+                        &#128126;
                     </div>
+
+                    <div>
+                        <h5 class="mb-1" th:text="${name}"></h5>
+                        <p class="text-muted small">
+                            <strong th:text="#{profile.email}">E-Mail:</strong> <span th:text="${email}"></span>
+                            <span class="badge ms-2"
+                                  th:classappend="${verified} ? 'bg-success' : 'bg-danger'"
+                                  th:text="${verified} ? #{profile.verified} : #{profile.notVerified}">
+                                verifiziert
+                            </span>
+                        </p>
+                    </div>
+
+                    <a th:href="@{/user/profile/edit}" class="btn btn-link position-absolute top-0 end-0 m-2">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
                 </div>
+            </div>
 
-                <div>
-                    <div class="card mb-4" th:unless="${#lists.isEmpty(receivedRequests) && #lists.isEmpty(pendingRequests)}">
-                        <div class="card-body">
-                            <h6 class="text-uppercase text-muted mb-3">
-                                <i class="bi bi-person-plus-fill me-1"></i>
-                                <span th:text="#{profile.friends.requests.title}">Freundschaftsanfragen</span>
-                            </h6>
-
-                            <div class="list-group list-group-flush">
-                                <div th:each="f : ${receivedRequests}"
-                                     th:id="'friendship-' + ${f.getId()}"
-                                     class="list-group-item border-0 px-0 d-flex justify-content-between align-items-center border-bottom">
-                                    <div class="d-flex align-items-center">
-                                        <div class="rounded-circle bg-light border d-flex align-items-center justify-content-center me-3 fw-bold"
-                                             style="width: 40px; height: 40px;">
-                                            &#128075;
-                                        </div>
-                                        <span th:text="${f.sender.name}"></span>
-                                    </div>
-                                    <div class="d-flex align-items-center gap-3">
-                                        <form th:action="@{/friends/accept/{friendshipId}(friendshipId=${f.getId()})}" method="post">
-                                            <button class="btn btn-sm btn-outline-success" th:text="#{profile.friends.btn-accept}">
-                                                Akzeptieren
-                                            </button>
-                                        </form>
-                                        <button type="button"
-                                                class="btn btn-sm btn-outline-danger"
-                                                th:text="#{profile.friends.btn-decline}"
-                                                th:hx-delete="@{/friends/decline/{friendshipId}(friendshipId=${f.getId()})}"
-                                                th:hx-target="'#friendship-' + ${f.getId()}"
-                                                hx-swap="outerHTML">
-                                            Ablehnen
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="list-group list-group-flush">
-                                <div th:each="f : ${pendingRequests}"
-                                     th:id="'friendship-' + ${f.getId()}"
-                                     class="list-group-item border-0 px-0 d-flex justify-content-between align-items-center border-bottom">
-                                    <div class="d-flex align-items-center">
-                                        <div class="rounded-circle bg-light border d-flex align-items-center justify-content-center me-3 fw-bold"
-                                             style="width: 40px; height: 40px;">
-                                            &#128640;
-                                        </div>
-                                        <span th:text="${f.receiver.name}"></span>
-                                    </div>
-                                    <div class="d-flex align-items-center gap-3">
-                                        <span class="badge bg-secondary" th:text="#{profile.friends.pending}">versandt</span>
-                                        <button type="button"
-                                                class="btn btn-sm btn-outline-danger"
-                                                th:text="#{profile.friends.btn-cancel}"
-                                                th:hx-delete="@{/friends/cancel/{friendshipId}(friendshipId=${f.getId()})}"
-                                                th:hx-target="'#friendship-' + ${f.getId()}"
-                                                hx-swap="outerHTML">
-                                            Abbrechen
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card mb-4 text-center text-muted py-4"
-                         th:if="${#lists.isEmpty(receivedRequests) && #lists.isEmpty(pendingRequests)}">
-                        <i class="bi bi-envelope-slash-fill fs-2 mb-1 d-block"></i>
-                        <p class="mb-0" th:text="#{profile.friends.noRequests}">Keine Freundschaftsanfragen</p>
-                    </div>
-                </div>
-
-                <div class="card">
+            <div>
+                <div class="card mb-4" th:unless="${#lists.isEmpty(receivedRequests) && #lists.isEmpty(pendingRequests)}">
                     <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h6 class="text-uppercase text-muted mb-0" th:text="#{profile.friends}">Freunde</h6>
-
-                            <a href="/friends/search"
-                                class="btn btn-sm btn-outline-primary"
-                                th:title="#{profile.friends.search}">
-                                <i class="bi bi-search"></i>
-                            </a>
-                        </div>
+                        <h6 class="text-uppercase text-muted mb-3">
+                            <i class="bi bi-person-plus-fill me-1"></i>
+                            <span th:text="#{profile.friends.requests.title}">Freundschaftsanfragen</span>
+                        </h6>
 
                         <div class="list-group list-group-flush">
-                            <div th:each="f: ${friends}"
-                                 th:id="'friendship-' + ${f.friendshipId}"
+                            <div th:each="f : ${receivedRequests}"
+                                 th:id="'friendship-' + ${f.getId()}"
                                  class="list-group-item border-0 px-0 d-flex justify-content-between align-items-center border-bottom">
                                 <div class="d-flex align-items-center">
-                                    <div class="rounded-circle bg-light border d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
-                                        &#127916;
+                                    <div class="rounded-circle bg-light border d-flex align-items-center justify-content-center me-3 fw-bold"
+                                         style="width: 40px; height: 40px;">
+                                        &#128075;
                                     </div>
-                                    <span th:text="${f.friend.name}"></span>
+                                    <span th:text="${f.sender.name}"></span>
                                 </div>
                                 <div class="d-flex align-items-center gap-3">
-                                    <a href="#" class="text-muted small" th:text="#{profile.friend-link}">Profil ansehen</a>
+                                    <form th:action="@{/friends/accept/{friendshipId}(friendshipId=${f.getId()})}" method="post">
+                                        <button class="btn btn-sm btn-outline-success" th:text="#{profile.friends.btn-accept}">
+                                            Akzeptieren
+                                        </button>
+                                    </form>
                                     <button type="button"
-                                            class="btn btr-link p-0 text-danger"
-                                            th:hx-delete="@{/friends/delete/{friendshipId}(friendshipId=${f.friendshipId})}"
-                                            th:hx-confirm="${#messages.msg('profile.friends.delete.confirmation')}"
-                                            th:hx-target="'#friendship-' + ${f.friendshipId}"
+                                            class="btn btn-sm btn-outline-danger"
+                                            th:text="#{profile.friends.btn-decline}"
+                                            th:hx-delete="@{/friends/decline/{friendshipId}(friendshipId=${f.getId()})}"
+                                            th:hx-target="'#friendship-' + ${f.getId()}"
                                             hx-swap="outerHTML">
-                                        <i class="bi bi-x-circle"></i>
+                                        Ablehnen
                                     </button>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="text-center text-muted py-4"
-                             th:if="${#lists.isEmpty(friends)}">
-                            <i class="bi bi-emoji-frown-fill fs-2 mb-1 d-block"></i>
-                            <p class="mb-0" th:text="#{profile.noFriends}">Noch keine Freunde</p>
+                        <div class="list-group list-group-flush">
+                            <div th:each="f : ${pendingRequests}"
+                                 th:id="'friendship-' + ${f.getId()}"
+                                 class="list-group-item border-0 px-0 d-flex justify-content-between align-items-center border-bottom">
+                                <div class="d-flex align-items-center">
+                                    <div class="rounded-circle bg-light border d-flex align-items-center justify-content-center me-3 fw-bold"
+                                         style="width: 40px; height: 40px;">
+                                        &#128640;
+                                    </div>
+                                    <span th:text="${f.receiver.name}"></span>
+                                </div>
+                                <div class="d-flex align-items-center gap-3">
+                                    <span class="badge bg-secondary" th:text="#{profile.friends.pending}">versandt</span>
+                                    <button type="button"
+                                            class="btn btn-sm btn-outline-danger"
+                                            th:text="#{profile.friends.btn-cancel}"
+                                            th:hx-delete="@{/friends/cancel/{friendshipId}(friendshipId=${f.getId()})}"
+                                            th:hx-target="'#friendship-' + ${f.getId()}"
+                                            hx-swap="outerHTML">
+                                        Abbrechen
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-
                     </div>
+                </div>
+
+                <div class="card mb-4 text-center text-muted py-4"
+                     th:if="${#lists.isEmpty(receivedRequests) && #lists.isEmpty(pendingRequests)}">
+                    <i class="bi bi-envelope-slash-fill fs-2 mb-1 d-block"></i>
+                    <p class="mb-0" th:text="#{profile.friends.noRequests}">Keine Freundschaftsanfragen</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="text-uppercase text-muted mb-0" th:text="#{profile.friends}">Freunde</h6>
+
+                        <a href="/friends/search"
+                            class="btn btn-sm btn-outline-primary"
+                            th:title="#{profile.friends.search}">
+                            <i class="bi bi-search"></i>
+                        </a>
+                    </div>
+
+                    <div class="list-group list-group-flush">
+                        <div th:each="f: ${friends}"
+                             th:id="'friendship-' + ${f.friendshipId}"
+                             class="list-group-item border-0 px-0 d-flex justify-content-between align-items-center border-bottom">
+                            <div class="d-flex align-items-center">
+                                <div class="rounded-circle bg-light border d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                    &#127916;
+                                </div>
+                                <span th:text="${f.friend.name}"></span>
+                            </div>
+                            <div class="d-flex align-items-center gap-3">
+                                <a href="#" class="text-muted small" th:text="#{profile.friend-link}">Profil ansehen</a>
+                                <button type="button"
+                                        class="btn btr-link p-0 text-danger"
+                                        th:hx-delete="@{/friends/delete/{friendshipId}(friendshipId=${f.friendshipId})}"
+                                        th:hx-confirm="${#messages.msg('profile.friends.delete.confirmation')}"
+                                        th:hx-target="'#friendship-' + ${f.friendshipId}"
+                                        hx-swap="outerHTML">
+                                    <i class="bi bi-x-circle"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center text-muted py-4"
+                         th:if="${#lists.isEmpty(friends)}">
+                        <i class="bi bi-emoji-frown-fill fs-2 mb-1 d-block"></i>
+                        <p class="mb-0" th:text="#{profile.noFriends}">Noch keine Freunde</p>
+                    </div>
+
                 </div>
             </div>
         </div>
