@@ -9,13 +9,56 @@
     <div th:replace="~{fragments/mobile-nav :: mobile-navbar('watchlist')}"></div>
     <div class="d-flex">
         <div th:replace="~{fragments/sidebar::sidebar('watchlist')}"></div>
-        <header class="d-flex flex-row p-4 w-100 container p-3">
-            <form role="search" class="flex-grow-1" method="get">
-                <label for="search" class="visually-hidden" th:text="#{watchlist.search.label}">Suchen</label>
-                <input id="search" name="search" th:placeholder="#{watchlist.search.placeholder}" class="form-control"
-                       type="search"/>
-            </form>
-        </header>
+        <div class="container">
+            <header class="mb-4">
+                <h1 class="trend-title mb-4">Meine gespeicherten Filme & Serien</h1>
+                <div class="input-group mb-4">
+                    <input id="search" name="search" th:placeholder="#{watchlist.search.placeholder}"
+                           class="form-control"
+                           type="search"/>
+                    <label for="search" class="visually-hidden" th:text="#{watchlist.search.label}">Suchen</label>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+
+                <ul class="nav nav-pills mb-4">
+                    <input type="hidden" id="selectedTab" name="selectedTab" value="watch-later"/>
+                    <li class="nav-item">
+                        <button class="nav-link active"
+                                data-script="on click take .active from .nav-link then set #selectedTab.value to 'watch-later' then send refreshResults to #results">
+                            Später anschauen
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link"
+                                data-script="on click take .active from .nav-link then set #selectedTab.value to 'in-progress' then send refreshResults to #results">
+                            Schaue gerade
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link"
+                                data-script="on click take .active from .nav-link then set #selectedTab.value to 'done' then send refreshResults to #results">
+                            Gesehen
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link"
+                                data-script="on click take .active from .nav-link then set #selectedTab.value to 'abandoned' then send refreshResults to #results">
+                            Abgebrochen
+                        </button>
+                    </li>
+                </ul>
+
+            </header>
+            <main>
+                <div id="results"
+                     hx-get="/app/watchlist/results"
+                     hx-trigger="input from:#search delay:500ms, refreshResults, load"
+                     hx-include="#search, #selectedTab"
+                     hx-target="this"></div>
+            </main>
+        </div>
     </div>
 </section>
 </html>

@@ -114,5 +114,15 @@
             <span th:text="#{movie.bookmark.abandoned}">Abgebrochen</span>
         </button>
     </li>
+    <th:block th:if="${activeTab != null}">
+        <li><hr class="dropdown-divider"></li>
+        <li>
+            <button th:hx-delete="@{/app/movie/{id}/unbookmark(id=${id})}"
+                    class="dropdown-item text-danger">
+                <i class="bi bi-bookmark-x-fill pe-1"></i>
+                <span th:text="#{movie.bookmark.remove}">Entfernen</span>
+            </button>
+        </li>
+    </th:block>
 </th:block>
 </html>
