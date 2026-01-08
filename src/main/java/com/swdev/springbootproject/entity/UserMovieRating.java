@@ -39,5 +39,4 @@ public class UserMovieRating {
     this.movie = movie;
     this.rating = rating;
   }
-
 }

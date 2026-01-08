@@ -1,7 +1,7 @@
 package com.swdev.springbootproject.controller;
 
-import com.swdev.springbootproject.entity.CbUser;
 import com.swdev.springbootproject.entity.CbMovie;
+import com.swdev.springbootproject.entity.CbUser;
 import com.swdev.springbootproject.entity.UserMovieRating;
 import com.swdev.springbootproject.repository.CbUserRepository;
 import com.swdev.springbootproject.repository.MovieRepository;
