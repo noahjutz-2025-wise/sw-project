@@ -1,7 +1,7 @@
 package com.swdev.springbootproject.controller;
 
 import com.swdev.springbootproject.entity.CbUser;
-import com.swdev.springbootproject.entity.Movie;
+import com.swdev.springbootproject.entity.CbMovie;
 import com.swdev.springbootproject.entity.UserMovieRating;
 import com.swdev.springbootproject.repository.CbUserRepository;
 import com.swdev.springbootproject.repository.MovieRepository;
@@ -39,7 +39,7 @@ public class RatingController {
 
     currentUser = cbUserRepository.findById(currentUser.getId()).orElseThrow();
 
-    final var movie = movieRepository.save(new Movie(id));
+    final var movie = movieRepository.save(new CbMovie(id));
 
     userMovieRatingRepository.save(new UserMovieRating(currentUser, movie, rating));
 

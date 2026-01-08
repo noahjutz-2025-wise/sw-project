@@ -24,7 +24,7 @@ public class UserMovieRating {
 
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "movie_id", referencedColumnName = "id", nullable = false)
-  private Movie movie;
+  private CbMovie movie;
 
   @Min(value = 0, message = "Die Note muss eine Ganzzahl zwischen 0 und 10 sein.")
   @Max(value = 10, message = "Die Note muss eine Ganzzahl zwischen 0 und 10 sein.")
@@ -34,9 +34,10 @@ public class UserMovieRating {
   @Column(nullable = false)
   private LocalDateTime ratedAt = LocalDateTime.now();
 
-  public UserMovieRating(CbUser cbUser, Movie movie, Integer rating) {
+  public UserMovieRating(CbUser cbUser, CbMovie movie, Integer rating) {
     this.cbUser = cbUser;
     this.movie = movie;
     this.rating = rating;
   }
+
 }
