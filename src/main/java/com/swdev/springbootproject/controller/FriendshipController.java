@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -38,7 +39,9 @@ public class FriendshipController {
       @RequestParam("searchEmail") String searchEmail, Model model, Authentication authentication) {
 
     CbUser currentCbUser = (CbUser) authentication.getPrincipal();
-    assert currentCbUser != null;
+    if (currentCbUser == null) {
+      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+    }
     List<CbUser> searchResults = new ArrayList<>();
 
     if (!searchEmail.isEmpty()) {
@@ -69,7 +72,9 @@ public class FriendshipController {
     HttpHeaders headers = new HttpHeaders();
     CbUser currentCbUser = (CbUser) authentication.getPrincipal();
 
-    assert currentCbUser != null;
+    if (currentCbUser == null) {
+      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+    }
 
     if (currentCbUser.getId().equals(friendId)) {
       return ResponseEntity.badRequest().build();
@@ -106,7 +111,9 @@ public class FriendshipController {
       Authentication authentication,
       RedirectAttributes redirectAttributes) {
     CbUser currentCbUser = (CbUser) authentication.getPrincipal();
-    assert currentCbUser != null;
+    if (currentCbUser == null) {
+      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+    }
 
     Optional<Friendship> friendship = friendshipRepository.findById(friendshipId);
 

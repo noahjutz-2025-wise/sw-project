@@ -30,7 +30,9 @@ public class ProfileController {
   public String profile(Model model, Authentication authentication) {
 
     CbUser currentCbUser = (CbUser) authentication.getPrincipal();
-    assert currentCbUser != null;
+    if (currentCbUser == null) {
+      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+    }
 
     CbUser updatedUser =
         cbUserRepository
@@ -85,7 +87,9 @@ public class ProfileController {
   @GetMapping("/user/profile/edit")
   public String editProfile(Model model, Authentication authentication) {
     CbUser currentCbUser = (CbUser) authentication.getPrincipal();
-    assert currentCbUser != null;
+    if (currentCbUser == null) {
+      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+    }
     CbUser updatedUser =
         cbUserRepository
             .findById(currentCbUser.getId())
@@ -101,7 +105,9 @@ public class ProfileController {
       Authentication authentication,
       RedirectAttributes redirectAttributes) {
     CbUser currentCbUser = (CbUser) authentication.getPrincipal();
-    assert currentCbUser != null;
+    if (currentCbUser == null) {
+      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+    }
     if (email.isBlank() || name.isBlank()) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
