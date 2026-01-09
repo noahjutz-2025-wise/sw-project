@@ -10,47 +10,45 @@
     <div th:replace="~{fragments/mobile-nav :: mobile-navbar('profile')}"></div>
 <div class="d-flex">
     <div th:replace="~{fragments/sidebar :: sidebar('profile')}"></div>
-    <div class="container-fluid p-3 d-flex flex-column">
-        <div class="row justify-content-start">
-            <div class="col-12 col-md-10 col-lg-8 col-xl-6">
-                <h2 class="trend-title mb-4" th:text="#{friends.search.title}">Freunde finden...</h2>
+    <div class="container">
+        <div class="container-fluid p-3 d-flex flex-column">
+            <h1 class="trend-title mb-4" th:text="#{friends.search.title}">Freunde finden...</h1>
 
-                <form th:action="@{/friends/search}" method="post">
-                    <div class="input-group mb-4">
-                        <input type="text" class="form-control" name="searchEmail" th:placeholder="#{friends.search.placeholder}">
-                        <div class="input-group-btn">
-                            <button class="btn btn-default" type="submit">
-                                <i class="bi bi-search"></i>
-                            </button>
-                        </div>
+            <form th:action="@{/friends/search}" method="post">
+                <div class="input-group mb-4">
+                    <input type="text" class="form-control" name="searchEmail" th:placeholder="#{friends.search.placeholder}">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit">
+                            <i class="bi bi-search"></i>
+                        </button>
                     </div>
-                </form>
+                </div>
+            </form>
 
-                <div class="card">
-                    <div class="card-body">
-                        <h6 class="text-uppercase text-muted mb-3" th:text="#{friends.search.results}">Ergebnisse</h6>
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="text-uppercase text-muted mb-3" th:text="#{friends.search.results}">Ergebnisse</h6>
 
-                        <ul class="list-group list-group-flush">
-                            <li th:each="cbUser : ${searchResults}"
-                                class="list-group-item d-flex justify-content-between align-items-start mb-3">
-                                <div>
-                                    <p class="mb-0" th:text="${cbUser.getName()}"></p>
-                                    <p class="text-muted mb-0" th:text="${cbUser.getEmail()}"></p>
-                                </div>
+                    <ul class="list-group list-group-flush">
+                        <li th:each="cbUser : ${searchResults}"
+                            class="list-group-item d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <p class="mb-0" th:text="${cbUser.getName()}"></p>
+                                <p class="text-muted mb-0" th:text="${cbUser.getEmail()}"></p>
+                            </div>
 
-                                <form th:action="@{/friends/add/{id}(id=${cbUser.getId()})}" method="post" class="d-inline">
-                                    <button class="btn btn-sm btn-outline-success" type="submit" th:text="#{friends.search.add}">Hinzufügen</button>
-                                </form>
+                            <form th:action="@{/friends/add/{id}(id=${cbUser.getId()})}" method="post" class="d-inline">
+                                <button class="btn btn-sm btn-outline-success" type="submit" th:text="#{friends.search.add}">Hinzufügen</button>
+                            </form>
 
-                            </li>
-                        </ul>
+                        </li>
+                    </ul>
 
-                        <div class="text-center text-muted py-4"
-                             th:if="${searchResults != null and searchResults.isEmpty() and searchEmail != ''}">
-                            <i class="bi bi-emoji-frown-fill fs-2 mb-1 d-block"></i>
-                            <p class="mb-0" th:text="#{friends.search.noFriendsFound}">Keine Freunde gefunden</p>
-                            <small th:text="#{friends.search.checkEmail}">Überprüfe die E-Mail-Adresse</small>
-                        </div>
+                    <div class="text-center text-muted py-4"
+                         th:if="${searchResults != null and searchResults.isEmpty() and searchEmail != ''}">
+                        <i class="bi bi-emoji-frown-fill fs-2 mb-1 d-block"></i>
+                        <p class="mb-0" th:text="#{friends.search.noFriendsFound}">Keine Freunde gefunden</p>
+                        <small th:text="#{friends.search.checkEmail}">Überprüfe die E-Mail-Adresse</small>
                     </div>
                 </div>
             </div>

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="@{scaffold}">
 <head>
     <title layout:fragment="title">Mood</title>
@@ -10,65 +9,67 @@
 <div th:replace="~{fragments/mobile-nav :: mobile-navbar('mood')}"></div>
 <div class="d-flex">
     <div th:replace="~{fragments/sidebar :: sidebar('mood')}"></div>
-    <div class="container-fluid p-3 d-flex flex-column">
+    <div class="container">
+        <div class="container-fluid p-3 d-flex flex-column">
 
-        <h3 class="trend-title mb-4" th:text="#{mood.title}">Filmempfehlungen nach Stimmung</h3>
+            <h1 class="trend-title mb-4" th:text="#{mood.title}">Filmempfehlungen nach Stimmung</h1>
 
-        <form action="/mood" method="get" class="mb-4" id="mood-form">
-            <div class="row g-3 align-items-center">
-                <div class="col-auto">
-                    <label for="mood" class="col-form-label" th:text="#{mood.label}"><i>Stimmung:</i></label>
-                </div>
-                <div class="col-auto">
-                    <select name="mood" id="mood" class="form-select">
-                        <option value="adventurous" th:selected="${mood == 'adventurous'}" th:text="#{mood.adventurous}">abenteuerlustig</option>
-                        <option value="happy" th:selected="${mood == 'happy'}" th:text="#{mood.happy}">Fröhlich</option>
-                        <option value="brave" th:selected="${mood == 'brave'}" th:text="#{mood.brave}">Mutig</option>
-                        <option value="nostalgic" th:selected="${mood == 'nostalgic'}" th:text="#{mood.nostalgic}">Nostalgisch</option>
-                        <option value="romantic" th:selected="${mood == 'romantic'}" th:text="#{mood.romantic}">Romantisch</option>
-                        <option value="sad" th:selected="${mood == 'sad'}" th:text="#{mood.sad}">Traurig</option>
-                        <option value="contemplative" th:selected="${mood == 'contemplative'}" th:text="#{mood.contemplative}">Nachdenklich</option>
-                        <option value="curious" th:selected="${mood == 'curious'}" th:text="#{mood.curious}">Neugierig</option>
-                        <option value="edgy" th:selected="${mood == 'edgy'}" th:text="#{mood.edgy}">Ausgefallen</option>
-                        <option value="silly" th:selected="${mood == 'silly'}" th:text="#{mood.silly}">Spaßig</option>
-                        <option value="cozy" th:selected="${mood == 'cozy'}" th:text="#{mood.cozy}">Gemütlich</option>
-                        <option value="detective-like" th:selected="${mood == 'detective-like'}" th:text="#{mood.detective-like}">Detektivisch</option>
-                        <option value="melodic" th:selected="${mood == 'melodic'}" th:text="#{mood.melodic}">Melodisch</option>
-                    </select>
-                </div>
-                <div class="col-auto">
-                    <div class="spinner-border spinner-border-sm text-primary d-none" id="load" role="status">
-                        <span class="visually-hidden" th:text="#{mood.loading}">Wird geladen...</span>
+            <form action="/mood" method="get" class="mb-4" id="mood-form">
+                <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                        <label for="mood" class="col-form-label" th:text="#{mood.label}"><i>Stimmung:</i></label>
+                    </div>
+                    <div class="col-auto">
+                        <select name="mood" id="mood" class="form-select">
+                            <option value="adventurous" th:selected="${mood == 'adventurous'}" th:text="#{mood.adventurous}">abenteuerlustig</option>
+                            <option value="happy" th:selected="${mood == 'happy'}" th:text="#{mood.happy}">Fröhlich</option>
+                            <option value="brave" th:selected="${mood == 'brave'}" th:text="#{mood.brave}">Mutig</option>
+                            <option value="nostalgic" th:selected="${mood == 'nostalgic'}" th:text="#{mood.nostalgic}">Nostalgisch</option>
+                            <option value="romantic" th:selected="${mood == 'romantic'}" th:text="#{mood.romantic}">Romantisch</option>
+                            <option value="sad" th:selected="${mood == 'sad'}" th:text="#{mood.sad}">Traurig</option>
+                            <option value="contemplative" th:selected="${mood == 'contemplative'}" th:text="#{mood.contemplative}">Nachdenklich</option>
+                            <option value="curious" th:selected="${mood == 'curious'}" th:text="#{mood.curious}">Neugierig</option>
+                            <option value="edgy" th:selected="${mood == 'edgy'}" th:text="#{mood.edgy}">Ausgefallen</option>
+                            <option value="silly" th:selected="${mood == 'silly'}" th:text="#{mood.silly}">Spaßig</option>
+                            <option value="cozy" th:selected="${mood == 'cozy'}" th:text="#{mood.cozy}">Gemütlich</option>
+                            <option value="detective-like" th:selected="${mood == 'detective-like'}" th:text="#{mood.detective-like}">Detektivisch</option>
+                            <option value="melodic" th:selected="${mood == 'melodic'}" th:text="#{mood.melodic}">Melodisch</option>
+                        </select>
+                    </div>
+                    <div class="col-auto">
+                        <div class="spinner-border spinner-border-sm text-primary d-none" id="load" role="status">
+                            <span class="visually-hidden" th:text="#{mood.loading}">Wird geladen...</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
 
-        <div class="row">
-            <div th:if="${movies != null}">
-                <h5 class="mb-4">
-                    <span th:text="#{mood.moviesFor}">Filme für Stimmung:</span>
-                    <span class="px-3 py-2 bg-info text-white rounded-pill" th:text="#{${'mood.' + mood}}"></span>
-                </h5>
+            <div class="row">
+                <div th:if="${movies != null}">
+                    <h5 class="mb-4">
+                        <span th:text="#{mood.moviesFor}">Filme für Stimmung:</span>
+                        <span class="px-3 py-2 bg-info text-white rounded-pill" th:text="#{${'mood.' + mood}}"></span>
+                    </h5>
+                </div>
+
+                <div th:replace="~{fragments/movie_card_grid :: movieCardGrid(movies=${movies})}"></div>
             </div>
 
-            <div th:replace="~{fragments/movie_card_grid :: movieCardGrid(movies=${movies})}"></div>
+            <nav aria-label="Seitennavigation" class="mt-5">
+                <ul class="pagination justify-content-center mt-4">
+                    <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+                        <a class="page-link" th:href="@{/mood(mood=${mood}, page=${currentPage - 1})}">&laquo;</a>
+                    </li>
+                    <li class="page-item" th:classappend="${i == currentPage} ? 'active'"
+                        th:each="i : ${#numbers.sequence(1, 3)}">
+                        <a class="page-link" th:href="@{/mood(mood=${mood}, page=${i})}" th:text="${i}"></a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" th:href="@{/mood(mood=${mood}, page=${currentPage + 1})}">&raquo;</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
-
-        <nav aria-label="Seitennavigation" class="mt-5">
-            <ul class="pagination justify-content-center mt-4">
-                <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
-                    <a class="page-link" th:href="@{/mood(mood=${mood}, page=${currentPage - 1})}">&laquo;</a>
-                </li>
-                <li class="page-item" th:classappend="${i == currentPage} ? 'active'"
-                    th:each="i : ${#numbers.sequence(1, 3)}">
-                    <a class="page-link" th:href="@{/mood(mood=${mood}, page=${i})}" th:text="${i}"></a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" th:href="@{/mood(mood=${mood}, page=${currentPage + 1})}">&raquo;</a>
-                </li>
-            </ul>
-        </nav>
     </div>
 </div>
 
