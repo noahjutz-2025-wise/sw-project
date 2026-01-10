@@ -10,10 +10,9 @@ import com.swdev.springbootproject.repository.CbUserRepository;
 import com.swdev.springbootproject.repository.FriendshipRepository;
 import com.swdev.springbootproject.repository.MovieBookmarkRepository;
 import com.swdev.springbootproject.service.EmailService;
+import com.swdev.springbootproject.service.TMDBService;
 import java.util.List;
 import java.util.Objects;
-
-import com.swdev.springbootproject.service.TMDBService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -156,29 +155,31 @@ public class ProfileController {
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
     }
 
-    CbUser friendCbUser = cbUserRepository.findById(userId)
-        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+    CbUser friendCbUser =
+        cbUserRepository
+            .findById(userId)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
-    if (friendshipRepository.findBySender_IdAndReceiver_Id(currentCbUser.getId(), friendCbUser.getId())
-        .filter(Friendship::isAccepted).isEmpty()
-        && friendshipRepository.findBySender_IdAndReceiver_Id(friendCbUser.getId(), currentCbUser.getId())
-        .filter(Friendship::isAccepted).isEmpty()) {
+    if (friendshipRepository
+            .findBySender_IdAndReceiver_Id(currentCbUser.getId(), friendCbUser.getId())
+            .filter(Friendship::isAccepted)
+            .isEmpty()
+        && friendshipRepository
+            .findBySender_IdAndReceiver_Id(friendCbUser.getId(), currentCbUser.getId())
+            .filter(Friendship::isAccepted)
+            .isEmpty()) {
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
     }
 
-    List<BookmarkStatus> watchlistBookmarks = List.of(
-        BookmarkStatus.WATCH_LATER,
-        BookmarkStatus.IN_PROGRESS,
-        BookmarkStatus.DONE
-    );
+    List<BookmarkStatus> watchlistBookmarks =
+        List.of(BookmarkStatus.WATCH_LATER, BookmarkStatus.IN_PROGRESS, BookmarkStatus.DONE);
 
     if (!watchlistBookmarks.contains(bookmarkStatus)) {
       bookmarkStatus = BookmarkStatus.WATCH_LATER;
     }
 
-    List<MovieDto> watchlistMovies = movieBookmarkRepository
-            .findByUserAndStatus(friendCbUser, bookmarkStatus)
-            .stream()
+    List<MovieDto> watchlistMovies =
+        movieBookmarkRepository.findByUserAndStatus(friendCbUser, bookmarkStatus).stream()
             .map(bookmark -> tmdbService.getMovieDetails(bookmark.getMovie().getId()))
             .filter(Objects::nonNull)
             .map(tmdbMovieToMovieDtoConverter::convert)
