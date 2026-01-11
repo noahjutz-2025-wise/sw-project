@@ -39,8 +39,9 @@
 
                             <div class="spinner-border spinner-border-sm text-primary d-none" id="load"></div>
                         </div>
-                        <div th:if="${movies != null}" class="d-flex align-items-center px-4">
-                            <span class="badge px-3 py-2 bg-info rounded-pill"
+                        <div th:if="${movies != null}"
+                             class="d-none d-sm-flex align-items-center px-4">
+                            <span class="badge bg-info rounded-pill px-3 py-2"
                                   th:text="#{${'mood.' + mood}}">
                             </span>
                         </div>
