@@ -31,7 +31,9 @@
                 <div class="col-sm-4 col-12">
                     <img width="100%" th:src="${poster}"
                          class="shadow mb-4"/>
-                    <p th:text="${'&quot;' + movieDetails.tagline + '&quot;'}"></p>
+                    <p th:if="${movieDetails.tagline != null and !#strings.isEmpty(movieDetails.tagline)}"
+                       th:text="${'&quot;' + movieDetails.tagline + '&quot;'}">
+                    </p>
                 </div>
                 <div class="col-sm-8 col-12">
                     <table class="table">
@@ -64,7 +66,13 @@
                         </tr>
                     </table>
                     <h2 th:text="#{movie.details.overview}">Kurzbeschreibung</h2>
-                    <p th:text="${movieDetails.overview}"></p>
+                    <p th:if="${movieDetails.overview != null and !#strings.isEmpty(movieDetails.overview)}"
+                       th:text="${movieDetails.overview}">
+                    </p>
+                    <p class="text-muted"
+                       th:unless="${movieDetails.overview != null and !#strings.isEmpty(movieDetails.overview)}"
+                       th:text="#{movie.details.noOverview}">
+                    </p>
                 </div>
             </div>
         </div>
