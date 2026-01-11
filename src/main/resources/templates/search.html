@@ -11,15 +11,15 @@
         <div th:replace="~{fragments/sidebar::sidebar('search')}"></div>
         <div class="container">
             <header class="mb-4">
-                <h1 class="trend-title mb-4">Suche</h1>
+                <h1 class="trend-title mb-4" th:text="#{search.title}">Suche</h1>
                 <div class="input-group mb-4">
-                    <input id="search" name="search" placeholder="Suchen"
+                    <input id="search" name="search" th:placeholder="#{search.placeholder}"
                            class="form-control"
                            type="search"/>
                     <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
                             data-bs-target="#filterModal">
                         <i class="bi bi-filter"></i>
-                        Filtern
+                        <span th:text="#{search.filter.button}">Filtern</span>
                     </button>
                     <button type="submit" class="btn btn-primary">
                         <i class="bi bi-search"></i>
@@ -29,15 +29,15 @@
                     <input type="hidden" id="searchType" name="searchType" value="movies">
                     <li class="nav-item">
                         <button class="nav-link active"
-                           data-script="on click take .active from .nav-link then set #searchType.value to 'movies'">Filme</button>
+                           data-script="on click take .active from .nav-link then set #searchType.value to 'movies'" th:text="#{search.films}">Filme</button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link"
-                           data-script="on click take .active from .nav-link then set #searchType.value to 'tv'">Serien</button>
+                           data-script="on click take .active from .nav-link then set #searchType.value to 'tv'" th:text="#{search.shows}">Serien</button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link"
-                           data-script="on click take .active from .nav-link then set #searchType.value to 'users'">Nutzer</button>
+                           data-script="on click take .active from .nav-link then set #searchType.value to 'users'" th:text="#{search.user}">Nutzer</button>
                     </li>
                 </ul>
             </header>
