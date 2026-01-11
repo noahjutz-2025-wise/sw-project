@@ -23,6 +23,23 @@
                     <a class="nav-link" href="/signup" th:text="#{landing.signup}">Registrieren</a>
                 </li>
             </ul>
+
+            <ul class="navbar-nav ms-auto gap-2">
+                <li class="nav-item">
+                    <a th:href="@{''(lang='en')}"
+                       class="btn btn-sm flex-fill text-white lang-btn"
+                       th:classappend="${#locale.language == 'en' } ? 'active'">
+                        🇬🇧 EN
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{''(lang='de')}"
+                       class="btn btn-sm flex-fill text-white lang-btn"
+                       th:classappend="${#locale.language == 'de'} ? 'active'">
+                        🇩🇪 DE
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>
