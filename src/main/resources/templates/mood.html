@@ -14,44 +14,41 @@
 
             <h1 class="trend-title mb-4" th:text="#{mood.title}">Filmempfehlungen nach Stimmung</h1>
 
-            <form action="/mood" method="get" class="mb-4" id="mood-form">
-                <div class="row g-3 align-items-center">
-                    <div class="col-auto">
-                        <label for="mood" class="col-form-label" th:text="#{mood.label}"><i>Stimmung:</i></label>
-                    </div>
-                    <div class="col-auto">
-                        <select name="mood" id="mood" class="form-select">
-                            <option value="adventurous" th:selected="${mood == 'adventurous'}" th:text="#{mood.adventurous}">abenteuerlustig</option>
-                            <option value="happy" th:selected="${mood == 'happy'}" th:text="#{mood.happy}">Fröhlich</option>
-                            <option value="brave" th:selected="${mood == 'brave'}" th:text="#{mood.brave}">Mutig</option>
-                            <option value="nostalgic" th:selected="${mood == 'nostalgic'}" th:text="#{mood.nostalgic}">Nostalgisch</option>
-                            <option value="romantic" th:selected="${mood == 'romantic'}" th:text="#{mood.romantic}">Romantisch</option>
-                            <option value="sad" th:selected="${mood == 'sad'}" th:text="#{mood.sad}">Traurig</option>
-                            <option value="contemplative" th:selected="${mood == 'contemplative'}" th:text="#{mood.contemplative}">Nachdenklich</option>
-                            <option value="curious" th:selected="${mood == 'curious'}" th:text="#{mood.curious}">Neugierig</option>
-                            <option value="edgy" th:selected="${mood == 'edgy'}" th:text="#{mood.edgy}">Ausgefallen</option>
-                            <option value="silly" th:selected="${mood == 'silly'}" th:text="#{mood.silly}">Spaßig</option>
-                            <option value="cozy" th:selected="${mood == 'cozy'}" th:text="#{mood.cozy}">Gemütlich</option>
-                            <option value="detective-like" th:selected="${mood == 'detective-like'}" th:text="#{mood.detective-like}">Detektivisch</option>
-                            <option value="melodic" th:selected="${mood == 'melodic'}" th:text="#{mood.melodic}">Melodisch</option>
-                        </select>
-                    </div>
-                    <div class="col-auto">
-                        <div class="spinner-border spinner-border-sm text-primary d-none" id="load" role="status">
-                            <span class="visually-hidden" th:text="#{mood.loading}">Wird geladen...</span>
+            <div>
+                <form action="/mood" method="get" class="mb-3" id="mood-form">
+                    <div class="d-flex g-3 justify-content-between align-items-center flex-wrap">
+                        <div class="d-flex align-items-center gap-2">
+                            <label for="mood" class="fw-semibold mb-0" >
+                                <span th:text="#{mood.label}">Stimmung:</span>
+                            </label>
+                            <select name="mood" id="mood" class="form-select form-select-sm w-auto">
+                                <option value="adventurous" th:selected="${mood == 'adventurous'}" th:text="#{mood.adventurous}">abenteuerlustig</option>
+                                <option value="happy" th:selected="${mood == 'happy'}" th:text="#{mood.happy}">Fröhlich</option>
+                                <option value="brave" th:selected="${mood == 'brave'}" th:text="#{mood.brave}">Mutig</option>
+                                <option value="nostalgic" th:selected="${mood == 'nostalgic'}" th:text="#{mood.nostalgic}">Nostalgisch</option>
+                                <option value="romantic" th:selected="${mood == 'romantic'}" th:text="#{mood.romantic}">Romantisch</option>
+                                <option value="sad" th:selected="${mood == 'sad'}" th:text="#{mood.sad}">Traurig</option>
+                                <option value="contemplative" th:selected="${mood == 'contemplative'}" th:text="#{mood.contemplative}">Nachdenklich</option>
+                                <option value="curious" th:selected="${mood == 'curious'}" th:text="#{mood.curious}">Neugierig</option>
+                                <option value="edgy" th:selected="${mood == 'edgy'}" th:text="#{mood.edgy}">Ausgefallen</option>
+                                <option value="silly" th:selected="${mood == 'silly'}" th:text="#{mood.silly}">Spaßig</option>
+                                <option value="cozy" th:selected="${mood == 'cozy'}" th:text="#{mood.cozy}">Gemütlich</option>
+                                <option value="detective-like" th:selected="${mood == 'detective-like'}" th:text="#{mood.detective-like}">Detektivisch</option>
+                                <option value="melodic" th:selected="${mood == 'melodic'}" th:text="#{mood.melodic}">Melodisch</option>
+                            </select>
+
+                            <div class="spinner-border spinner-border-sm text-primary d-none" id="load"></div>
+                        </div>
+                        <div th:if="${movies != null}" class="d-flex align-items-center px-4">
+                            <span class="badge px-3 py-2 bg-info rounded-pill"
+                                  th:text="#{${'mood.' + mood}}">
+                            </span>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
 
             <div class="row">
-                <div th:if="${movies != null}">
-                    <h5 class="mb-4">
-                        <span th:text="#{mood.moviesFor}">Filme für Stimmung:</span>
-                        <span class="px-3 py-2 bg-info text-white rounded-pill" th:text="#{${'mood.' + mood}}"></span>
-                    </h5>
-                </div>
-
                 <div th:replace="~{fragments/movie_card_grid :: movieCardGrid(movies=${movies})}"></div>
             </div>
 
