@@ -4,10 +4,8 @@ import com.swdev.springbootproject.model.tmdb.TmdbGenre;
 import com.swdev.springbootproject.model.tmdb.TmdbMovie;
 import com.swdev.springbootproject.model.tmdb.TmdbResults;
 import com.swdev.springbootproject.model.tmdb.TmdbTv;
-
 import java.util.*;
 import java.util.stream.Collectors;
-
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Value;
@@ -115,7 +113,11 @@ public class TMDBService {
         .get()
         .uri(
             uriBuilder ->
-                uriBuilder.path(ENDPOINT_MOVIE).queryParam("api_key", apiKey).queryParam("language", localeService.getCurrentLanguage()).build(movieId))
+                uriBuilder
+                    .path(ENDPOINT_MOVIE)
+                    .queryParam("api_key", apiKey)
+                    .queryParam("language", localeService.getCurrentLanguage())
+                    .build(movieId))
         .retrieve()
         .body(TmdbMovie.class);
   }
