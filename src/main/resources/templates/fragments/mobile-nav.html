@@ -8,6 +8,9 @@
             </button>
 
             <div class="collapse navbar-collapse" id="mobileMenu">
+                <div class="d-flex justify-content-center gap-2 my-3"
+                     th:replace="fragments/language-switcher :: languageSwitcher">
+                </div>
                 <ul class="navbar-nav mt-3">
                     <li class="nav-item"><a href="/mood" class="nav-link text-white"
                                             th:classappend="${activeTab == 'mood'} ? 'active' : ''" th:text="#{nav.mood}">Stimmung</a></li>
