@@ -4,12 +4,12 @@
         <div class="language-switcher d-flex gap-2 pb-3 mb-0 border-bottom border-white border-opacity-25">
             <a th:href="@{''(lang='en')}"
                 class="btn btn-sm flex-fill text-white lang-btn"
-                th:classappend="${#locale.toString() == 'en' ? 'active' : ''}">
+                th:classappend="${#locale.language == 'en'} ? 'active'">
                 🇬🇧 EN
             </a>
             <a th:href="@{''(lang='de')}"
                class="btn btn-sm flex-fill text-white lang-btn"
-               th:classappend="${#locale.toString() == 'de' ? 'active' : ''}">
+               th:classappend="${#locale.language == 'de'} ? 'active'">
                 🇩🇪 DE
             </a>
         </div>
