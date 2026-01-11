@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
@@ -48,7 +49,7 @@ public class TMDBService {
                             .queryParam("api_key", apiKey)
                             .build())
                 .retrieve()
-                .body(new ParameterizedTypeReference<TmdbResults<TmdbMovie>>() {}))
+                .body(new ParameterizedTypeReference<@NonNull TmdbResults<TmdbMovie>>() {}))
         .getResults();
   }
 
@@ -96,9 +97,11 @@ public class TMDBService {
                         .queryParam("api_key", apiKey)
                         .build())
             .retrieve()
-            .body(new ParameterizedTypeReference<TmdbResults<TmdbMovie>>() {});
+            .body(new ParameterizedTypeReference<@NonNull TmdbResults<TmdbMovie>>() {});
 
-    assert discoverResults != null;
+    if (discoverResults == null) {
+      return List.of();
+    }
     return discoverResults.getResults();
   }
 
@@ -124,7 +127,7 @@ public class TMDBService {
                             .queryParam("api_key", apiKey)
                             .build())
                 .retrieve()
-                .body(new ParameterizedTypeReference<TmdbResults<TmdbMovie>>() {}))
+                .body(new ParameterizedTypeReference<@NonNull TmdbResults<TmdbMovie>>() {}))
         .getResults();
   }
 
@@ -140,7 +143,7 @@ public class TMDBService {
                             .queryParam("api_key", apiKey)
                             .build())
                 .retrieve()
-                .body(new ParameterizedTypeReference<TmdbResults<TmdbTv>>() {}))
+                .body(new ParameterizedTypeReference<@NonNull TmdbResults<TmdbTv>>() {}))
         .getResults();
   }
 }

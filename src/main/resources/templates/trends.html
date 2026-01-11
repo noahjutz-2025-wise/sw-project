@@ -11,7 +11,7 @@
 <div class="d-flex">
     <div th:replace="~{fragments/sidebar :: sidebar('trends')}"></div>
     <div class="container">
-        <div class="container-fluid p-3">
+        <div class="container-fluid">
             <h1 class="trend-title mb-4" th:text="#{trends.title}">Aktuell im Trend</h1>
             <div th:replace="~{fragments/movie_card_grid :: movieCardGrid(movies=${movies})}"></div>
 
