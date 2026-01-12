@@ -23,6 +23,12 @@
                     <a class="nav-link" href="/signup" th:text="#{landing.signup}">Registrieren</a>
                 </li>
             </ul>
+
+            <ul class="navbar-nav ms-auto gap-2">
+                <li class="nav-item">
+                    <div th:replace="fragments/language-switcher :: languageSwitcher"></div>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>

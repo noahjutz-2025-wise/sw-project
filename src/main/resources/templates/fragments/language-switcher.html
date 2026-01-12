@@ -1,0 +1,13 @@
+<div th:fragment="languageSwitcher">
+    <a th:href="@{''(lang='en')}"
+       class="btn btn-sm flex-fill text-white lang-btn me-3"
+       th:classappend="${#locale.language == 'en'} ? 'active'">
+        🇬🇧 EN
+    </a>
+
+    <a th:href="@{''(lang='de')}"
+       class="btn btn-sm flex-fill text-white lang-btn me-1"
+       th:classappend="${#locale.language == 'de'} ? 'active'">
+        🇩🇪 DE
+    </a>
+</div>

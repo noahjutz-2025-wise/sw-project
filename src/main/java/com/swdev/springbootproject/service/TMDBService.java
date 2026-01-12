@@ -4,11 +4,9 @@ import com.swdev.springbootproject.model.tmdb.TmdbGenre;
 import com.swdev.springbootproject.model.tmdb.TmdbMovie;
 import com.swdev.springbootproject.model.tmdb.TmdbResults;
 import com.swdev.springbootproject.model.tmdb.TmdbTv;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -16,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 @Service
+@RequiredArgsConstructor
 public class TMDBService {
   public static final String API_URL = "https://api.themoviedb.org/3/";
 
@@ -28,6 +27,8 @@ public class TMDBService {
   public static final String BACKDROP_BASE_URL = "https://image.tmdb.org/t/p/w1280/";
 
   private final RestClient restClient = RestClient.builder().baseUrl(API_URL).build();
+
+  private final LocaleService localeService;
 
   @Value("${tmdb.api.key:keynotfound}")
   private String apiKey;
@@ -46,6 +47,7 @@ public class TMDBService {
                             .queryParam("sort_by", "popularity.desc")
                             .queryParam("certification_country", "US")
                             .queryParam("certification.lte", "PG-13")
+                            .queryParam("language", localeService.getCurrentLanguage())
                             .queryParam("api_key", apiKey)
                             .build())
                 .retrieve()
@@ -94,6 +96,7 @@ public class TMDBService {
                         .queryParam("certification.gte", "G")
                         .queryParam("certification.lte", "PG-13")
                         .queryParam("with_genres", genreParam)
+                        .queryParam("language", localeService.getCurrentLanguage())
                         .queryParam("api_key", apiKey)
                         .build())
             .retrieve()
@@ -110,7 +113,11 @@ public class TMDBService {
         .get()
         .uri(
             uriBuilder ->
-                uriBuilder.path(ENDPOINT_MOVIE).queryParam("api_key", apiKey).build(movieId))
+                uriBuilder
+                    .path(ENDPOINT_MOVIE)
+                    .queryParam("api_key", apiKey)
+                    .queryParam("language", localeService.getCurrentLanguage())
+                    .build(movieId))
         .retrieve()
         .body(TmdbMovie.class);
   }
@@ -124,6 +131,7 @@ public class TMDBService {
                         uriBuilder
                             .path(ENDPOINT_SEARCH_MOVIE)
                             .queryParam("query", query)
+                            .queryParam("language", localeService.getCurrentLanguage())
                             .queryParam("api_key", apiKey)
                             .build())
                 .retrieve()
@@ -140,6 +148,7 @@ public class TMDBService {
                         uriBuilder
                             .path(ENDPOINT_SEARCH_TV)
                             .queryParam("query", query)
+                            .queryParam("language", localeService.getCurrentLanguage())
                             .queryParam("api_key", apiKey)
                             .build())
                 .retrieve()

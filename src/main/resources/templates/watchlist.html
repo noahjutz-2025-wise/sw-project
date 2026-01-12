@@ -11,7 +11,7 @@
         <div th:replace="~{fragments/sidebar::sidebar('watchlist')}"></div>
         <div class="container">
             <header class="mb-4">
-                <h1 class="trend-title mb-4">Meine gespeicherten Filme & Serien</h1>
+                <h1 class="trend-title mb-4" th:text="#{watchlist.title}">Meine gespeicherten Filme & Serien</h1>
                 <div class="input-group mb-4">
                     <input id="search" name="search" th:placeholder="#{watchlist.search.placeholder}"
                            class="form-control"
@@ -26,25 +26,29 @@
                     <input type="hidden" id="selectedTab" name="selectedTab" value="watch-later"/>
                     <li class="nav-item">
                         <button class="nav-link active"
-                                data-script="on click take .active from .nav-link then set #selectedTab.value to 'watch-later' then send refreshResults to #results">
+                                data-script="on click take .active from .nav-link then set #selectedTab.value to 'watch-later' then send refreshResults to #results"
+                                th:text="#{watchlist.watchLater}">
                             Später anschauen
                         </button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link"
-                                data-script="on click take .active from .nav-link then set #selectedTab.value to 'in-progress' then send refreshResults to #results">
+                                data-script="on click take .active from .nav-link then set #selectedTab.value to 'in-progress' then send refreshResults to #results"
+                                th:text="#{watchlist.inProgress}">
                             Schaue gerade
                         </button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link"
-                                data-script="on click take .active from .nav-link then set #selectedTab.value to 'done' then send refreshResults to #results">
+                                data-script="on click take .active from .nav-link then set #selectedTab.value to 'done' then send refreshResults to #results"
+                                th:text="#{watchlist.done}">
                             Gesehen
                         </button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link"
-                                data-script="on click take .active from .nav-link then set #selectedTab.value to 'abandoned' then send refreshResults to #results">
+                                data-script="on click take .active from .nav-link then set #selectedTab.value to 'abandoned' then send refreshResults to #results"
+                                th:text="#{watchlist.abandoned}">
                             Abgebrochen
                         </button>
                     </li>
