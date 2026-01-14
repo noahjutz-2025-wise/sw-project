@@ -9,6 +9,7 @@ import com.swdev.springbootproject.model.dto.MovieDto;
 import com.swdev.springbootproject.repository.CbUserRepository;
 import com.swdev.springbootproject.repository.FriendshipRepository;
 import com.swdev.springbootproject.repository.MovieBookmarkRepository;
+import com.swdev.springbootproject.service.CertifiedBangerService;
 import com.swdev.springbootproject.service.EmailService;
 import com.swdev.springbootproject.service.TMDBService;
 import java.util.List;
@@ -35,6 +36,7 @@ public class ProfileController {
   private final MovieBookmarkRepository movieBookmarkRepository;
   private final TMDBService tmdbService;
   private final TmdbMovieToMovieDtoConverter tmdbMovieToMovieDtoConverter;
+  private final CertifiedBangerService certifiedBangerService;
 
   @GetMapping("/user/profile")
   public String profile(Model model, Authentication authentication) {
@@ -185,6 +187,8 @@ public class ProfileController {
             .map(tmdbMovieToMovieDtoConverter::convert)
             .toList();
 
+
+    certifiedBangerService.applyCertifiedBangerFlag(watchlistMovies);
     model.addAttribute("friend", friendCbUser);
     model.addAttribute("movies", watchlistMovies);
     model.addAttribute("bookmarkStatus", bookmarkStatus);

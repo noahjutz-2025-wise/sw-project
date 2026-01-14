@@ -1,7 +1,9 @@
 package com.swdev.springbootproject.controller;
 
 import com.swdev.springbootproject.component.TmdbMovieToMovieDtoConverter;
+import com.swdev.springbootproject.model.dto.MovieDto;
 import com.swdev.springbootproject.model.tmdb.TmdbMovie;
+import com.swdev.springbootproject.service.CertifiedBangerService;
 import com.swdev.springbootproject.service.TMDBService;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class MoodController {
   private final TMDBService tmdbService;
   private final TmdbMovieToMovieDtoConverter tmdbMovieToMovieDto;
+  private final CertifiedBangerService certifiedBangerService;
 
   @GetMapping("/api/mood")
   public List<TmdbMovie> getMood(
@@ -32,13 +35,13 @@ public class MoodController {
     if (mood == null || mood.isBlank()) {
       mood = "happy";
     }
+
+    List<MovieDto> movies = tmdbService.getMoviesByMood(mood, page).stream().map(tmdbMovieToMovieDto::convert).toList();
+    certifiedBangerService.applyCertifiedBangerFlag(movies);
     model.addAttribute("mood", mood);
     model.addAttribute("pageTitle", "Mood - Genres By Mood");
-    model.addAttribute(
-        "movies",
-        tmdbService.getMoviesByMood(mood, page).stream()
-            .map(tmdbMovieToMovieDto::convert)
-            .collect(Collectors.toList()));
+    model.addAttribute("movies", movies);
+
     model.addAttribute("currentPage", page);
     return "mood";
   }

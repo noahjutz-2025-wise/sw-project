@@ -1,5 +1,14 @@
-<div th:fragment="movieCard(posterUrl, title)" class="card movie-card h-100 shadow-sm">
-    <div class="ratio d-flex align-items-center justify-content-center" style="--bs-aspect-ratio: 150%;">
+<div th:fragment="movieCard(movieId, certifiedBanger, posterUrl, title)"
+     class="card movie-card h-100 shadow-sm position-relative">
+    <span th:if="${certifiedBanger}"
+          class="position-absolute top-0 end-0 badge m-1 shadow-sm d-inline-flex fs-5 certified-mark"
+          style="z-index: 5;"
+          title="Certified Banger">
+                &#128165;
+    </span>
+    <div class="ratio d-flex align-items-center justify-content-center position-relative"
+         style="--bs-aspect-ratio: 150%;">
+
         <img th:src="${posterUrl}"
              class="card-img-top object-fit-cover h-100 w-100 opacity-0"
              alt="Movie Poster"
@@ -25,4 +34,5 @@
         <h5 th:text="${title}" class="card-title"></h5>
         <h5 class="card-title invisible"><br><br></h5>
     </div>
+    <div th:insert="fragments/certify-btn :: certifyBtn(movieId=${movieId}, certified=${certifiedBanger})"></div>
 </div>
