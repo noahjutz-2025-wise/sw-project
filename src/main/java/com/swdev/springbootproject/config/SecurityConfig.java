@@ -34,7 +34,14 @@ class SecurityConfig {
             a ->
                 a.requestMatchers("/app/**", "/verify", "/user/profile")
                     .authenticated()
-                    .requestMatchers("/signup", "/", "/css/**", "/js/**", "/error", "/webjars/**")
+                    .requestMatchers(
+                        "/signup",
+                        "/",
+                        "/css/**",
+                        "/js/**",
+                        "/error",
+                        "/webjars/**",
+                        "/images/theater.jpg")
                     .permitAll()
                     .anyRequest()
                     .authenticated())

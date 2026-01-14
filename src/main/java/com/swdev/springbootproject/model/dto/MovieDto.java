@@ -10,6 +10,7 @@ public class MovieDto {
   private final String title;
   private final String posterPath;
   private final String backdropPath;
+  private final String releaseDate;
   private final String overview;
   private final MovieDtoType type;
 }
