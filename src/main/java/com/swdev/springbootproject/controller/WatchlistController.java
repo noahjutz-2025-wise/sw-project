@@ -47,7 +47,7 @@ class WatchlistController {
                         || tmdbMovie.getTitle().toLowerCase().contains(search.toLowerCase()))
             .map(tmdbMovieToMovieDtoConverter::convert)
             .collect(Collectors.toList());
-    
+
     certifiedBangerService.applyCertifiedBangerFlag(movies);
     model.addAttribute("movies", movies);
     return "fragments/movie_card_grid :: movieCardGrid(movies=${movies})";

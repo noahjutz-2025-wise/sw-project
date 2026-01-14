@@ -187,7 +187,6 @@ public class ProfileController {
             .map(tmdbMovieToMovieDtoConverter::convert)
             .toList();
 
-
     certifiedBangerService.applyCertifiedBangerFlag(watchlistMovies);
     model.addAttribute("friend", friendCbUser);
     model.addAttribute("movies", watchlistMovies);

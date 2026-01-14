@@ -6,7 +6,6 @@ import com.swdev.springbootproject.model.tmdb.TmdbMovie;
 import com.swdev.springbootproject.service.CertifiedBangerService;
 import com.swdev.springbootproject.service.TMDBService;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,7 +35,8 @@ public class MoodController {
       mood = "happy";
     }
 
-    List<MovieDto> movies = tmdbService.getMoviesByMood(mood, page).stream().map(tmdbMovieToMovieDto::convert).toList();
+    List<MovieDto> movies =
+        tmdbService.getMoviesByMood(mood, page).stream().map(tmdbMovieToMovieDto::convert).toList();
     certifiedBangerService.applyCertifiedBangerFlag(movies);
     model.addAttribute("mood", mood);
     model.addAttribute("pageTitle", "Mood - Genres By Mood");

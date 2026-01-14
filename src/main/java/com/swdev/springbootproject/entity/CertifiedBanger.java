@@ -14,7 +14,5 @@ import org.jspecify.annotations.NonNull;
 @Entity
 @Table(name = "certified_bangers")
 public class CertifiedBanger {
-    @NonNull
-    @Id
-    private Long id;
+  @NonNull @Id private Long id;
 }

@@ -1,17 +1,11 @@
 package com.swdev.springbootproject.controller;
 
 import com.swdev.springbootproject.component.TmdbMovieToMovieDtoConverter;
-import com.swdev.springbootproject.entity.CertifiedBanger;
 import com.swdev.springbootproject.model.dto.MovieDto;
 import com.swdev.springbootproject.model.tmdb.TmdbMovie;
-import com.swdev.springbootproject.repository.CertifiedBangerRepository;
 import com.swdev.springbootproject.service.CertifiedBangerService;
 import com.swdev.springbootproject.service.TMDBService;
 import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -35,8 +29,10 @@ public class TrendsController {
   }
 
   @GetMapping("/trends")
-  public String showTrendingMovies(@RequestParam(defaultValue = "1") int page, Model model, Authentication authentication) {
-    List<MovieDto> movies = tmdbService.getPopularMovies(page).stream().map(tmdbMovieToMovieDto::convert).toList();
+  public String showTrendingMovies(
+      @RequestParam(defaultValue = "1") int page, Model model, Authentication authentication) {
+    List<MovieDto> movies =
+        tmdbService.getPopularMovies(page).stream().map(tmdbMovieToMovieDto::convert).toList();
 
     certifiedBangerService.applyCertifiedBangerFlag(movies);
 

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/admin/certified")
@@ -37,5 +36,4 @@ public class CertifiedBangerController {
     model.addAttribute("certified", false);
     return "fragments/certify-btn :: certifyBtn";
   }
-
 }
