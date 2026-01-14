@@ -4,17 +4,18 @@
             th:if="${!certified}"
             type="button"
             class="btn btn-outline-secondary w-100"
-            title="Promote to Certified Banger"
+            th:title="#{certify.btn.certify.title}"
+            th:text="#{certify.btn.certify} + ' 💣'"
             th:hx-post="@{/admin/certified/add/{movieId}(movieId=${movieId})}"
             hx-target="this"
             hx-swap="outerHTML">
-        Certify &#128163;
     </button>
     <button sec:authorize="hasAuthority('admin')"
             th:if="${certified}"
             type="button"
             class="btn btn-primary w-100"
-            title="Revoke banger certification"
+            th:title="#{certify.btn.certified.title}"
+            th:text="#{certify.btn.certified} + ' 💣'"
             th:hx-delete="@{/admin/certified/remove/{movieId}(movieId=${movieId})}"
             hx-target="this"
             hx-swap="outerHTML">
