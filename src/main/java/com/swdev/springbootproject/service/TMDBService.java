@@ -155,4 +155,26 @@ public class TMDBService {
                 .body(new ParameterizedTypeReference<@NonNull TmdbResults<TmdbTv>>() {}))
         .getResults();
   }
+
+  public List<TmdbMovie> getUpcomingMovies(int page) {
+    return Objects.requireNonNull(
+            this.restClient
+                .get()
+                .uri(
+                    uriBuilder ->
+                        uriBuilder
+                            .path(ENDPOINT_DISCOVER_MOVIE)
+                            .queryParam("include_adult", false)
+                            .queryParam("include_video", false)
+                            .queryParam("page", page)
+                            .queryParam("sort_by", "release_date.desc")
+                            .queryParam("certification_country", "US")
+                            .queryParam("certification.lte", "PG-13")
+                            .queryParam("language", localeService.getCurrentLanguage())
+                            .queryParam("api_key", apiKey)
+                            .build())
+                .retrieve()
+                .body(new ParameterizedTypeReference<@NonNull TmdbResults<TmdbMovie>>() {}))
+        .getResults();
+  }
 }
