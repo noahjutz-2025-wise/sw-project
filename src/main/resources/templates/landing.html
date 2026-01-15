@@ -4,27 +4,13 @@
 <head>
     <title>Certified Bangers</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        @media only screen and (max-width: 1000px) {
-            /* For mobile phones: */
-            .big-screen {
-                display: none;
-            }
-        }
-        @media only screen and (min-width: 1000px) {
-            /* For mobile phones: */
-            .small-screen {
-                display: none;
-            }
-        }
-    </style>
     <link href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
 
 
 <section layout:fragment="content">
-    <div class="big-screen" th:insert="~{fragments/landing_page_top_bar::navbar}"></div>
-    <div class="small-screen" th:insert="~{fragments/landing_page_top_bar::mobile_navbar}"></div>
+    <div class="d-none d-lg-block" th:insert="~{fragments/landing_page_top_bar :: ${pageTitle == 'Home'} ? navbar_home : navbar}"></div>
+    <div class="d-lg-none" th:insert="~{fragments/landing_page_top_bar :: ${pageTitle == 'Home'} ? mobile_navbar_home : mobile_navbar}"></div>
 
     <div class="alert alert-info">
         <h1 th:text="#{landing.greeting}">Willkommen zu Certified Bangers, Ihrem neuen Movies-Empfehlungsportal!</h1>
@@ -33,23 +19,8 @@
 
     <div class="container">
         <div class="container-fluid">
-            <h1 class="trend-title my-3" th:text="#{landing.upcoming}">Kommende Filme</h1>
+            <h1 class="trend-title my-3" th:text="#{landing.upcoming}">Anstehende Filme</h1>
             <div th:replace="~{fragments/movie_card_grid :: movieCardGrid(movies=${movies})}"></div>
-
-            <nav aria-label="Seitennavigation">
-                <ul class="pagination justify-content-center py-3">
-                    <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
-                        <a class="page-link" th:href="@{/(page=${currentPage - 1})}">&laquo;</a>
-                    </li>
-                    <li class="page-item" th:classappend="${i == currentPage} ? 'active'"
-                        th:each="i : ${#numbers.sequence(1, 5)}">
-                        <a class="page-link" th:href="@{/(page=${i})}" th:text="${i}"></a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" th:href="@{/(page=${currentPage + 1})}">&raquo;</a>
-                    </li>
-                </ul>
-            </nav>
         </div>
     </div>
 

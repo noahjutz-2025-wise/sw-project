@@ -6,6 +6,8 @@
         </div>
         <br>
         <ul class="nav flex-column">
+            <li class="nav-item"><a href="/home" class="nav-link text-white"
+                                    th:classappend="${activeTab == 'home'} ? 'active' : ''" th:text="#{nav.home}">Startseite</a></li>
             <li class="nav-item"><a href="/mood" class="nav-link text-white"
                                     th:classappend="${activeTab == 'mood'} ? 'active' : ''" th:text="#{nav.mood}">Stimmung</a></li>
             <li class="nav-item"><a href="/trends" class="nav-link text-white"
