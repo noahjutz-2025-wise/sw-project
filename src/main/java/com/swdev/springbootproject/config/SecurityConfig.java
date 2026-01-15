@@ -35,13 +35,7 @@ class SecurityConfig {
                 a.requestMatchers("/app/**", "/verify", "/user/profile", "/home")
                     .authenticated()
                     .requestMatchers(
-                        "/signup",
-                        "/",
-                        "/css/**",
-                        "/js/**",
-                        "/error",
-                        "/webjars/**",
-                        "/images/theater.jpg")
+                        "/signup", "/", "/css/**", "/js/**", "/error", "/webjars/**", "/images/**")
                     .permitAll()
                     .anyRequest()
                     .authenticated())
