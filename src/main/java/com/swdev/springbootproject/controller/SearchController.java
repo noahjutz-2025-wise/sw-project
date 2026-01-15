@@ -2,9 +2,16 @@ package com.swdev.springbootproject.controller;
 
 import com.swdev.springbootproject.component.TmdbMovieToMovieDtoConverter;
 import com.swdev.springbootproject.component.TmdbTvToMovieDtoConverter;
+import com.swdev.springbootproject.model.dto.MovieDto;
 import com.swdev.springbootproject.service.TMDBService;
+
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -71,7 +78,21 @@ class SearchController {
 
   @GetMapping("/autocomplete")
   public String autocomplete(@RequestParam String query, Model model) {
-    model.addAttribute("results", List.of("hello", "world"));
+    final List<String> titles =
+        query.isBlank()
+            ? List.of()
+            : Stream.concat(
+                    tmdbService.searchMovies(query).stream()
+                        .map(tmdbMovieToCbMovieDto::convert)
+                        .limit(5),
+                    tmdbService.searchTv(query).stream().map(tmdbTvToCbMovieDto::convert).limit(5))
+                .filter(Objects::nonNull)
+                .map(MovieDto::getTitle)
+                .collect(Collectors.toSet())
+                .stream()
+                .toList();
+
+    model.addAttribute("results", titles);
     return "fragments/dropdown_list::dropdown_list(results=${results})";
   }
 }
