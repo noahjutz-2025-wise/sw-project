@@ -157,12 +157,13 @@ public class TMDBService {
   }
 
   public List<TmdbMovie> getUpcomingMovies(int page) {
-    List<TmdbMovie> fullList = Objects.requireNonNull(
-            this.restClient
-                .get()
-                .uri(
-                    uriBuilder ->
-                        uriBuilder
+    List<TmdbMovie> fullList =
+        Objects.requireNonNull(
+                this.restClient
+                    .get()
+                    .uri(
+                        uriBuilder ->
+                            uriBuilder
                                 .path(ENDPOINT_DISCOVER_MOVIE)
                                 .queryParam("include_adult", false)
                                 .queryParam("include_video", false)
@@ -175,9 +176,9 @@ public class TMDBService {
                                 .queryParam("language", localeService.getCurrentLanguage())
                                 .queryParam("api_key", apiKey)
                                 .build())
-                .retrieve()
-                .body(new ParameterizedTypeReference<@NonNull TmdbResults<TmdbMovie>>() {}))
-        .getResults();
+                    .retrieve()
+                    .body(new ParameterizedTypeReference<@NonNull TmdbResults<TmdbMovie>>() {}))
+            .getResults();
 
     return fullList.subList(0, 12);
   }
