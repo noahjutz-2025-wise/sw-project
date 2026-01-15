@@ -12,4 +12,5 @@ public class MovieDto {
   private final String backdropPath;
   private final String overview;
   private final MovieDtoType type;
+  private boolean certifiedBanger;
 }

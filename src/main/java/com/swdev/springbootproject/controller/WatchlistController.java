@@ -4,6 +4,7 @@ import com.swdev.springbootproject.component.TmdbMovieToMovieDtoConverter;
 import com.swdev.springbootproject.entity.BookmarkStatus;
 import com.swdev.springbootproject.entity.CbUser;
 import com.swdev.springbootproject.repository.MovieBookmarkRepository;
+import com.swdev.springbootproject.service.CertifiedBangerService;
 import com.swdev.springbootproject.service.TMDBService;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -21,6 +22,7 @@ class WatchlistController {
   private final MovieBookmarkRepository movieBookmarkRepository;
   private final TMDBService tmdbService;
   private final TmdbMovieToMovieDtoConverter tmdbMovieToMovieDtoConverter;
+  private final CertifiedBangerService certifiedBangerService;
 
   @GetMapping
   public String watchlist() {
@@ -46,6 +48,7 @@ class WatchlistController {
             .map(tmdbMovieToMovieDtoConverter::convert)
             .collect(Collectors.toList());
 
+    certifiedBangerService.applyCertifiedBangerFlag(movies);
     model.addAttribute("movies", movies);
     return "fragments/movie_card_grid :: movieCardGrid(movies=${movies})";
   }
