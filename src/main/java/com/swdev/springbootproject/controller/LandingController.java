@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -33,12 +32,12 @@ public class LandingController {
     return "landing";
   }
 
-    @GetMapping("/home")
-    public String showHomePage(Model model) {
-        model.addAttribute("pageTitle", "Home");
-        model.addAttribute(
-                "movies",
-                tmdbService.getUpcomingMovies(1).stream().map(tmdbMovieToMovieDto::convert).toList());
-        return "landing";
-    }
+  @GetMapping("/home")
+  public String showHomePage(Model model) {
+    model.addAttribute("pageTitle", "Home");
+    model.addAttribute(
+        "movies",
+        tmdbService.getUpcomingMovies(1).stream().map(tmdbMovieToMovieDto::convert).toList());
+    return "landing";
+  }
 }
