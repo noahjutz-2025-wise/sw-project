@@ -9,11 +9,45 @@
     <div th:replace="~{fragments/mobile-nav :: mobile-navbar('feed')}"></div>
     <div class="d-flex">
         <div th:replace="~{fragments/sidebar :: sidebar('feed')}"></div>
+        <button class="btn btn-primary position-fixed end-0 bottom-0 m-5 shadow"
+                type="button" data-bs-toggle="modal" data-bs-target="#postModal">
+            <i class="bi bi-plus-lg me-1"></i>
+            <span th:text="#{feed.new-post}">New Post</span>
+        </button>
         <div class="container">
             <div class="container-fluid d-flex flex-column">
                 <h1 class="trend-title mb-4" th:text="#{feed.title}">Feed</h1>
             </div>
         </div>
     </div>
+
+    <div th:replace="~{::postModal}"></div>
 </section>
+
+<div class="modal fade" id="postModal" tabindex="-1" th:fragment="postModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" th:text="#{feed.new-post}">New Post</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="dropdown mb-2">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Add related media..."
+                               data-script="on focus toggle .show on the next <ul/> until blur">
+                        <span class="input-group-text"><i class="bi bi-search"></i></span>
+                    </div>
+                    <ul id="suggestions" class="dropdown-menu">
+                        <li class="dropdown-item">hi</li>
+                    </ul>
+                </div>
+                <textarea type="text" class="form-control" placeholder="Post something..." rows="5"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Post</button>
+            </div>
+        </div>
+    </div>
+</div>
 </html>
