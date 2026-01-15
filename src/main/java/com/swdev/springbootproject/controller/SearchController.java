@@ -68,4 +68,10 @@ class SearchController {
       }
     };
   }
+
+  @GetMapping("/autocomplete")
+  public String autocomplete(@RequestParam String query, Model model) {
+    model.addAttribute("results", List.of("hello", "world"));
+    return "fragments/dropdown_list::dropdown_list(results=${results})";
+  }
 }

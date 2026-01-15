@@ -35,12 +35,17 @@
                 <div class="dropdown mb-2">
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Add related media..."
-                               data-script="on focus toggle .show on the next <ul/> until blur">
+                               name="query"
+                               data-script="on focus toggle .d-none on #suggestions until blur"
+                               hx-get="/app/search/autocomplete"
+                               hx-params="*"
+                               hx-trigger="input changed delay:500ms"
+                               hx-target="#suggestions"
+                               hx-swap="inner">
                         <span class="input-group-text"><i class="bi bi-search"></i></span>
                     </div>
-                    <ul id="suggestions" class="dropdown-menu">
-                        <li class="dropdown-item">hi</li>
-                    </ul>
+                    <div id="suggestions" class="d-none">
+                    </div>
                 </div>
                 <textarea type="text" class="form-control" placeholder="Post something..." rows="5"></textarea>
             </div>
