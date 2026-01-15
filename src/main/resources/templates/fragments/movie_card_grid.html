@@ -9,7 +9,7 @@
                 : '/app/tv/' + movie.id}}">
             <th:block
                     th:with="fullPosterUrl=${T(com.swdev.springbootproject.service.TMDBService).POSTER_BASE_URL + movie.getPosterPath}">
-                <div th:replace="~{fragments/movie_card :: movieCard(movieId=${movie.id}, certifiedBanger=${movie.certifiedBanger} ,title=${movie.title}, posterUrl=${fullPosterUrl})}"></div>
+                <div th:replace="~{fragments/movie_card :: movieCard(title=${movie.title}, posterUrl=${fullPosterUrl}, releaseDate=${movie.releaseDate})}"></div>
             </th:block>
         </a>
     </th:block>

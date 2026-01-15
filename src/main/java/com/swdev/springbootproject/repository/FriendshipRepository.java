@@ -14,5 +14,7 @@ public interface FriendshipRepository extends JpaRepository<@NonNull Friendship,
 
   Optional<Friendship> findBySender_IdAndReceiver_Id(Long senderId, Long receiverId);
 
+  Optional<Friendship> findFriendshipById(Long id);
+
   boolean existsBySender_IdAndReceiver_Id(@NonNull Long userId1, @NonNull Long userId2);
 }

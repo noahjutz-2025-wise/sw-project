@@ -157,16 +157,10 @@ There are three parts to the exam submission.
     - [x] Decide on formatter - [Spring Java Formatter](https://github.com/spring-io/spring-javaformat)
     - [x] Finalize Definition of Done
 - 2025-12-04
-    - [x] Assign Profile screen to F13 Friends & Profiles    
+    - [x] Assign Profile screen to F13 Friends & Profiles
     - [x] Assign Movie details screen to F7 Catalog & Details
 - 2025-12-18
     - [x] Design decisions: Dedicated Search page with tabs (movies, shows, users). Replace home page with mood page.
-- 2026-01-09
-    - [x] ER Diagram
-- 2026-01-15
-    - [x] [Presentation](https://docs.google.com/presentation/d/1OOad_HXL0u61iQu2d2kwsYC3nhkKg7DSj33kWUH5CgE) 30.01.2026 12:15-12:45 (8 Min Pro Person)
-    - [x] [Bewertungs-Template](https://docs.google.com/spreadsheets/d/12KGH75xNbCPqAtvQRwFPHraN69S-VTdu/edit?usp=sharing&ouid=107658354701601386729&rtpof=true&sd=true)
-    - [x] [Presentation notes](https://docs.google.com/spreadsheets/d/12KGH75xNbCPqAtvQRwFPHraN69S-VTdu/edit?usp=sharing&ouid=107658354701601386729&rtpof=true&sd=true)
 
 ## Further links
 
