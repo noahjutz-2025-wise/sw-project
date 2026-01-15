@@ -36,7 +36,8 @@
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Add related media..."
                                name="query"
-                               data-script="on focus toggle .d-none on #suggestions until blur"
+                               data-script="on focus remove .d-none from #suggestions
+                                            on blur wait 200ms then add .d-none to #suggestions"
                                hx-get="/app/search/autocomplete"
                                hx-params="*"
                                hx-trigger="input changed delay:500ms"
@@ -44,7 +45,7 @@
                                hx-swap="inner">
                         <span class="input-group-text"><i class="bi bi-search"></i></span>
                     </div>
-                    <div id="suggestions" class="d-none">
+                    <div id="suggestions" class="d-none" data-script="on mousedown log target's textContent">
                     </div>
                 </div>
                 <textarea type="text" class="form-control" placeholder="Post something..." rows="5"></textarea>
