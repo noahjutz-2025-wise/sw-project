@@ -32,7 +32,7 @@ class SecurityConfig {
   public SecurityFilterChain filterChain(HttpSecurity http) {
     return http.authorizeHttpRequests(
             a ->
-                a.requestMatchers("/app/**", "/verify", "/user/profile")
+                a.requestMatchers("/app/**", "/verify", "/user/profile", "/home")
                     .authenticated()
                     .requestMatchers(
                         "/signup",
@@ -45,7 +45,7 @@ class SecurityConfig {
                     .permitAll()
                     .anyRequest()
                     .authenticated())
-        .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/mood").permitAll())
+        .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/home").permitAll())
         .csrf(csrf -> csrf.ignoringRequestMatchers("/**"))
         .build();
   }

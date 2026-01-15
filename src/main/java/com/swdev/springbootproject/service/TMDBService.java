@@ -157,24 +157,28 @@ public class TMDBService {
   }
 
   public List<TmdbMovie> getUpcomingMovies(int page) {
-    return Objects.requireNonNull(
+    List<TmdbMovie> fullList = Objects.requireNonNull(
             this.restClient
                 .get()
                 .uri(
                     uriBuilder ->
                         uriBuilder
-                            .path(ENDPOINT_DISCOVER_MOVIE)
-                            .queryParam("include_adult", false)
-                            .queryParam("include_video", false)
-                            .queryParam("page", page)
-                            .queryParam("sort_by", "release_date.desc")
-                            .queryParam("certification_country", "US")
-                            .queryParam("certification.lte", "PG-13")
-                            .queryParam("language", localeService.getCurrentLanguage())
-                            .queryParam("api_key", apiKey)
-                            .build())
+                                .path(ENDPOINT_DISCOVER_MOVIE)
+                                .queryParam("include_adult", false)
+                                .queryParam("include_video", false)
+                                .queryParam("page", page)
+                                .queryParam("sort_by", "release_date.desc")
+                                .queryParam("certification_country", "US")
+                                .queryParam("certification.lte", "PG-13")
+                                .queryParam("release_date.gte", "2026-02-02")
+                                .queryParam("release_date.lte", "2026-03-25")
+                                .queryParam("language", localeService.getCurrentLanguage())
+                                .queryParam("api_key", apiKey)
+                                .build())
                 .retrieve()
                 .body(new ParameterizedTypeReference<@NonNull TmdbResults<TmdbMovie>>() {}))
         .getResults();
+
+    return fullList.subList(0, 12);
   }
 }

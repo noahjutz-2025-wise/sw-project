@@ -17,7 +17,7 @@ class LoginController {
     if (authentication != null
         && authentication.isAuthenticated()
         && !(authentication instanceof AnonymousAuthenticationToken)) {
-      return "redirect:/mood";
+      return "redirect:/home";
     }
     return "login";
   }

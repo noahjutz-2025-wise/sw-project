@@ -39,7 +39,7 @@ public class SignupController {
     if (authentication != null
         && authentication.isAuthenticated()
         && !(authentication instanceof AnonymousAuthenticationToken)) {
-      return "redirect:/mood";
+      return "redirect:/home";
     }
 
     model.addAttribute("user", new CbUser());
@@ -70,7 +70,7 @@ public class SignupController {
         createAuth(userDto.getEmail(), userDto.getPassword()), request, response);
 
     emailService.sendVerificationEmail(insertedUser);
-    return "redirect:/mood";
+    return "redirect:/home";
   }
 
   private SecurityContext createAuth(String username, String password) {

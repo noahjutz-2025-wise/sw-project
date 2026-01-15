@@ -20,17 +20,25 @@ public class LandingController {
 
   @GetMapping("/api/upcoming")
   @ResponseBody
-  public List<TmdbMovie> getUpcoming(@RequestParam(defaultValue = "1") int page) {
-    return tmdbService.getUpcomingMovies(page);
+  public List<TmdbMovie> getUpcoming() {
+    return tmdbService.getUpcomingMovies(1);
   }
 
   @GetMapping("/")
-  public String showLandingPage(@RequestParam(defaultValue = "1") int page, Model model) {
-    model.addAttribute("pageTitle", "Upcoming Movies");
+  public String showLandingPage(Model model) {
+    model.addAttribute("pageTitle", "Landing");
     model.addAttribute(
         "movies",
-        tmdbService.getUpcomingMovies(page).stream().map(tmdbMovieToMovieDto::convert).toList());
-    model.addAttribute("currentPage", page);
+        tmdbService.getUpcomingMovies(1).stream().map(tmdbMovieToMovieDto::convert).toList());
     return "landing";
   }
+
+    @GetMapping("/home")
+    public String showHomePage(Model model) {
+        model.addAttribute("pageTitle", "Home");
+        model.addAttribute(
+                "movies",
+                tmdbService.getUpcomingMovies(1).stream().map(tmdbMovieToMovieDto::convert).toList());
+        return "landing";
+    }
 }
