@@ -17,6 +17,7 @@ public class TmdbMovieToMovieDtoConverter implements Converter<TmdbMovie, MovieD
         .title(source.getTitle())
         .posterPath(source.getPosterPath())
         .backdropPath(source.getBackdropPath())
+        .releaseDate(source.getReleaseDate())
         .overview(source.getOverview())
         .type(MovieDtoType.MOVIE)
         .build();
