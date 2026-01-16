@@ -69,7 +69,7 @@
                             call htmx.trigger('#suggestions', 'addMedia')"
                          hx-trigger="addMedia from:body"
                          hx-get="/app/feed/mediaCards"
-                         hx-swap=".selected-medias-view"
+                         hx-target="#selected-medias-view"
                          id="suggestions"
                          class="d-none">
                     </div>

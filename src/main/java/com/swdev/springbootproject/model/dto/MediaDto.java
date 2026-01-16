@@ -1,17 +1,21 @@
 package com.swdev.springbootproject.model.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class MediaDto {
-  private final long id;
-  private final String title;
-  private final String posterPath;
-  private final String backdropPath;
-  private final String releaseDate;
-  private final String overview;
-  private final MediaDtoType type;
-  private boolean certifiedBanger;
+  private long id;
+  private String title;
+  private String posterPath;
+  private String backdropPath;
+  private String releaseDate;
+  private String overview;
+  private MediaDtoType type;
+  private Boolean certifiedBanger;
 }
