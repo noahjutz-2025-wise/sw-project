@@ -2,11 +2,9 @@ package com.swdev.springbootproject.controller;
 
 import com.swdev.springbootproject.component.TmdbMovieToMovieDtoConverter;
 import com.swdev.springbootproject.component.TmdbTvToMovieDtoConverter;
-import com.swdev.springbootproject.model.dto.MovieDto;
+import com.swdev.springbootproject.model.dto.MediaDto;
 import com.swdev.springbootproject.service.TMDBService;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -87,7 +85,7 @@ class SearchController {
                         .limit(5),
                     tmdbService.searchTv(query).stream().map(tmdbTvToCbMovieDto::convert).limit(5))
                 .filter(Objects::nonNull)
-                .map(MovieDto::getTitle)
+                .map(MediaDto::getTitle)
                 .collect(Collectors.toSet())
                 .stream()
                 .toList();

@@ -1,7 +1,7 @@
 package com.swdev.springbootproject.controller;
 
 import com.swdev.springbootproject.component.TmdbMovieToMovieDtoConverter;
-import com.swdev.springbootproject.model.dto.MovieDto;
+import com.swdev.springbootproject.model.dto.MediaDto;
 import com.swdev.springbootproject.model.tmdb.TmdbMovie;
 import com.swdev.springbootproject.service.CertifiedBangerService;
 import com.swdev.springbootproject.service.TMDBService;
@@ -35,7 +35,7 @@ public class MoodController {
       mood = "happy";
     }
 
-    List<MovieDto> movies =
+    List<MediaDto> movies =
         tmdbService.getMoviesByMood(mood, page).stream().map(tmdbMovieToMovieDto::convert).toList();
     certifiedBangerService.applyCertifiedBangerFlag(movies);
     model.addAttribute("mood", mood);
