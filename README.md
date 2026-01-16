@@ -3,21 +3,32 @@
 Spring Boot web app that provides movie and TV show recommendations. Created in the course of the computer science
 module "Softwareentwicklung (SW)" at OTH Regensburg.
 
-## Quickstart
+## Quickstart with Docker
+
+```shell
+docker run \
+  -p 8080:8080 \
+  -e TMDB_API_KEY=... \
+  -e SECURITY_OWNER_DEFAULT_PASSWORD=... \
+  -e SPRING_MAIL_USERNAME=... \
+  -e SPRING_MAIL_PASSWORD=... \
+  quay.io/noahjutz/sw-project
+```
+
+## Quickstart without Docker
 
 ```sh
 ./mvnw spring-boot:run
 ```
 
-## Required local properties
-
 Place these secrets in `src/main/resources/application-local.properties`.
 
-| Key                    | Content                                                 |
-|------------------------|---------------------------------------------------------|
-| `tmdb.api.key`         | [TMDB API Key](https://www.themoviedb.org/settings/api) |
-| `spring.mail.username` | YOUR_EMAIL@gmail.com                                    |
-| `spring.mail.password` | Google App Password (see below)                         |
+| Key                               | Content                                                 |
+|-----------------------------------|---------------------------------------------------------|
+| `security.owner.default_password` | Choose freely, e.g. 123                                 |
+| `tmdb.api.key`                    | [TMDB API Key](https://www.themoviedb.org/settings/api) |
+| `spring.mail.username`            | YOUR_EMAIL@gmail.com                                    |
+| `spring.mail.password`            | Google App Password (see below)                         |
 
 ## Class Diagram
 
@@ -157,14 +168,15 @@ There are three parts to the exam submission.
     - [x] Decide on formatter - [Spring Java Formatter](https://github.com/spring-io/spring-javaformat)
     - [x] Finalize Definition of Done
 - 2025-12-04
-    - [x] Assign Profile screen to F13 Friends & Profiles    
+    - [x] Assign Profile screen to F13 Friends & Profiles
     - [x] Assign Movie details screen to F7 Catalog & Details
 - 2025-12-18
     - [x] Design decisions: Dedicated Search page with tabs (movies, shows, users). Replace home page with mood page.
 - 2026-01-09
     - [x] ER Diagram
 - 2026-01-15
-    - [x] [Presentation](https://docs.google.com/presentation/d/1OOad_HXL0u61iQu2d2kwsYC3nhkKg7DSj33kWUH5CgE) 30.01.2026 12:15-12:45 (8 Min Pro Person)
+    - [x] [Presentation](https://docs.google.com/presentation/d/1OOad_HXL0u61iQu2d2kwsYC3nhkKg7DSj33kWUH5CgE) 30.01.2026
+      12:15-12:45 (8 Min Pro Person)
     - [x] [Bewertungs-Template](https://docs.google.com/spreadsheets/d/12KGH75xNbCPqAtvQRwFPHraN69S-VTdu/edit?usp=sharing&ouid=107658354701601386729&rtpof=true&sd=true)
     - [x] [Presentation notes](https://docs.google.com/spreadsheets/d/12KGH75xNbCPqAtvQRwFPHraN69S-VTdu/edit?usp=sharing&ouid=107658354701601386729&rtpof=true&sd=true)
 
