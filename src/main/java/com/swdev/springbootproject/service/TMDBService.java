@@ -21,6 +21,7 @@ public class TMDBService {
   public static final String ENDPOINT_SEARCH_MOVIE = "/search/movie";
   public static final String ENDPOINT_SEARCH_TV = "/search/tv";
   public static final String ENDPOINT_PERSON_POPULAR = "/person/popular";
+  public static final String ENDPOINT_PERSON = "/person/{id}";
 
   public static final String POSTER_BASE_URL = "https://image.tmdb.org/t/p/w342/";
   public static final String BACKDROP_BASE_URL = "https://image.tmdb.org/t/p/w1280/";
@@ -211,5 +212,19 @@ public class TMDBService {
                 .retrieve()
                 .body(new ParameterizedTypeReference<@NonNull TmdbResults<TmdbPerson>>() {}))
         .getResults();
+  }
+
+  public TmdbPerson getPersonDetails(Long personId) {
+    return restClient
+        .get()
+        .uri(
+            uriBuilder ->
+                uriBuilder
+                    .path(ENDPOINT_PERSON)
+                    .queryParam("api_key", apiKey)
+                    .queryParam("language", localeService.getCurrentLanguage())
+                    .build(personId))
+        .retrieve()
+        .body(TmdbPerson.class);
   }
 }

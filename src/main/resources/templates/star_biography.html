@@ -1,0 +1,67 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{scaffold}">
+<head>
+    <meta charset="UTF-8">
+    <title>Star Biography</title>
+</head>
+<section layout:fragment="content">
+    <header class="mb-4">
+        <div class="container position-relative p-0">
+            <div class="overflow-hidden">
+                <div class="top-gradient"></div>
+            </div>
+
+            <div class="position-absolute top-0 navbar navbar-light z-1">
+                <div class="container">
+                    <div class="navbar-brand me-0 flex-grow-1">
+                        <a class="icon-link nav-link" href="javascript:void(0)" th:onclick="history.back()">
+                            <i class="bi bi-arrow-left"></i>
+                        </a>
+                        <span class="me-2"></span>
+                        <span th:text="${personDetails.name}">Star Name</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </header>
+    <main>
+        <div class="container mt-5">
+            <div class="row g-4">
+                <div class="col-sm-4 col-12">
+                    <img width="100%" th:src="${poster}"
+                         class="shadow mb-4"/>
+                </div>
+                <div class="col-sm-8 col-12">
+                    <table class="table">
+                        <tr>
+                            <th th:text="#{person.details.birthday}">Geboren am</th>
+                            <td th:text="${personDetails.birthday}"></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{person.details.placeOfBirth}">Geboren in</th>
+                            <td th:text="${personDetails.placeOfBirth}"></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{person.details.knownForDepartment}">Bekannt für</th>
+                            <td th:text="${personDetails.knownForDepartment}"></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{person.details.popularity}">Beliebtheit</th>
+                            <td th:text="${personDetails.popularity} + ' ' + #{celebrities.point}">Punkte</td>
+                        </tr>
+                    </table>
+                    <h2 th:text="#{person.details.biography}">Biography</h2>
+                    <p th:if="${personDetails.biography != null and !#strings.isEmpty(personDetails.biography)}"
+                       th:text="${personDetails.biography}">
+                    </p>
+                    <p class="text-muted"
+                       th:unless="${personDetails.biography != null and !#strings.isEmpty(personDetails.biography)}"
+                       th:text="#{person.details.noBiography}">
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+</section>
+</html>
