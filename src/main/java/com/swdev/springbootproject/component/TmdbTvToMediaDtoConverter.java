@@ -8,7 +8,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TmdbTvToMovieDtoConverter implements Converter<TmdbTv, MediaDto> {
+public class TmdbTvToMediaDtoConverter implements Converter<TmdbTv, MediaDto> {
 
   @Override
   public @Nullable MediaDto convert(TmdbTv source) {

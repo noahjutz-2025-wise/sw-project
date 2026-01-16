@@ -1,6 +1,6 @@
 package com.swdev.springbootproject.controller;
 
-import com.swdev.springbootproject.component.TmdbMovieToMovieDtoConverter;
+import com.swdev.springbootproject.component.TmdbMovieToMediaDtoConverter;
 import com.swdev.springbootproject.entity.BookmarkStatus;
 import com.swdev.springbootproject.entity.CbUser;
 import com.swdev.springbootproject.entity.Friendship;
@@ -35,7 +35,7 @@ public class ProfileController {
   private final EmailService emailService;
   private final MovieBookmarkRepository movieBookmarkRepository;
   private final TMDBService tmdbService;
-  private final TmdbMovieToMovieDtoConverter tmdbMovieToMovieDtoConverter;
+  private final TmdbMovieToMediaDtoConverter tmdbMovieToMediaDtoConverter;
   private final CertifiedBangerService certifiedBangerService;
 
   @GetMapping("/user/profile")
@@ -184,7 +184,7 @@ public class ProfileController {
         movieBookmarkRepository.findByUserAndStatus(friendCbUser, bookmarkStatus).stream()
             .map(bookmark -> tmdbService.getMovieDetails(bookmark.getMovie().getId()))
             .filter(Objects::nonNull)
-            .map(tmdbMovieToMovieDtoConverter::convert)
+            .map(tmdbMovieToMediaDtoConverter::convert)
             .toList();
 
     certifiedBangerService.applyCertifiedBangerFlag(watchlistMovies);

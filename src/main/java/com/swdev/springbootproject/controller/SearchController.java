@@ -1,7 +1,7 @@
 package com.swdev.springbootproject.controller;
 
-import com.swdev.springbootproject.component.TmdbMovieToMovieDtoConverter;
-import com.swdev.springbootproject.component.TmdbTvToMovieDtoConverter;
+import com.swdev.springbootproject.component.TmdbMovieToMediaDtoConverter;
+import com.swdev.springbootproject.component.TmdbTvToMediaDtoConverter;
 import com.swdev.springbootproject.model.dto.MediaDto;
 import com.swdev.springbootproject.service.TMDBService;
 
@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/app/search")
 class SearchController {
   private final TMDBService tmdbService;
-  private final TmdbTvToMovieDtoConverter tmdbTvToCbMovieDto;
-  private final TmdbMovieToMovieDtoConverter tmdbMovieToCbMovieDto;
+  private final TmdbTvToMediaDtoConverter tmdbTvToCbMovieDto;
+  private final TmdbMovieToMediaDtoConverter tmdbMovieToCbMovieDto;
 
   @GetMapping("")
   public String search() {

@@ -1,6 +1,6 @@
 package com.swdev.springbootproject.controller;
 
-import com.swdev.springbootproject.component.TmdbMovieToMovieDtoConverter;
+import com.swdev.springbootproject.component.TmdbMovieToMediaDtoConverter;
 import com.swdev.springbootproject.model.dto.MediaDto;
 import com.swdev.springbootproject.model.tmdb.TmdbMovie;
 import com.swdev.springbootproject.service.CertifiedBangerService;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 public class MoodController {
   private final TMDBService tmdbService;
-  private final TmdbMovieToMovieDtoConverter tmdbMovieToMovieDto;
+  private final TmdbMovieToMediaDtoConverter tmdbMovieToMovieDto;
   private final CertifiedBangerService certifiedBangerService;
 
   @GetMapping("/api/mood")
