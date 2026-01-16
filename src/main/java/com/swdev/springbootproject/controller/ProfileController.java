@@ -93,7 +93,7 @@ public class ProfileController {
     model.addAttribute("friends", friendsMapped);
     model.addAttribute("receivedRequests", receivedRequests);
     model.addAttribute("pendingRequests", pendingRequests);
-    return "/user/profile";
+    return "user/profile";
   }
 
   @GetMapping("/user/profile/edit")
@@ -107,7 +107,7 @@ public class ProfileController {
             .findById(currentCbUser.getId())
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
     model.addAttribute("user", updatedUser);
-    return "/user/profile-edit";
+    return "user/profile-edit";
   }
 
   @PostMapping("/user/profile/edit")
