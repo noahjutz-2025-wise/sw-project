@@ -45,17 +45,25 @@
                                hx-swap="inner">
                         <span class="input-group-text"><i class="bi bi-search"></i></span>
                     </div>
-                    <div id="suggestions" class="d-none" data-script="on mousedown
-                                                                      make a <input/>
-                                                                      add @name='media-ids[]' to it
-                                                                      add @type='hidden' to it
-                                                                      put target's @data-id into its @value
-                                                                      append it to #selected-medias then
-                                                                      make a <input/>
-                                                                      add @name='media-types[]' to it
-                                                                      add @type='hidden' to it
-                                                                      put target's @data-type into its @value
-                                                                      append it to #selected-medias">
+                    <div data-script="
+                        on htmx:configRequest
+                            set mediaList to []
+
+                            for item in children of #selected-medias
+                                log item
+                              append {id: item@data-id, type: item@data-type} to mediaList
+                            end
+
+                            set event.detail.parameters.media_json to JSON.stringify(mediaList)
+                            end
+                        on mousedown
+                            make a <div.selectedMedia/>
+                            put target's @data-id into its @data-id
+                            put target's @data-type into its @data-type
+                            append it to #selected-medias then
+                            call htmx.trigger('#suggestions', 'addMedia')"
+                         hx-trigger="addMedia from:body" hx-get="/test" id="suggestions"
+                         class="d-none">
                     </div>
                     <div id="selected-medias">
                     </div>
