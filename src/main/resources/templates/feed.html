@@ -67,8 +67,13 @@
                             put target's @data-type into its @data-type
                             append it to #selected-medias then
                             call htmx.trigger('#suggestions', 'addMedia')"
-                         hx-trigger="addMedia from:body" hx-get="/test" id="suggestions"
+                         hx-trigger="addMedia from:body"
+                         hx-get="/app/feed/mediaCards"
+                         hx-swap=".selected-medias-view"
+                         id="suggestions"
                          class="d-none">
+                    </div>
+                    <div id="selected-medias-view">
                     </div>
                     <div id="selected-medias">
                     </div>
