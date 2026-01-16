@@ -45,7 +45,19 @@
                                hx-swap="inner">
                         <span class="input-group-text"><i class="bi bi-search"></i></span>
                     </div>
-                    <div id="suggestions" class="d-none" data-script="on mousedown log target's textContent">
+                    <div id="suggestions" class="d-none" data-script="on mousedown
+                                                                      make a <input/>
+                                                                      add @name='media-ids[]' to it
+                                                                      add @type='hidden' to it
+                                                                      put target's @data-id into its @value
+                                                                      append it to #selected-medias then
+                                                                      make a <input/>
+                                                                      add @name='media-types[]' to it
+                                                                      add @type='hidden' to it
+                                                                      put target's @data-type into its @value
+                                                                      append it to #selected-medias">
+                    </div>
+                    <div id="selected-medias">
                     </div>
                 </div>
                 <textarea type="text" class="form-control" placeholder="Post something..." rows="5"></textarea>
