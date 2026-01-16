@@ -1,21 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{scaffold}">
     <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Error</title>
-        <link href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet"/>
     </head>
 
-    <body>
-        <div th:replace="~{fragments/landing_page_top_bar::navbar}">
-        </div>
-        <div class="alert alert-warning">
-            <h1>Ups! Da ist wohl etwas schiefgelaufen.</h1>
-            <p>Die App-Dateien konnten nicht geladen werden – wir sind schon dran!
-            <p>Klicken Sie einfach, um zur Startseite zurückzukehren.</p>
-            <button type="button" class="btn btn-info"><a href="/">Landing Page</a></button>
-        </div>
+    <section layout:fragment="content">
+        <div class="d-none d-lg-block" th:insert="~{fragments/landing_page_top_bar :: navbar_error}"></div>
+        <div class="d-lg-none" th:insert="~{fragments/landing_page_top_bar :: mobile_navbar_error}"></div>
 
-    </body>
+        <div class="alert alert-warning">
+            <h1 th:text="#{error.notification}">Ups! Da ist wohl etwas schiefgelaufen.</h1>
+            <p th:text="#{error.reason}">Die App-Dateien konnten nicht geladen werden - wir sind schon dran!</p>
+            <p th:text="#{error.solution}">Klicken Sie einfach, um zur Startseite zurückzukehren.</p>
+            <button type="button" class="btn btn-info"><a href="/" th:text="#{landing.page-name}">Startseite</a></button>
+        </div>
+    </section>
 </html>
