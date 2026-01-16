@@ -57,6 +57,11 @@
                             set event.detail.parameters.media_json to JSON.stringify(mediaList)
                             end
                         on mousedown
+                            for child in #selected-medias.children
+                                if child@data-id equals target's @data-id
+                                    exit
+                                end
+                            end
                             make a <div.selectedMedia/>
                             put target's @data-id into its @data-id
                             put target's @data-type into its @data-type
