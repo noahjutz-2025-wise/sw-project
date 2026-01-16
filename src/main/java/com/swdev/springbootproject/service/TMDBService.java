@@ -1,7 +1,6 @@
 package com.swdev.springbootproject.service;
 
 import com.swdev.springbootproject.model.tmdb.*;
-
 import java.util.*;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -197,21 +196,20 @@ public class TMDBService {
     return fullList.subList(0, 12);
   }
 
-    public List<TmdbPerson> getPopularPeople(int page) {
-                return Objects.requireNonNull(
-                        this.restClient
-                                .get()
-                                .uri(
-                                        uriBuilder ->
-                                                uriBuilder
-                                                        .path(ENDPOINT_PERSON_POPULAR)
-                                                        .queryParam("language", localeService.getCurrentLanguage())
-                                                        .queryParam("page", page)
-                                                        .queryParam("api_key", apiKey)
-                                                        .build())
-                                .retrieve()
-                                .body(new ParameterizedTypeReference<@NonNull TmdbResults<TmdbPerson>>() {}))
-                .getResults();
-
-    }
+  public List<TmdbPerson> getPopularPeople(int page) {
+    return Objects.requireNonNull(
+            this.restClient
+                .get()
+                .uri(
+                    uriBuilder ->
+                        uriBuilder
+                            .path(ENDPOINT_PERSON_POPULAR)
+                            .queryParam("language", localeService.getCurrentLanguage())
+                            .queryParam("page", page)
+                            .queryParam("api_key", apiKey)
+                            .build())
+                .retrieve()
+                .body(new ParameterizedTypeReference<@NonNull TmdbResults<TmdbPerson>>() {}))
+        .getResults();
+  }
 }
