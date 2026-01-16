@@ -5,10 +5,21 @@
     <title>Certified Bangers</title>
 </head>
 
+
 <section layout:fragment="content">
-    <div th:replace="~{fragments/landing_page_top_bar::navbar}"></div>
+    <div class="d-none d-lg-block" th:insert="~{fragments/landing_page_top_bar :: ${pageTitle == 'Home'} ? navbar_home : navbar}"></div>
+    <div class="d-lg-none" th:insert="~{fragments/landing_page_top_bar :: ${pageTitle == 'Home'} ? mobile_navbar_home : mobile_navbar}"></div>
+
     <div class="alert alert-info">
         <h1 th:text="#{landing.greeting}">Willkommen zu Certified Bangers, Ihrem neuen Movies-Empfehlungsportal!</h1>
+    </div>
+    <img th:src="@{/images/home_poster.jpg}" alt="Theater image" width="100%" class="banner-img">
+
+    <div class="container">
+        <div class="container-fluid">
+            <h1 class="trend-title my-3" th:text="#{landing.upcoming}">Anstehende Filme</h1>
+            <div th:replace="~{fragments/movie_card_grid :: movieCardGrid(movies=${movies})}"></div>
+        </div>
     </div>
 
 </section>
