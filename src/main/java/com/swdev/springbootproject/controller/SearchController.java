@@ -3,6 +3,7 @@ package com.swdev.springbootproject.controller;
 import com.swdev.springbootproject.component.TmdbMovieToMediaDtoConverter;
 import com.swdev.springbootproject.component.TmdbTvToMediaDtoConverter;
 import com.swdev.springbootproject.model.dto.MediaDto;
+import com.swdev.springbootproject.model.dto.MediaDtoType;
 import com.swdev.springbootproject.service.TMDBService;
 
 import java.util.List;
@@ -22,8 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/app/search")
 class SearchController {
   private final TMDBService tmdbService;
-  private final TmdbTvToMediaDtoConverter tmdbTvToCbMovieDto;
-  private final TmdbMovieToMediaDtoConverter tmdbMovieToCbMovieDto;
+  private final TmdbTvToMediaDtoConverter movieToMedia;
+  private final TmdbMovieToMediaDtoConverter tvToMedia;
 
   @GetMapping("")
   public String search() {
@@ -50,7 +51,7 @@ class SearchController {
             search.isBlank()
                 ? List.of()
                 : tmdbService.searchMovies(search).stream()
-                    .map(tmdbMovieToCbMovieDto::convert)
+                    .map(tvToMedia::convert)
                     .collect(Collectors.toList());
         model.addAttribute("movies", movies);
         yield "fragments/movie_card_grid :: movieCardGrid(movies=${movies})";
@@ -60,7 +61,7 @@ class SearchController {
             search.isBlank()
                 ? List.of()
                 : tmdbService.searchTv(search).stream()
-                    .map(tmdbTvToCbMovieDto::convert)
+                    .map(movieToMedia::convert)
                     .collect(Collectors.toList());
         model.addAttribute("movies", shows);
         yield "fragments/movie_card_grid :: movieCardGrid(movies=${movies})";
@@ -76,19 +77,15 @@ class SearchController {
 
   @GetMapping("/autocomplete")
   public String autocomplete(@RequestParam String query, Model model) {
-    final List<String> titles =
+    final List<MediaDto> titles =
         query.isBlank()
             ? List.of()
             : Stream.concat(
-                    tmdbService.searchMovies(query).stream()
-                        .map(tmdbMovieToCbMovieDto::convert)
-                        .limit(5),
-                    tmdbService.searchTv(query).stream().map(tmdbTvToCbMovieDto::convert).limit(5))
+                    tmdbService.searchMovies(query).stream().limit(5).map(tvToMedia::convert),
+                    tmdbService.searchTv(query).stream().limit(5).map(movieToMedia::convert))
                 .filter(Objects::nonNull)
-                .map(MediaDto::getTitle)
                 .collect(Collectors.toSet())
-                .stream()
-                .toList();
+                .stream().toList();
 
     model.addAttribute("results", titles);
     return "fragments/dropdown_list::dropdown_list(results=${results})";
