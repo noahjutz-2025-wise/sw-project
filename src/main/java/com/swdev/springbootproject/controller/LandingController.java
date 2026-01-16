@@ -25,16 +25,6 @@ public class LandingController {
 
   @GetMapping("/")
   public String showLandingPage(Model model) {
-    model.addAttribute("pageTitle", "Landing");
-    model.addAttribute(
-        "movies",
-        tmdbService.getUpcomingMovies(1).stream().map(tmdbMovieToMovieDto::convert).toList());
-    return "landing";
-  }
-
-  @GetMapping("/home")
-  public String showHomePage(Model model) {
-    model.addAttribute("pageTitle", "Home");
     model.addAttribute(
         "movies",
         tmdbService.getUpcomingMovies(1).stream().map(tmdbMovieToMovieDto::convert).toList());
