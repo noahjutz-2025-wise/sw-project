@@ -26,7 +26,16 @@
 
 <div class="modal fade" id="postModal" tabindex="-1" th:fragment="postModal">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content" data-script="
+            on htmx:configRequest
+                set mediaList to []
+
+                for item in children of #selected-medias
+                    append {id: item@data-id, type: item@data-type} to mediaList
+                end
+
+                set event.detail.parameters.media_json to JSON.stringify(mediaList)
+            ">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" th:text="#{feed.new-post}">New Post</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -46,16 +55,7 @@
                         <span class="input-group-text"><i class="bi bi-search"></i></span>
                     </div>
                     <div data-script="
-                        on htmx:configRequest
-                            set mediaList to []
 
-                            for item in children of #selected-medias
-                                log item
-                              append {id: item@data-id, type: item@data-type} to mediaList
-                            end
-
-                            set event.detail.parameters.media_json to JSON.stringify(mediaList)
-                            end
                         on mousedown
                             set datatag to the closest <li/> to target
                             for child in #selected-medias.children
@@ -83,7 +83,8 @@
                           name="post-text"></textarea>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Post</button>
+                <button type="button" class="btn btn-primary" hx-post="/app/feed" hx-include="[name='post-text']">Post
+                </button>
             </div>
         </div>
     </div>
