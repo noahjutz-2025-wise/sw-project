@@ -18,6 +18,7 @@ public class TmdbTvToMediaDtoConverter implements Converter<TmdbTv, MediaDto> {
         .posterPath(source.getPosterPath())
         .backdropPath(source.getBackdropPath())
         .overview(source.getOverview())
+        .releaseDate(source.getLastAirDate())
         .type(MediaDtoType.TV)
         .certifiedBanger(false)
         .build();
