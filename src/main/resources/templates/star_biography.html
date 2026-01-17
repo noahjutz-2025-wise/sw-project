@@ -43,16 +43,13 @@
                             <td th:text="${personDetails.placeOfBirth}"></td>
                         </tr>
                         <tr>
-                            <th th:text="#{person.details.knownForDepartment}">Bekannt für</th>
-                            <td th:text="${personDetails.knownForDepartment}"></td>
-                        </tr>
-                        <tr>
                             <th th:text="#{person.details.popularity}">Beliebtheit</th>
                             <td th:text="${personDetails.popularity} + ' ' + #{celebrities.point}">Punkte</td>
                         </tr>
                     </table>
                     <h2 th:text="#{person.details.biography}">Biography</h2>
-                    <p th:if="${personDetails.biography != null and !#strings.isEmpty(personDetails.biography)}"
+                    <p class="biography"
+                       th:if="${personDetails.biography != null and !#strings.isEmpty(personDetails.biography)}"
                        th:text="${personDetails.biography}">
                     </p>
                     <p class="text-muted"
