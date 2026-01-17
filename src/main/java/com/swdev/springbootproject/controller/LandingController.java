@@ -1,6 +1,6 @@
 package com.swdev.springbootproject.controller;
 
-import com.swdev.springbootproject.component.TmdbMovieToMovieDtoConverter;
+import com.swdev.springbootproject.component.TmdbMovieToMediaDtoConverter;
 import com.swdev.springbootproject.model.tmdb.TmdbMovie;
 import com.swdev.springbootproject.service.TMDBService;
 import java.util.List;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class LandingController {
 
   private final TMDBService tmdbService;
-  private final TmdbMovieToMovieDtoConverter tmdbMovieToMovieDto;
+  private final TmdbMovieToMediaDtoConverter tmdbMovieToMovieDto;
 
   @GetMapping("/api/upcoming")
   @ResponseBody

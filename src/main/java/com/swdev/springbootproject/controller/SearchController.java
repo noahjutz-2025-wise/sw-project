@@ -1,9 +1,12 @@
 package com.swdev.springbootproject.controller;
 
-import com.swdev.springbootproject.component.TmdbMovieToMovieDtoConverter;
-import com.swdev.springbootproject.component.TmdbTvToMovieDtoConverter;
+import com.swdev.springbootproject.component.TmdbMovieToMediaDtoConverter;
+import com.swdev.springbootproject.component.TmdbTvToMediaDtoConverter;
+import com.swdev.springbootproject.model.dto.MediaDto;
 import com.swdev.springbootproject.service.TMDBService;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,8 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/app/search")
 class SearchController {
   private final TMDBService tmdbService;
-  private final TmdbTvToMovieDtoConverter tmdbTvToCbMovieDto;
-  private final TmdbMovieToMovieDtoConverter tmdbMovieToCbMovieDto;
+  private final TmdbMovieToMediaDtoConverter movieToMedia;
+  private final TmdbTvToMediaDtoConverter tvToMedia;
 
   @GetMapping("")
   public String search() {
@@ -45,7 +48,7 @@ class SearchController {
             search.isBlank()
                 ? List.of()
                 : tmdbService.searchMovies(search).stream()
-                    .map(tmdbMovieToCbMovieDto::convert)
+                    .map(movieToMedia::convert)
                     .collect(Collectors.toList());
         model.addAttribute("movies", movies);
         yield "fragments/movie_card_grid :: movieCardGrid(movies=${movies})";
@@ -55,7 +58,7 @@ class SearchController {
             search.isBlank()
                 ? List.of()
                 : tmdbService.searchTv(search).stream()
-                    .map(tmdbTvToCbMovieDto::convert)
+                    .map(tvToMedia::convert)
                     .collect(Collectors.toList());
         model.addAttribute("movies", shows);
         yield "fragments/movie_card_grid :: movieCardGrid(movies=${movies})";
@@ -67,5 +70,35 @@ class SearchController {
         throw new IllegalArgumentException();
       }
     };
+  }
+
+  @GetMapping("/autocomplete")
+  public String autocomplete(@RequestParam String query, Model model) {
+    final List<MediaDto> movies =
+        query.isBlank()
+            ? List.of()
+            : tmdbService.searchMovies(query).stream()
+                .limit(5)
+                .map(movieToMedia::convert)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet())
+                .stream()
+                .toList();
+
+    final List<MediaDto> tvs =
+        query.isBlank()
+            ? List.of()
+            : tmdbService.searchTv(query).stream()
+                .limit(5)
+                .map(tvToMedia::convert)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet())
+                .stream()
+                .toList();
+
+    final var titles = Map.of("Movies", movies, "TV Shows", tvs);
+
+    model.addAttribute("results", titles);
+    return "fragments/dropdown_list::dropdown_list(results=${results})";
   }
 }

@@ -2,6 +2,7 @@ package com.swdev.springbootproject.entity;
 
 import jakarta.persistence.*;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import lombok.*;
 import org.jspecify.annotations.NonNull;
@@ -39,6 +40,9 @@ public class CbUser implements UserDetails {
   @Column(nullable = false, columnDefinition = "boolean default false")
   @Builder.Default
   private boolean verified = false;
+
+  @OneToMany(mappedBy = "author")
+  private List<Post> posts;
 
   @Override
   @NonNull

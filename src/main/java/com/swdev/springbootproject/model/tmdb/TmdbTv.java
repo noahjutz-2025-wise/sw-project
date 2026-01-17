@@ -12,4 +12,6 @@ public class TmdbTv {
   private String posterPath;
   private String backdropPath;
   private String overview;
+  private String firstAirDate;
+  private String lastAirDate;
 }
