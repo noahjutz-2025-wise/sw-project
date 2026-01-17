@@ -6,7 +6,9 @@ import com.swdev.springbootproject.model.dto.MediaDto;
 import com.swdev.springbootproject.model.dto.MediaDtoType;
 import com.swdev.springbootproject.service.TMDBService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -77,15 +79,29 @@ class SearchController {
 
   @GetMapping("/autocomplete")
   public String autocomplete(@RequestParam String query, Model model) {
-    final List<MediaDto> titles =
+    final List<MediaDto> movies =
         query.isBlank()
             ? List.of()
-            : Stream.concat(
-                    tmdbService.searchMovies(query).stream().limit(5).map(tvToMedia::convert),
-                    tmdbService.searchTv(query).stream().limit(5).map(movieToMedia::convert))
+            : tmdbService.searchMovies(query).stream()
+                .limit(5)
+                .map(tvToMedia::convert)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toSet())
-                .stream().toList();
+                .stream()
+                .toList();
+
+    final List<MediaDto> tvs =
+        query.isBlank()
+            ? List.of()
+            : tmdbService.searchTv(query).stream()
+                .limit(5)
+                .map(movieToMedia::convert)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet())
+                .stream()
+                .toList();
+
+    final var titles = Map.of("Movies", movies, "TV Shows", tvs);
 
     model.addAttribute("results", titles);
     return "fragments/dropdown_list::dropdown_list(results=${results})";

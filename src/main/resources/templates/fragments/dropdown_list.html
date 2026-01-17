@@ -1,4 +1,10 @@
-<ul class="dropdown-menu show" th:fragment="dropdown_list">
-    <li th:each="item : ${results}" class="dropdown-item" th:text="${item.title}" th:data-id="${item.id}" th:data-type="${item.type}">
-    </li>
+<ul class="dropdown-menu show" th:fragment="dropdown_list(results)">
+    <th:block th:each="group : ${results.keySet()}">
+        <li><h6 class="dropdown-header" th:text="${group}"></h6></li>
+        <li th:each="item : ${results.get(group)}" class="dropdown-item" th:data-id="${item.id}"
+            th:data-type="${item.type}">
+            <span th:text="${item.title}"></span>
+            <span th:text="'(' + ${item.releaseDate} + ')'" th:if="${item.releaseDate}"></span>
+        </li>
+    </th:block>
 </ul>
