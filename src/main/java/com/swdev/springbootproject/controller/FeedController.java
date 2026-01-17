@@ -32,8 +32,33 @@ public class FeedController {
   @GetMapping()
   public String showFeed(Model model) {
     model.addAttribute("pageTitle", "Feed");
+
+    final var posts =
+        postRepository.findAll().stream()
+            .map(
+                post -> {
+                  final var movies =
+                      postToCbMovieRepository.findAllByPost(post).stream()
+                          .map(it -> movieToMedia.convert(tmdbService.getMovieDetails(it.getMovie().getId())))
+                          .toList();
+                  final var tvs =
+                      postToCbTvRepository.findAllByPost(post).stream()
+                          .map(it -> tvToMedia.convert(tmdbService.getTvDetails(it.getTv().getId())))
+                          .toList();
+
+                  final var media = new java.util.ArrayList<MediaDto>();
+                  media.addAll(movies);
+                  media.addAll(tvs);
+
+                  return new PostDto(post.getContent(), media);
+                })
+            .toList();
+
+    model.addAttribute("posts", posts);
     return "feed";
   }
+
+  public record PostDto(String content, List<MediaDto> media) {}
 
   @GetMapping("/mediaCards")
   public String showFeedMediaCards(@RequestParam("media_json") String medias, Model model) {
