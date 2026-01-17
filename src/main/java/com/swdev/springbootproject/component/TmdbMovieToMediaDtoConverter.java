@@ -20,6 +20,7 @@ public class TmdbMovieToMediaDtoConverter implements Converter<TmdbMovie, MediaD
         .releaseDate(source.getReleaseDate())
         .overview(source.getOverview())
         .type(MediaDtoType.MOVIE)
+        .certifiedBanger(false)
         .build();
   }
 }

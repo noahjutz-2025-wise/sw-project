@@ -19,6 +19,7 @@ public class TmdbTvToMediaDtoConverter implements Converter<TmdbTv, MediaDto> {
         .backdropPath(source.getBackdropPath())
         .overview(source.getOverview())
         .type(MediaDtoType.TV)
+        .certifiedBanger(false)
         .build();
   }
 }
