@@ -1,0 +1,14 @@
+<div th:fragment="personCardGrid(people)" class="row">
+    <th:block>
+        <a
+                th:each="person : ${people}"
+                class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3 text-decoration-none"
+                hx-boost="false"
+                th:href="@{${'/app/person/' + person.id}}">
+            <th:block
+                    th:with="fullPosterUrl=${T(com.swdev.springbootproject.service.TMDBService).POSTER_BASE_URL + person.getProfilePath}">
+                <div th:replace="~{fragments/person_card :: personCard(personId=${person.id}, name=${person.name}, popularity= ${person.popularity}, posterUrl=${fullPosterUrl})}"></div>
+            </th:block>
+        </a>
+    </th:block>
+</div>
