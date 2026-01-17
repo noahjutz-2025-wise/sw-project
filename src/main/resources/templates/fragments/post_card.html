@@ -15,7 +15,7 @@
     <div class="card-header">
         <i class="bi bi-person-circle"></i>
         <th:block th:if="${!#strings.isEmpty(postDto.authorName)}">
-            <a th:href="@{/user/{username}/watchlist(username=${postDto.authorId})}" class="text-decoration-none" th:text="${postDto.authorName}"></a>
+            <a th:href="@{/app/user/{username}(username=${postDto.authorName})}" class="text-decoration-none" th:text="${postDto.authorName}"></a>
         </th:block>
         <th:block th:if="${#strings.isEmpty(postDto.authorName)}">
             <span>Anonymous</span>
@@ -23,7 +23,7 @@
     </div>
 
     <div class="card-body">
-        <p class="card-text" th:text="${postDto.content}"></p>
+        <p class="card-text" th:text="${postDto.content}" style="white-space: pre-wrap;"></p>
     </div>
 
     <ul class="list-group list-group-flush" th:if="${postDto.media != null && !postDto.media.isEmpty()}">
