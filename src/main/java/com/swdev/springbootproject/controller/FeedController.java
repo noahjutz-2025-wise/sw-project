@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -81,11 +82,12 @@ public class FeedController {
   public String post(
       @RequestParam("media_json") String medias,
       @RequestParam("post-text") String postText,
-      Model model) {
+      Model model,
+      Authentication authentication
+  ) {
     final var mediaDtos = stringToMediaDtos(medias);
 
     final var post = new Post(postText);
-    final var authentication = SecurityContextHolder.getContext().getAuthentication();
     final var user = cbUserRepository.findByEmail(authentication.getName());
     user.ifPresent(post::setAuthor);
     postRepository.save(post);
