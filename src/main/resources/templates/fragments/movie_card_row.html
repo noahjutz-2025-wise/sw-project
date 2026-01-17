@@ -19,7 +19,7 @@
             <a
                     hx-boost="false"
                     class="text-decoration-none"
-                    th:href="@{${movie.type != null && movie.type == movieDtoType.MOVIE
+                    th:href="@{${movie.type != null && movie.type.name() == movieDtoType.MOVIE
                 ? '/app/movie/' + movie.id
                 : '/app/tv/' + movie.id}}">
                 <div th:replace="~{fragments/movie_card :: movieCard(movieId=${movie.id}, certifiedBanger=${movie.certifiedBanger}, title=${movie.title}, posterUrl=${fullPosterUrl})}"></div>
