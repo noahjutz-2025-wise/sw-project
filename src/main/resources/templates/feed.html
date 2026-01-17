@@ -57,14 +57,15 @@
                             set event.detail.parameters.media_json to JSON.stringify(mediaList)
                             end
                         on mousedown
+                            set datatag to the closest <li/> to target
                             for child in #selected-medias.children
-                                if child@data-id equals target's @data-id
+                                if child@data-id equals datatag's @data-id
                                     exit
                                 end
                             end
                             make a <div.selectedMedia/>
-                            put target's @data-id into its @data-id
-                            put target's @data-type into its @data-type
+                            put datatag's @data-id into its @data-id
+                            put datatag's @data-type into its @data-type
                             append it to #selected-medias then
                             call htmx.trigger('#suggestions', 'addMedia')"
                          hx-trigger="addMedia from:body"
