@@ -1,16 +1,29 @@
 <div th:fragment="movie_card_row(movies)"
      class="d-flex flex-row flex-nowrap gap-4 horizontal-scroll overflow-x-scroll w-100">
     <th:block th:with="movieDtoType=${T(com.swdev.springbootproject.model.dto.MediaDtoType)}">
-        <a
-                th:each="movie : ${movies}"
-                hx-boost="false"
-                th:href="@{${movie.type == movieDtoType.MOVIE
+
+        <div style="width: 10rem" class="position-relative flex-shrink-0"
+             th:each="movie : ${movies}"
+             th:with="fullPosterUrl=${T(com.swdev.springbootproject.service.TMDBService).POSTER_BASE_URL + movie.posterPath}">
+            <button th:data-id="${movie.id}" th:data-type="${movie.type}" data-script="
+                    on click
+                        for child in #selected-medias.children
+                            if child@data-id equals my @data-id and child@data-type equals my @data-type
+                                remove child then
+                                call htmx.trigger('#suggestions', 'addMedia')
+                                exit
+                            end
+                        end
+                " class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2 z-3">
+                <i class="bi bi-trash"></i>
+            </button>
+            <a
+                    hx-boost="false"
+                    th:href="@{${movie.type == movieDtoType.MOVIE
                 ? '/app/movie/' + movie.id
                 : '/app/tv/' + movie.id}}">
-            <div style="width: 10rem"
-                 th:with="fullPosterUrl=${T(com.swdev.springbootproject.service.TMDBService).POSTER_BASE_URL + movie.getPosterPath}">
                 <div th:replace="~{fragments/movie_card :: movieCard(movieId=${movie.id}, certifiedBanger=${movie.certifiedBanger}, title=${movie.title}, posterUrl=${fullPosterUrl})}"></div>
-            </div>
-        </a>
+            </a>
+        </div>
     </th:block>
 </div>
