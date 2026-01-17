@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/app/search")
 class SearchController {
   private final TMDBService tmdbService;
-  private final TmdbTvToMediaDtoConverter movieToMedia;
-  private final TmdbMovieToMediaDtoConverter tvToMedia;
+  private final TmdbMovieToMediaDtoConverter movieToMedia;
+  private final TmdbTvToMediaDtoConverter tvToMedia;
 
   @GetMapping("")
   public String search() {
@@ -48,7 +48,7 @@ class SearchController {
             search.isBlank()
                 ? List.of()
                 : tmdbService.searchMovies(search).stream()
-                    .map(tvToMedia::convert)
+                    .map(movieToMedia::convert)
                     .collect(Collectors.toList());
         model.addAttribute("movies", movies);
         yield "fragments/movie_card_grid :: movieCardGrid(movies=${movies})";
@@ -58,7 +58,7 @@ class SearchController {
             search.isBlank()
                 ? List.of()
                 : tmdbService.searchTv(search).stream()
-                    .map(movieToMedia::convert)
+                    .map(tvToMedia::convert)
                     .collect(Collectors.toList());
         model.addAttribute("movies", shows);
         yield "fragments/movie_card_grid :: movieCardGrid(movies=${movies})";
@@ -79,7 +79,7 @@ class SearchController {
             ? List.of()
             : tmdbService.searchMovies(query).stream()
                 .limit(5)
-                .map(tvToMedia::convert)
+                .map(movieToMedia::convert)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toSet())
                 .stream()
@@ -90,7 +90,7 @@ class SearchController {
             ? List.of()
             : tmdbService.searchTv(query).stream()
                 .limit(5)
-                .map(movieToMedia::convert)
+                .map(tvToMedia::convert)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toSet())
                 .stream()
