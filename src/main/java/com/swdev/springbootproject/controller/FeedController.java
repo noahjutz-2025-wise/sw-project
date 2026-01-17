@@ -9,11 +9,11 @@ import com.swdev.springbootproject.service.TMDBService;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
-
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +33,7 @@ public class FeedController {
   private final @NonNull TvRepository tvRepository;
   private final @NonNull PostToCbMovieRepository postToCbMovieRepository;
   private final @NonNull PostToCbTvRepository postToCbTvRepository;
+  private final @NonNull CbUserRepository cbUserRepository;
 
   @GetMapping()
   public String showFeed(Model model) {
@@ -56,7 +57,7 @@ public class FeedController {
 
                   final var media = Stream.concat(movies, tvs).toList();
 
-                  return new PostDto(post.getContent(), media);
+                  return new PostDto(post.getContent(), media, post.getAuthor().getName());
                 })
             .toList();
 
@@ -78,7 +79,11 @@ public class FeedController {
       Model model) {
     final var mediaDtos = stringToMediaDtos(medias);
 
-    final var post = postRepository.save(new Post(postText));
+    final var post = new Post(postText);
+    final var authentication = SecurityContextHolder.getContext().getAuthentication();
+    final var user = cbUserRepository.findByEmail(authentication.getName());
+    user.ifPresent(post::setAuthor);
+    postRepository.save(post);
 
     for (final var mediaDto : mediaDtos) {
       switch (mediaDto.getType()) {

@@ -1,11 +1,11 @@
 package com.swdev.springbootproject.model.dto;
 
-import lombok.Data;
-
 import java.util.List;
+import lombok.Data;
 
 @Data
 public class PostDto {
-    private final String content;
-    private final List<MediaDto> media;
+  private final String content;
+  private final List<MediaDto> media;
+  private final String authorName;
 }

@@ -20,6 +20,9 @@
 
                 <div th:each="post : ${posts}" class="card mb-3 shadow-sm">
                     <div class="card-body">
+                        <div class="d-flex align-items-center mb-2">
+                            <h5 class="card-title mb-0" th:text="${post.authorName}"></h5>
+                        </div>
                         <p class="card-text fs-5" th:text="${post.content}"></p>
                         <div th:if="${!post.media.isEmpty()}">
                             <hr>
