@@ -57,7 +57,12 @@ public class FeedController {
 
                   final var media = Stream.concat(movies, tvs).toList();
 
-                  return new PostDto(post.getContent(), media, post.getAuthor().getName());
+                  return new PostDto(
+                      post.getContent(),
+                      media,
+                      post.getAuthor().getName(),
+                      post.getAuthor().getEmail(),
+                      post.getAuthor().getId());
                 })
             .toList();
 
