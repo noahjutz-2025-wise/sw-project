@@ -1,7 +1,9 @@
 package com.swdev.springbootproject.controller;
 
 import com.swdev.springbootproject.component.*;
+import com.swdev.springbootproject.entity.*;
 import com.swdev.springbootproject.model.dto.MediaDto;
+import com.swdev.springbootproject.repository.*;
 import com.swdev.springbootproject.service.TMDBService;
 import java.util.List;
 import java.util.Objects;
@@ -15,11 +17,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/app/feed")
 @RequiredArgsConstructor
 public class FeedController {
-  private @NonNull StringToJsonNodesConverter stringToJsonNodes;
-  private @NonNull JsonNodeToMediaDtoConverter jsonNodeToMedia;
-  private @NonNull TMDBService tmdbService;
-  private @NonNull TmdbTvToMediaDtoConverter tvToMedia;
-  private @NonNull TmdbMovieToMediaDtoConverter movieToMedia;
+  private final @NonNull StringToJsonNodesConverter stringToJsonNodes;
+  private final @NonNull JsonNodeToMediaDtoConverter jsonNodeToMedia;
+  private final @NonNull TMDBService tmdbService;
+  private final @NonNull TmdbTvToMediaDtoConverter tvToMedia;
+  private final @NonNull TmdbMovieToMediaDtoConverter movieToMedia;
+
+  private final @NonNull PostRepository postRepository;
+  private final @NonNull MovieRepository movieRepository;
+  private final @NonNull TvRepository tvRepository;
+  private final @NonNull PostToCbMovieRepository postToCbMovieRepository;
+  private final @NonNull PostToCbTvRepository postToCbTvRepository;
 
   @GetMapping()
   public String showFeed(Model model) {
@@ -35,12 +43,34 @@ public class FeedController {
   }
 
   @PostMapping()
-  @ResponseBody
   public String post(
       @RequestParam("media_json") String medias,
       @RequestParam("post-text") String postText,
       Model model) {
-    return stringToMediaDtos(medias).toString() + postText;
+    final var mediaDtos = stringToMediaDtos(medias);
+
+    final var post = postRepository.save(new Post(postText));
+
+    for (final var mediaDto : mediaDtos) {
+      switch (mediaDto.getType()) {
+        case MOVIE -> {
+          final var movie =
+              movieRepository
+                  .findById(mediaDto.getId())
+                  .orElseGet(() -> movieRepository.save(new CbMovie(mediaDto.getId())));
+          postToCbMovieRepository.save(new PostToCbMovie(post, movie));
+        }
+        case TV -> {
+          final var tv =
+              tvRepository
+                  .findById(mediaDto.getId())
+                  .orElseGet(() -> tvRepository.save(new CbTv(mediaDto.getId())));
+          postToCbTvRepository.save(new PostToCbTv(post, tv));
+        }
+      }
+    }
+
+    return "redirect:/app/feed";
   }
 
   private List<MediaDto> stringToMediaDtos(String medias) {
