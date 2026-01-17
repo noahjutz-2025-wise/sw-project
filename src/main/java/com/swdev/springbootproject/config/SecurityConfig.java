@@ -32,14 +32,14 @@ class SecurityConfig {
   public SecurityFilterChain filterChain(HttpSecurity http) {
     return http.authorizeHttpRequests(
             a ->
-                a.requestMatchers("/app/**", "/verify", "/user/profile", "/home")
+                a.requestMatchers("/app/**", "/verify", "/user/profile")
                     .authenticated()
                     .requestMatchers(
                         "/signup", "/", "/css/**", "/js/**", "/error", "/webjars/**", "/images/**")
                     .permitAll()
                     .anyRequest()
                     .authenticated())
-        .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/home").permitAll())
+        .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/mood").permitAll())
         .csrf(csrf -> csrf.ignoringRequestMatchers("/**"))
         .build();
   }
