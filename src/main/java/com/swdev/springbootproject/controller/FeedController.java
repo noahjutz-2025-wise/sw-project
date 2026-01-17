@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +39,7 @@ public class FeedController {
     model.addAttribute("pageTitle", "Feed");
 
     final var posts =
-        postRepository.findAll(PageRequest.of(0, 10)).stream()
+        postRepository.findAll(PageRequest.of(0, 10, Sort.by("id").descending())).stream()
             .map(
                 post -> {
                   final var movies =
