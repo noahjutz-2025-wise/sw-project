@@ -1,4 +1,5 @@
-<div th:fragment="movie_card_row(movies)" class="d-flex flex-row gap-4 horizontal-scroll">
+<div th:fragment="movie_card_row(movies)"
+     class="d-flex flex-row flex-nowrap gap-4 horizontal-scroll overflow-x-scroll w-100">
     <th:block th:with="movieDtoType=${T(com.swdev.springbootproject.model.dto.MediaDtoType)}">
         <a
                 th:each="movie : ${movies}"
@@ -6,10 +7,10 @@
                 th:href="@{${movie.type == movieDtoType.MOVIE
                 ? '/app/movie/' + movie.id
                 : '/app/tv/' + movie.id}}">
-            <th:block
-                    th:with="fullPosterUrl=${T(com.swdev.springbootproject.service.TMDBService).POSTER_BASE_URL + movie.getPosterPath}">
+            <div style="width: 10rem"
+                 th:with="fullPosterUrl=${T(com.swdev.springbootproject.service.TMDBService).POSTER_BASE_URL + movie.getPosterPath}">
                 <div th:replace="~{fragments/movie_card :: movieCard(movieId=${movie.id}, certifiedBanger=${movie.certifiedBanger}, title=${movie.title}, posterUrl=${fullPosterUrl})}"></div>
-            </th:block>
+            </div>
         </a>
     </th:block>
 </div>
