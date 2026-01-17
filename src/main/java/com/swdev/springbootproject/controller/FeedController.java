@@ -3,7 +3,6 @@ package com.swdev.springbootproject.controller;
 import com.swdev.springbootproject.component.*;
 import com.swdev.springbootproject.model.dto.MediaDto;
 import com.swdev.springbootproject.service.TMDBService;
-
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;

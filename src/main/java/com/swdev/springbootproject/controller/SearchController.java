@@ -3,16 +3,11 @@ package com.swdev.springbootproject.controller;
 import com.swdev.springbootproject.component.TmdbMovieToMediaDtoConverter;
 import com.swdev.springbootproject.component.TmdbTvToMediaDtoConverter;
 import com.swdev.springbootproject.model.dto.MediaDto;
-import com.swdev.springbootproject.model.dto.MediaDtoType;
 import com.swdev.springbootproject.service.TMDBService;
-
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
