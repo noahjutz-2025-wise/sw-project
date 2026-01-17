@@ -19,6 +19,7 @@
             </button>
             <a
                     hx-boost="false"
+                    class="text-decoration-none"
                     th:href="@{${movie.type == movieDtoType.MOVIE
                 ? '/app/movie/' + movie.id
                 : '/app/tv/' + movie.id}}">
