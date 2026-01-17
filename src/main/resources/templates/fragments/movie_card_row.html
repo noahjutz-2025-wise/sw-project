@@ -4,7 +4,7 @@
         <div style="width: 10rem" class="position-relative flex-shrink-0"
              th:each="movie : ${movies}"
              th:with="fullPosterUrl=${T(com.swdev.springbootproject.service.TMDBService).POSTER_BASE_URL + movie.posterPath}">
-            <button th:if="${showDeleteButton}" th:data-id="${movie.id}" th:data-type="${movie.type}" data-script="
+            <button th:data-id="${movie.id}" th:data-type="${movie.type}" data-script="
                     on click
                         for child in #selected-medias.children
                             if child@data-id equals my @data-id and child@data-type equals my @data-type
