@@ -3,10 +3,13 @@ package com.swdev.springbootproject.controller;
 import com.swdev.springbootproject.component.*;
 import com.swdev.springbootproject.entity.*;
 import com.swdev.springbootproject.model.dto.MediaDto;
+import com.swdev.springbootproject.model.dto.PostDto;
 import com.swdev.springbootproject.repository.*;
 import com.swdev.springbootproject.service.TMDBService;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Controller;
@@ -39,16 +42,17 @@ public class FeedController {
                 post -> {
                   final var movies =
                       postToCbMovieRepository.findAllByPost(post).stream()
-                          .map(it -> movieToMedia.convert(tmdbService.getMovieDetails(it.getMovie().getId())))
-                          .toList();
+                          .map(
+                              it ->
+                                  movieToMedia.convert(
+                                      tmdbService.getMovieDetails(it.getMovie().getId())));
                   final var tvs =
                       postToCbTvRepository.findAllByPost(post).stream()
-                          .map(it -> tvToMedia.convert(tmdbService.getTvDetails(it.getTv().getId())))
-                          .toList();
+                          .map(
+                              it ->
+                                  tvToMedia.convert(tmdbService.getTvDetails(it.getTv().getId())));
 
-                  final var media = new java.util.ArrayList<MediaDto>();
-                  media.addAll(movies);
-                  media.addAll(tvs);
+                  final var media = Stream.concat(movies, tvs).toList();
 
                   return new PostDto(post.getContent(), media);
                 })
@@ -57,8 +61,6 @@ public class FeedController {
     model.addAttribute("posts", posts);
     return "feed";
   }
-
-  public record PostDto(String content, List<MediaDto> media) {}
 
   @GetMapping("/mediaCards")
   public String showFeedMediaCards(@RequestParam("media_json") String medias, Model model) {
