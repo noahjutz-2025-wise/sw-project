@@ -84,6 +84,17 @@ classDiagram
     }
     UserMovieRating "*" -- "1" CbUser : user
     UserMovieRating "*" -- "1" CbMovie : movie
+    
+    class CbTv {
+        long id
+    }
+
+    class Post {
+        String content
+    }
+    Post "*" -- "1" CbUser : author
+    Post "*" -- "*" CbTv : references
+    Post "*" -- "*" CbMovie : references
 ```
 
 ## Email Verification Setup
