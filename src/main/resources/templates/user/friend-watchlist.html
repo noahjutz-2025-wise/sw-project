@@ -28,7 +28,7 @@
 
                     <div>
                         <span th:if="${friend.certifiedCritic}" class="badge rounded-pill bg-warning text-dark mb-1">
-                            &#127916; Filmkritiker
+                            &#127916; <span th:text="#{profile.friends.critic}">Filmkritiker</span>
                         </span>
                         <h5 class="mb-1" th:text="${friend.name}"></h5>
                         <p class="text-muted small">
