@@ -57,12 +57,14 @@ public class FeedController {
 
                   final var media = Stream.concat(movies, tvs).toList();
 
-                  return new PostDto(
-                      post.getContent(),
-                      media,
-                      post.getAuthor().getName(),
-                      post.getAuthor().getEmail(),
-                      post.getAuthor().getId());
+                  return PostDto.builder()
+                      .id(post.getId())
+                      .content(post.getContent())
+                      .media(media)
+                      .authorName(post.getAuthor().getName())
+                      .authorEmail(post.getAuthor().getEmail())
+                      .authorId(post.getAuthor().getId())
+                      .build();
                 })
             .toList();
 
@@ -110,6 +112,13 @@ public class FeedController {
     }
 
     return "redirect:/app/feed";
+  }
+
+  @GetMapping("/delete-confirm/{id}")
+  public String deleteConfirm(@PathVariable Long id, Model model) {
+    final var post = postRepository.findById(id).orElseThrow();
+    model.addAttribute("post", post);
+    return "feed::delete_post_confirm_dialog";
   }
 
   private List<MediaDto> stringToMediaDtos(String medias) {
