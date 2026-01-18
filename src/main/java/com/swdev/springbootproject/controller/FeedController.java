@@ -1,5 +1,6 @@
 package com.swdev.springbootproject.controller;
 
+import com.sun.net.httpserver.Headers;
 import com.swdev.springbootproject.component.*;
 import com.swdev.springbootproject.entity.*;
 import com.swdev.springbootproject.model.dto.MediaDto;
@@ -13,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -72,6 +75,12 @@ public class FeedController {
     return "feed";
   }
 
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> delete(@PathVariable Long id) {
+    postRepository.deleteById(id);
+    return ResponseEntity.ok().header("HX-Refresh", "true").build();
+  }
+
   @GetMapping("/mediaCards")
   public String showFeedMediaCards(@RequestParam("media_json") String medias, Model model) {
     final var mediaDtos = stringToMediaDtos(medias);
@@ -80,7 +89,7 @@ public class FeedController {
   }
 
   @PostMapping()
-  public String post(
+  public ResponseEntity<Void> post(
       @RequestParam("media_json") String medias,
       @RequestParam("post-text") String postText,
       Model model,
@@ -111,7 +120,7 @@ public class FeedController {
       }
     }
 
-    return "redirect:/app/feed";
+    return ResponseEntity.ok().header("HX-Refresh", "true").build();
   }
 
   @GetMapping("/delete-confirm/{id}")
