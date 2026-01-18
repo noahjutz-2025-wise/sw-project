@@ -27,12 +27,19 @@
         </div>
     </div>
 
-    <div th:replace="~{::postModal}"></div>
+    <div id="postModalPlaceholder" th:insert="~{::postModal}"></div>
     <div id="deleteConfirmModalPlaceholder" data-script="
         on htmx:afterSettle
             set x to #deleteConfirmModal
             js(x) new bootstrap.Modal(x).show() end
         "></div>
+    <div id="editModalPlaceholder" data-script="
+        -- on htmx:afterSettle
+            -- set x to #postModal
+            -- js(x) new bootstrap.Modal(x).show() end
+    ">
+
+    </div>
 </section>
 
 <div class="modal fade" id="postModal" tabindex="-1" th:fragment="postModal">
@@ -88,10 +95,16 @@
                     <div id="selected-medias-view">
                     </div>
                     <div id="selected-medias">
+                        <div class="selectedMedia"
+                             th:if="${postDto != null and postDto.medias != null}"
+                             th:each="media : ${postDto?.medias}"
+                             th:data-id="${media.id}"
+                             th:data-type="${media.type}">
+                        </div>
                     </div>
                 </div>
                 <textarea type="text" class="form-control" placeholder="Post something..." rows="5"
-                          name="post-text"></textarea>
+                          name="post-text" th:text="${postDto?.content} ?: ''"></textarea>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" hx-post="/app/feed" hx-include="[name='post-text']"
