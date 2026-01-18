@@ -52,8 +52,6 @@
             <a href="#"
                th:if="${#authentication.name == postDto.authorEmail or #authorization.expression('hasAuthority(''admin'')')}"
                class="btn btn-sm btn-danger"
-               data-bs-toggle="modal"
-               data-bs-target="#deleteConfirmModal"
                th:hx-get="@{/app/feed/delete-confirm/{id}(id=${postDto.id})}"
                hx-target="#deleteConfirmModalPlaceholder"
                title="Delete Post">
