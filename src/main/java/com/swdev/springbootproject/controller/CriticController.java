@@ -8,8 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/admin/critics")
@@ -24,7 +22,8 @@ public class CriticController {
   }
 
   @PostMapping("/{userId}/update")
-  public String certifyCritic(@PathVariable Long userId, @RequestParam boolean certification, Model model) {
+  public String certifyCritic(
+      @PathVariable Long userId, @RequestParam boolean certification, Model model) {
     CbUser cbUserUpdated = criticService.updateCertifiedCriticStatus(userId, certification);
     model.addAttribute("user", cbUserUpdated);
     return "fragments/critic-user-row :: userRow(user=${user})";
