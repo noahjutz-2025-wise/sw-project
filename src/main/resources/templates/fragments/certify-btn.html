@@ -6,7 +6,7 @@
             class="btn btn-outline-secondary w-100"
             th:title="#{certify.btn.certify.title}"
             th:text="#{certify.btn.certify} + ' 💣'"
-            th:hx-post="@{/admin/certified/add/{movieId}(movieId=${movieId})}"
+            th:hx-post="@{/templates/admin/certified/add/{movieId}(movieId=${movieId})}"
             hx-target="this"
             hx-swap="outerHTML">
     </button>
@@ -16,7 +16,7 @@
             class="btn btn-primary w-100"
             th:title="#{certify.btn.certified.title}"
             th:text="#{certify.btn.certified} + ' 💣'"
-            th:hx-delete="@{/admin/certified/remove/{movieId}(movieId=${movieId})}"
+            th:hx-delete="@{/templates/admin/certified/remove/{movieId}(movieId=${movieId})}"
             hx-target="this"
             hx-swap="outerHTML">
         Certified &#128163;

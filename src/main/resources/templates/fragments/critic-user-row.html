@@ -3,8 +3,8 @@
     <td th:text="${user.name}"></td>
     <td th:text="${user.email}"></td>
     <td>
-        <span th:if="${user.certifiedCritic}" class="badge bg-success">certified critic</span>
-        <span th:if="${!user.certifiedCritic}" class="badge bg-secondary">not a critic</span>
+        <span th:if="${user.certifiedCritic}" class="badge bg-success" th:text="#{critic.user.critic.badge}">zertifizierter Filmkritiker</span>
+        <span th:if="${!user.certifiedCritic}" class="badge bg-secondary" th:text="#{critic.user.notCritic.badge}">kein Filmkritiker</span>
     </td>
     <td class="text-end">
         <form method="post"
@@ -16,7 +16,7 @@
             <button type="submit"
                     class="btn btn-sm"
                     th:classappend="${user.certifiedCritic} ? ' btn-outline-danger' : ' btn-outline-primary'"
-                    th:text="${user.certifiedCritic} ? 'Remove' : 'Make Critic'">
+                    th:text="${user.certifiedCritic} ? #{critic.user.remove} : #{critic.user.certify}">
             </button>
         </form>
     </td>
