@@ -14,7 +14,6 @@ import org.jspecify.annotations.NonNull;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -83,8 +82,7 @@ public class FeedController {
       @RequestParam("media_json") String medias,
       @RequestParam("post-text") String postText,
       Model model,
-      Authentication authentication
-  ) {
+      Authentication authentication) {
     final var mediaDtos = stringToMediaDtos(medias);
 
     final var post = new Post(postText);
