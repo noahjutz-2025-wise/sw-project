@@ -28,7 +28,11 @@
     </div>
 
     <div th:replace="~{::postModal}"></div>
-    <div id="deleteConfirmModalPlaceholder"></div>
+    <div id="deleteConfirmModalPlaceholder" data-script="
+        on htmx:afterSettle
+            set x to #deleteConfirmModal
+            js(x) new bootstrap.Modal(x).show() end
+        "></div>
 </section>
 
 <div class="modal fade" id="postModal" tabindex="-1" th:fragment="postModal">
