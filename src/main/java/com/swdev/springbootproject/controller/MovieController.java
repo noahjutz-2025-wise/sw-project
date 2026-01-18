@@ -6,10 +6,12 @@ import com.swdev.springbootproject.component.converter.TmdbMovieToMediaDtoConver
 import com.swdev.springbootproject.entity.CbMovie;
 import com.swdev.springbootproject.entity.CbUser;
 import com.swdev.springbootproject.entity.MovieBookmark;
+import com.swdev.springbootproject.entity.UserMovieRating;
 import com.swdev.springbootproject.repository.CbUserRepository;
 import com.swdev.springbootproject.repository.MovieBookmarkRepository;
 import com.swdev.springbootproject.repository.MovieRepository;
 import com.swdev.springbootproject.repository.PostRepository;
+import com.swdev.springbootproject.repository.UserMovieRatingRepository;
 import com.swdev.springbootproject.service.TMDBService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +28,7 @@ public class MovieController {
   private final CbUserRepository cbUserRepository;
   private final MovieBookmarkRepository movieBookmarkRepository;
   private final MovieRepository movieRepository;
+  private final UserMovieRatingRepository userMovieRatingRepository;
   private final TMDBService tmdbService;
   private final QueryParamToBookmarkStatusConverter queryParamToBookmarkStatusConverter;
   private final PostRepository postRepository;
@@ -33,7 +36,7 @@ public class MovieController {
   private final TmdbMovieToMediaDtoConverter movieToMediaDto;
 
   @GetMapping("/{id}")
-  public String movie(@PathVariable Long id, Model model) {
+  public String movie(@PathVariable Long id, Model model, Authentication authentication) {
     final var movie = tmdbService.getMovieDetails(id);
     final var media = movieToMediaDto.convert(movie);
     final var posts =
@@ -46,9 +49,26 @@ public class MovieController {
     model.addAttribute("posts", posts);
 
     model.addAttribute("media", media);
+
+    var currentUser = (CbUser) authentication.getPrincipal();
+
+    if (currentUser == null) {
+      throw new IllegalArgumentException("User is not logged in");
+    }
+
+    currentUser = cbUserRepository.findById(currentUser.getId()).orElseThrow();
+
+    final var currentMovie = movieRepository.save(new CbMovie(id));
+
+    final var userMovieRating =
+        userMovieRatingRepository.findByUserAndMovie(currentUser, currentMovie);
+
+    model.addAttribute("movieDetails", movie);
     model.addAttribute("poster", TMDBService.POSTER_BASE_URL + movie.getPosterPath());
     model.addAttribute("backdrop", TMDBService.BACKDROP_BASE_URL + movie.getBackdropPath());
     model.addAttribute("id", id);
+    model.addAttribute("rating", userMovieRating.map(UserMovieRating::getRating).orElse(null));
+    model.addAttribute("ratedAt", userMovieRating.map(UserMovieRating::getRatedAt).orElse(null));
     return "movie_details";
   }
 

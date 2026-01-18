@@ -61,6 +61,13 @@
                             </td>
                         </tr>
                         <tr th:if="${media.runtime}">
+                        <tr>
+                            <th th:text="#{movie.details.your.vote}">Ihre Abstimmung</th>
+                            <td>
+                                <span th:text="${rating}"></span>
+                            </td>
+                        </tr>
+                        <tr>
                             <th th:text="#{movie.details.duration}">Dauer</th>
                             <td>
                                 <span th:text="${media.runtime}"></span>

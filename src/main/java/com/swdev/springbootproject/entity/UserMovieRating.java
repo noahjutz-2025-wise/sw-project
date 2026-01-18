@@ -18,11 +18,11 @@ public class UserMovieRating {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "cb_user", referencedColumnName = "username", nullable = false)
-  private CbUser cbUser;
+  private CbUser user;
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "movie_id", referencedColumnName = "id", nullable = false)
   private CbMovie movie;
 
@@ -34,8 +34,8 @@ public class UserMovieRating {
   @Column(nullable = false)
   private LocalDateTime ratedAt = LocalDateTime.now();
 
-  public UserMovieRating(CbUser cbUser, CbMovie movie, Integer rating) {
-    this.cbUser = cbUser;
+  public UserMovieRating(CbUser user, CbMovie movie, Integer rating) {
+    this.user = user;
     this.movie = movie;
     this.rating = rating;
   }
