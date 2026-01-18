@@ -2,6 +2,7 @@ package com.swdev.springbootproject.entity;
 
 import jakarta.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import lombok.*;
@@ -44,10 +45,19 @@ public class CbUser implements UserDetails {
   @OneToMany(mappedBy = "author")
   private List<Post> posts;
 
+  @Column(nullable = false, columnDefinition = "boolean default false")
+  @Builder.Default
+  private boolean certifiedCritic = false;
+
   @Override
   @NonNull
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return Set.of(new SimpleGrantedAuthority(authority));
+    Set<GrantedAuthority> auths = new HashSet<>();
+    auths.add(new SimpleGrantedAuthority(authority));
+    if (certifiedCritic) {
+      auths.add(new SimpleGrantedAuthority("ROLE_CRITIC"));
+    }
+    return auths;
   }
 
   @Override

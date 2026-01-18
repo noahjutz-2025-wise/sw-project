@@ -1,0 +1,23 @@
+<tr th:fragment="userRow(user)"
+    th:id="'user-row-' + ${user.id}">
+    <td th:text="${user.name}"></td>
+    <td th:text="${user.email}"></td>
+    <td>
+        <span th:if="${user.certifiedCritic}" class="badge bg-success">certified critic</span>
+        <span th:if="${!user.certifiedCritic}" class="badge bg-secondary">not a critic</span>
+    </td>
+    <td class="text-end">
+        <form method="post"
+              th:action="@{/admin/critics/{id}/update(id=${user.getId()})}"
+              th:hx-post="@{/admin/critics/{id}/update(id=${user.getId()})}"
+              th:hx-target="'#user-row-' + ${user.getId()}"
+              hx-swap="outerHTML">
+            <input type="hidden" name="certification" th:value="${!user.certifiedCritic}"/>
+            <button type="submit"
+                    class="btn btn-sm"
+                    th:classappend="${user.certifiedCritic} ? ' btn-outline-danger' : ' btn-outline-primary'"
+                    th:text="${user.certifiedCritic} ? 'Remove' : 'Make Critic'">
+            </button>
+        </form>
+    </td>
+</tr>

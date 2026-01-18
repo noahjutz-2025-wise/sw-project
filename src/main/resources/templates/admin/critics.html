@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="@{scaffold}">
+<head>
+    <title layout:fragment="title">User Profile</title>
+</head>
+<section layout:fragment="content">
+<div th:replace="~{fragments/mobile-nav :: mobile-navbar('critics')}"></div>
+<div class="d-flex">
+    <div th:replace="~{fragments/sidebar :: sidebar('critics')}"></div>
+    <div class="container">
+        <h1 class="trend-title mb-4">Certified Critics</h1>
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Critic Role</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody th:each="user : ${users}">
+                            <tr th:replace="~{fragments/critic-user-row :: userRow(user=${user})}"></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+</html>
