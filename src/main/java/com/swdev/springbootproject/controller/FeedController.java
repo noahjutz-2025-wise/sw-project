@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -76,7 +77,11 @@ public class FeedController {
   }
 
   @DeleteMapping("/{id}")
+  @Transactional
   public ResponseEntity<Void> delete(@PathVariable Long id) {
+    final var post = postRepository.findById(id).orElseThrow();
+    postToCbMovieRepository.deleteAllByPost(post);
+    postToCbTvRepository.deleteAllByPost(post);
     postRepository.deleteById(id);
     return ResponseEntity.ok().header("HX-Refresh", "true").build();
   }

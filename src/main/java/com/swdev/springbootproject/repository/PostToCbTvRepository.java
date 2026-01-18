@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PostToCbTvRepository extends JpaRepository<PostToCbTv, PostToCbTv.PostToCbTvId> {
   List<PostToCbTv> findAllByPost(Post post);
+
+  void deleteAllByPost(Post post);
 }
