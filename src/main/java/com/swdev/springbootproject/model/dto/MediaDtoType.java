@@ -1,6 +1,6 @@
 package com.swdev.springbootproject.model.dto;
 
-public enum MovieDtoType {
+public enum MediaDtoType {
   MOVIE,
   TV
 }

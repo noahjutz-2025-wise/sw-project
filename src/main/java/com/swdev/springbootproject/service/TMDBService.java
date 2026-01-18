@@ -20,6 +20,7 @@ public class TMDBService {
 
   public static final String ENDPOINT_DISCOVER_MOVIE = "/discover/movie";
   public static final String ENDPOINT_MOVIE = "/movie/{id}";
+  public static final String ENDPOINT_TV = "/tv/{id}";
   public static final String ENDPOINT_SEARCH_MOVIE = "/search/movie";
   public static final String ENDPOINT_SEARCH_TV = "/search/tv";
 
@@ -120,6 +121,20 @@ public class TMDBService {
                     .build(movieId))
         .retrieve()
         .body(TmdbMovie.class);
+  }
+
+  public TmdbTv getTvDetails(Long tvId) {
+    return restClient
+        .get()
+        .uri(
+            uriBuilder ->
+                uriBuilder
+                    .path(ENDPOINT_TV)
+                    .queryParam("api_key", apiKey)
+                    .queryParam("language", localeService.getCurrentLanguage())
+                    .build(tvId))
+        .retrieve()
+        .body(TmdbTv.class);
   }
 
   public List<TmdbMovie> searchMovies(String query) {

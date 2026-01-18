@@ -1,6 +1,6 @@
 package com.swdev.springbootproject.controller;
 
-import com.swdev.springbootproject.component.TmdbMovieToMovieDtoConverter;
+import com.swdev.springbootproject.component.TmdbMovieToMediaDtoConverter;
 import com.swdev.springbootproject.entity.BookmarkStatus;
 import com.swdev.springbootproject.entity.CbUser;
 import com.swdev.springbootproject.repository.MovieBookmarkRepository;
@@ -21,7 +21,7 @@ class WatchlistController {
 
   private final MovieBookmarkRepository movieBookmarkRepository;
   private final TMDBService tmdbService;
-  private final TmdbMovieToMovieDtoConverter tmdbMovieToMovieDtoConverter;
+  private final TmdbMovieToMediaDtoConverter tmdbMovieToMediaDtoConverter;
   private final CertifiedBangerService certifiedBangerService;
 
   @GetMapping
@@ -45,7 +45,7 @@ class WatchlistController {
                 tmdbMovie ->
                     search.isBlank()
                         || tmdbMovie.getTitle().toLowerCase().contains(search.toLowerCase()))
-            .map(tmdbMovieToMovieDtoConverter::convert)
+            .map(tmdbMovieToMediaDtoConverter::convert)
             .collect(Collectors.toList());
 
     certifiedBangerService.applyCertifiedBangerFlag(movies);

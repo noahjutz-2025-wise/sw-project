@@ -1,10 +1,10 @@
 <div th:fragment="movieCardGrid(movies)" class="row">
-    <th:block th:with="movieDtoType=${T(com.swdev.springbootproject.model.dto.MovieDtoType)}">
+    <th:block th:with="movieDtoType=${T(com.swdev.springbootproject.model.dto.MediaDtoType)}">
         <a
                 th:each="movie : ${movies}"
                 class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3 text-decoration-none"
                 hx-boost="false"
-                th:href="@{${movie.type == movieDtoType.MOVIE
+                th:href="@{${movie.type != null && movie.type.name() == 'MOVIE'
                 ? '/app/movie/' + movie.id
                 : '/app/tv/' + movie.id}}">
             <th:block

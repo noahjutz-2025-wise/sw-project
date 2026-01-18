@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="@{scaffold}">
+<head>
+    <title layout:fragment="title">Feed</title>
+</head>
+<section layout:fragment="content">
+    <div th:replace="~{fragments/mobile-nav :: mobile-navbar('feed')}"></div>
+    <div class="d-flex">
+        <div th:replace="~{fragments/sidebar :: sidebar('feed')}"></div>
+        <button class="btn btn-primary position-fixed end-0 bottom-0 m-5 shadow"
+                type="button" data-bs-toggle="modal" data-bs-target="#postModal">
+            <i class="bi bi-plus-lg me-1"></i>
+            <span th:text="#{feed.new-post}">New Post</span>
+        </button>
+        <div class="container">
+            <div class="container-fluid d-flex flex-column align-items-center">
+                <h1 class="trend-title mb-4" th:text="#{feed.title}">Feed</h1>
+
+                <div style="max-width: 48rem;">
+                    <div th:each="post : ${posts}">
+                        <div th:replace="~{fragments/post_card :: post_card(postDto=${post})}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{::postModal}"></div>
+</section>
+
+<div class="modal fade" id="postModal" tabindex="-1" th:fragment="postModal">
+    <div class="modal-dialog">
+        <div class="modal-content" data-script="
+            on htmx:configRequest
+                set mediaList to []
+
+                for item in children of #selected-medias
+                    append {id: item@data-id, type: item@data-type} to mediaList
+                end
+
+                set event.detail.parameters.media_json to JSON.stringify(mediaList)
+            ">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" th:text="#{feed.new-post}">New Post</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="dropdown mb-2">
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control" placeholder="Add related media..."
+                               name="query"
+                               data-script="on focus remove .d-none from #suggestions
+                                            on blur wait 200ms then add .d-none to #suggestions"
+                               hx-get="/app/search/autocomplete"
+                               hx-params="*"
+                               hx-trigger="input changed delay:500ms"
+                               hx-target="#suggestions"
+                               hx-swap="inner">
+                        <span class="input-group-text"><i class="bi bi-search"></i></span>
+                    </div>
+                    <div data-script="
+
+                        on mousedown
+                            set datatag to the closest <li/> to target
+                            for child in #selected-medias.children
+                                if child@data-id equals datatag's @data-id
+                                    exit
+                                end
+                            end
+                            make a <div.selectedMedia/>
+                            put datatag's @data-id into its @data-id
+                            put datatag's @data-type into its @data-type
+                            append it to #selected-medias then
+                            call htmx.trigger('#suggestions', 'addMedia')"
+                         hx-trigger="addMedia from:body"
+                         hx-get="/app/feed/mediaCards"
+                         hx-target="#selected-medias-view"
+                         id="suggestions"
+                         class="d-none">
+                    </div>
+                    <div id="selected-medias-view">
+                    </div>
+                    <div id="selected-medias">
+                    </div>
+                </div>
+                <textarea type="text" class="form-control" placeholder="Post something..." rows="5"
+                          name="post-text"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" hx-post="/app/feed" hx-include="[name='post-text']"
+                        hx-swap="none">Post
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</html>
