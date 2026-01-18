@@ -1,9 +1,6 @@
 package com.swdev.springbootproject.service;
 
-import com.swdev.springbootproject.model.tmdb.TmdbGenre;
-import com.swdev.springbootproject.model.tmdb.TmdbMovie;
-import com.swdev.springbootproject.model.tmdb.TmdbResults;
-import com.swdev.springbootproject.model.tmdb.TmdbTv;
+import com.swdev.springbootproject.model.tmdb.*;
 import java.util.*;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +20,8 @@ public class TMDBService {
   public static final String ENDPOINT_TV = "/tv/{id}";
   public static final String ENDPOINT_SEARCH_MOVIE = "/search/movie";
   public static final String ENDPOINT_SEARCH_TV = "/search/tv";
+  public static final String ENDPOINT_PERSON_POPULAR = "/person/popular";
+  public static final String ENDPOINT_PERSON = "/person/{id}";
 
   public static final String POSTER_BASE_URL = "https://image.tmdb.org/t/p/w342/";
   public static final String BACKDROP_BASE_URL = "https://image.tmdb.org/t/p/w1280/";
@@ -196,5 +195,36 @@ public class TMDBService {
             .getResults();
 
     return fullList.subList(0, 12);
+  }
+
+  public List<TmdbPerson> getPopularPeople(int page) {
+    return Objects.requireNonNull(
+            this.restClient
+                .get()
+                .uri(
+                    uriBuilder ->
+                        uriBuilder
+                            .path(ENDPOINT_PERSON_POPULAR)
+                            .queryParam("language", localeService.getCurrentLanguage())
+                            .queryParam("page", page)
+                            .queryParam("api_key", apiKey)
+                            .build())
+                .retrieve()
+                .body(new ParameterizedTypeReference<@NonNull TmdbResults<TmdbPerson>>() {}))
+        .getResults();
+  }
+
+  public TmdbPerson getPersonDetails(Long personId) {
+    return restClient
+        .get()
+        .uri(
+            uriBuilder ->
+                uriBuilder
+                    .path(ENDPOINT_PERSON)
+                    .queryParam("api_key", apiKey)
+                    .queryParam("language", localeService.getCurrentLanguage())
+                    .build(personId))
+        .retrieve()
+        .body(TmdbPerson.class);
   }
 }
