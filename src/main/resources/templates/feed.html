@@ -27,7 +27,9 @@
         </div>
     </div>
 
-    <div id="postModalPlaceholder" th:insert="~{::postModal}"></div>
+    <div id="postModalPlaceholder">
+        <div id="postModal" class="modal fade" tabindex="-1" th:insert="~{::postModal}"></div>
+    </div>
     <div id="deleteConfirmModalPlaceholder" data-script="
         on htmx:afterSettle
             set x to #deleteConfirmModal
@@ -42,9 +44,8 @@
     </div>
 </section>
 
-<div class="modal fade" id="postModal" tabindex="-1" th:fragment="postModal">
-    <div class="modal-dialog">
-        <div class="modal-content" data-script="
+<div class="modal-dialog" th:fragment="postModal">
+    <div class="modal-content" data-script="
             on htmx:configRequest
                 set mediaList to []
 
@@ -54,25 +55,25 @@
 
                 set event.detail.parameters.media_json to JSON.stringify(mediaList)
             ">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" th:text="#{feed.new-post}">New Post</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="dropdown mb-2">
-                    <div class="input-group mb-2">
-                        <input type="text" class="form-control" placeholder="Add related media..."
-                               name="query"
-                               data-script="on focus remove .d-none from #suggestions
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" th:text="#{feed.new-post}">New Post</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="dropdown mb-2">
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control" placeholder="Add related media..."
+                           name="query"
+                           data-script="on focus remove .d-none from #suggestions
                                             on blur wait 200ms then add .d-none to #suggestions"
-                               hx-get="/app/search/autocomplete"
-                               hx-params="*"
-                               hx-trigger="input changed delay:500ms"
-                               hx-target="#suggestions"
-                               hx-swap="inner">
-                        <span class="input-group-text"><i class="bi bi-search"></i></span>
-                    </div>
-                    <div data-script="
+                           hx-get="/app/search/autocomplete"
+                           hx-params="*"
+                           hx-trigger="input changed delay:500ms"
+                           hx-target="#suggestions"
+                           hx-swap="inner">
+                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                </div>
+                <div data-script="
 
                         on mousedown
                             set datatag to the closest <li/> to target
@@ -86,31 +87,30 @@
                             put datatag's @data-type into its @data-type
                             append it to #selected-medias then
                             call htmx.trigger('#suggestions', 'addMedia')"
-                         hx-trigger="addMedia from:body"
-                         hx-get="/app/feed/mediaCards"
-                         hx-target="#selected-medias-view"
-                         id="suggestions"
-                         class="d-none">
-                    </div>
-                    <div id="selected-medias-view">
-                    </div>
-                    <div id="selected-medias">
-                        <div class="selectedMedia"
-                             th:if="${postDto != null and postDto.medias != null}"
-                             th:each="media : ${postDto?.medias}"
-                             th:data-id="${media.id}"
-                             th:data-type="${media.type}">
-                        </div>
+                     hx-trigger="addMedia from:body"
+                     hx-get="/app/feed/mediaCards"
+                     hx-target="#selected-medias-view"
+                     id="suggestions"
+                     class="d-none">
+                </div>
+                <div id="selected-medias-view">
+                </div>
+                <div id="selected-medias">
+                    <div class="selectedMedia"
+                         th:if="${postDto != null and postDto.medias != null}"
+                         th:each="media : ${postDto?.medias}"
+                         th:data-id="${media.id}"
+                         th:data-type="${media.type}">
                     </div>
                 </div>
-                <textarea type="text" class="form-control" placeholder="Post something..." rows="5"
-                          name="post-text" th:text="${postDto?.content} ?: ''"></textarea>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" hx-post="/app/feed" hx-include="[name='post-text']"
-                        hx-swap="none">Post
-                </button>
-            </div>
+            <textarea type="text" class="form-control" placeholder="Post something..." rows="5"
+                      name="post-text" th:text="${postDto?.content} ?: ''"></textarea>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" hx-post="/app/feed" hx-include="[name='post-text']"
+                    hx-swap="none">Post
+            </button>
         </div>
     </div>
 </div>
