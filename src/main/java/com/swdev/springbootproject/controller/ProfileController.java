@@ -54,6 +54,7 @@ public class ProfileController {
     model.addAttribute("name", updatedUser.getName());
     model.addAttribute("email", updatedUser.getEmail());
     model.addAttribute("verified", updatedUser.isVerified());
+    model.addAttribute("certifiedCritic", updatedUser.isCertifiedCritic());
 
     List<Friendship> friendships =
         friendshipRepository.findBySender_IdOrReceiver_Id(

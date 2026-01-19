@@ -37,6 +37,8 @@ class SecurityConfig {
                     .requestMatchers(
                         "/signup", "/", "/css/**", "/js/**", "/error", "/webjars/**", "/images/**")
                     .permitAll()
+                    .requestMatchers("/admin/**")
+                    .hasAuthority("admin")
                     .anyRequest()
                     .authenticated())
         .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/mood").permitAll())

@@ -1,4 +1,4 @@
-<div th:fragment="sidebar(activeTab)">
+<div xmlns:sec="https://www.thymeleaf.org/extras/spring-security" th:fragment="sidebar(activeTab)">
     <div id="sidebar" class="bg-sidebar p-3 collapse d-md-flex flex-column d-none d-md-block"
          style="width: 200px; height: 100vh;" hx-boost="false">
         <div class="language-switcher d-flex pb-3 border-bottom border-white border-opacity-25"
@@ -21,7 +21,18 @@
         </ul>
 
         <div class="mt-auto mb-3" >
-            <div class="dropdown dropup">
+            <div class="mb-2" sec:authorize="hasAuthority('admin')">
+                <a href="/admin/critics" class="text-decoration-none">
+                    <button class="btn btn-outline-light w-100 rounded-circle d-flex align-items-center justify-content-start rounded-pill" type="button">
+                        <span class="bg-light text-dark rounded-circle d-flex align-items-center justify-content-center me-2 p-1"
+                              style="width: 40px; height: 40px;">
+                            &#129488;
+                        </span>
+                        <span class="small text-truncate" th:text="#{nav.critics}">Critics</span>
+                    </button>
+                </a>
+            </div>
+            <div class="mb-3">
                 <a href="/user/profile" class="text-decoration-none">
                     <button class="btn btn-outline-light w-100 d-flex align-items-center justify-content-start rounded-pill" type="button">
                             <span class="bg-light text-dark rounded-circle d-flex align-items-center justify-content-center me-2 p-1"
