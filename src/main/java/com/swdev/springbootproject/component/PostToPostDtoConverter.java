@@ -21,7 +21,12 @@ public class PostToPostDtoConverter implements Converter<Post, PostDto> {
   public @Nullable PostDto convert(Post source) {
     final var movieMediaDtos = source.getMovies().stream().map(cbMovieToMediaDto::convert);
     final var tvMediaDtos = source.getTvs().stream().map(cbTvToMediaDto::convert);
-    final var userDto = UserDto.builder().id(source.getAuthor().getId()).build();
+    final var userDto =
+        UserDto.builder()
+            .id(source.getAuthor().getId())
+            .name(source.getAuthor().getName())
+            .email(source.getAuthor().getEmail())
+            .build();
 
     return PostDto.builder()
         .id(source.getId())
