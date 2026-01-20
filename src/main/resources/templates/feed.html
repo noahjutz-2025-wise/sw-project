@@ -37,8 +37,10 @@
     </div>
     <div id="editModalPlaceholder" data-script="
         on htmx:afterSettle
-            set x to #editModal
-            js(x) new bootstrap.Modal(x).show() end
+            if event.target.id is 'editModal'
+                set x to #editModal
+                js(x) new bootstrap.Modal(x).show() end
+            end
     ">
         <div id="editModal" class="modal fade" tabindex="-1"></div>
     </div>
