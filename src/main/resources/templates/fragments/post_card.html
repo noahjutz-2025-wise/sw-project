@@ -14,10 +14,11 @@
 
     <div class="card-header">
         <i class="bi bi-person-circle"></i>
-        <th:block th:if="${!#strings.isEmpty(postDto.authorName)}">
-            <a th:href="@{/app/user/{username}(username=${postDto.authorName})}" class="text-decoration-none" th:text="${postDto.authorName}"></a>
+        <th:block th:if="${!#strings.isEmpty(postDto.author.name)}">
+            <a th:href="@{/app/user/{username}(username=${postDto.author.name})}" class="text-decoration-none"
+               th:text="${postDto.author.name}"></a>
         </th:block>
-        <th:block th:if="${#strings.isEmpty(postDto.authorName)}">
+        <th:block th:if="${#strings.isEmpty(postDto.author.name)}">
             <span>Anonymous</span>
         </th:block>
     </div>
@@ -27,7 +28,8 @@
     </div>
 
     <ul class="list-group list-group-flush" th:if="${postDto.media != null && !postDto.media.isEmpty()}">
-        <li th:each="media : ${postDto.media}" class="list-group-item" th:with="path=${media.type.name() == 'MOVIE' ? 'movie' : 'tv'}">
+        <li th:each="media : ${postDto.media}" class="list-group-item"
+            th:with="path=${media.type.name() == 'MOVIE' ? 'movie' : 'tv'}">
             <a th:href="@{/app/{path}/{id}(id=${media.id},path=${path})}" class="text-decoration-none">
                 <i class="bi bi-film"></i>
                 <span th:text="${media.title + ' (' + media.releaseDate + ')'}"></span>
@@ -38,9 +40,26 @@
     <div class="card-footer text-muted">
         <i class="bi bi-calendar-event"></i>
         <span>Jan 1, 2024</span>
-        <div sec:authorize="isAuthenticated()" th:if="${#authentication.principal.username == postDto.authorEmail}" class="float-end">
-            <a href="#" class="btn btn-sm btn-primary" title="Edit Post"><i class="bi bi-pencil-square"></i></a>
-            <a href="#" class="btn btn-sm btn-danger" title="Delete Post"><i class="bi bi-trash"></i></a>
+        <div sec:authorize="isAuthenticated()" class="float-end">
+
+            <a href="#"
+               th:if="${#authentication.name == postDto.author.email}"
+               class="btn btn-sm btn-primary"
+               th:hx-get="@{/app/feed/edit-dialog/{id}(id=${postDto.id})}"
+               hx-target="#editModal"
+               title="Edit Post">
+                <i class="bi bi-pencil-square"></i>
+            </a>
+
+            <a href="#"
+               th:if="${#authentication.name == postDto.author.email or #authorization.expression('hasAuthority(''admin'')')}"
+               class="btn btn-sm btn-danger"
+               th:hx-get="@{/app/feed/delete-confirm/{id}(id=${postDto.id})}"
+               hx-target="#deleteConfirmModal"
+               title="Delete Post">
+                <i class="bi bi-trash"></i>
+            </a>
+
         </div>
     </div>
 </div>

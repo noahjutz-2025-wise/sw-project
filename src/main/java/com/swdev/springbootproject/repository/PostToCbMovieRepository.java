@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface PostToCbMovieRepository
     extends JpaRepository<PostToCbMovie, PostToCbMovie.PostToCbMovieId> {
   List<PostToCbMovie> findAllByPost(Post post);
+
+  void deleteAllByPost(Post post);
 }

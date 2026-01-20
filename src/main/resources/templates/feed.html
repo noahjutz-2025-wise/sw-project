@@ -10,7 +10,8 @@
     <div class="d-flex">
         <div th:replace="~{fragments/sidebar :: sidebar('feed')}"></div>
         <button class="btn btn-primary position-fixed end-0 bottom-0 m-5 shadow"
-                type="button" data-bs-toggle="modal" data-bs-target="#postModal">
+                type="button" hx-get="/app/feed/edit-dialog"
+                hx-target="#editModal">
             <i class="bi bi-plus-lg me-1"></i>
             <span th:text="#{feed.new-post}">New Post</span>
         </button>
@@ -27,12 +28,26 @@
         </div>
     </div>
 
-    <div th:replace="~{::postModal}"></div>
+    <div id="deleteConfirmModalPlaceholder" data-script="
+        on htmx:afterSettle
+            set x to #deleteConfirmModal
+            js(x) new bootstrap.Modal(x).show() end
+        ">
+        <div id="deleteConfirmModal" class="modal fade" tabindex="-1"></div>
+    </div>
+    <div id="editModalPlaceholder" data-script="
+        on htmx:afterSettle
+            if event.target.id is 'editModal'
+                set x to #editModal
+                js(x) new bootstrap.Modal(x).show() end
+            end
+    ">
+        <div id="editModal" class="modal fade" tabindex="-1"></div>
+    </div>
 </section>
 
-<div class="modal fade" id="postModal" tabindex="-1" th:fragment="postModal">
-    <div class="modal-dialog">
-        <div class="modal-content" data-script="
+<div class="modal-dialog" th:fragment="postModal">
+    <div class="modal-content" data-script="
             on htmx:configRequest
                 set mediaList to []
 
@@ -42,25 +57,25 @@
 
                 set event.detail.parameters.media_json to JSON.stringify(mediaList)
             ">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" th:text="#{feed.new-post}">New Post</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="dropdown mb-2">
-                    <div class="input-group mb-2">
-                        <input type="text" class="form-control" placeholder="Add related media..."
-                               name="query"
-                               data-script="on focus remove .d-none from #suggestions
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" th:text="#{feed.new-post}">New Post</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="dropdown mb-2">
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control" placeholder="Add related media..."
+                           name="query"
+                           data-script="on focus remove .d-none from #suggestions
                                             on blur wait 200ms then add .d-none to #suggestions"
-                               hx-get="/app/search/autocomplete"
-                               hx-params="*"
-                               hx-trigger="input changed delay:500ms"
-                               hx-target="#suggestions"
-                               hx-swap="inner">
-                        <span class="input-group-text"><i class="bi bi-search"></i></span>
-                    </div>
-                    <div data-script="
+                           hx-get="/app/search/autocomplete"
+                           hx-params="*"
+                           hx-trigger="input changed delay:500ms"
+                           hx-target="#suggestions"
+                           hx-swap="inner">
+                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                </div>
+                <div data-script="
 
                         on mousedown
                             set datatag to the closest <li/> to target
@@ -74,26 +89,51 @@
                             put datatag's @data-type into its @data-type
                             append it to #selected-medias then
                             call htmx.trigger('#suggestions', 'addMedia')"
-                         hx-trigger="addMedia from:body"
-                         hx-get="/app/feed/mediaCards"
-                         hx-target="#selected-medias-view"
-                         id="suggestions"
-                         class="d-none">
-                    </div>
-                    <div id="selected-medias-view">
-                    </div>
-                    <div id="selected-medias">
+                     hx-trigger="shown.bs.modal from:closest .modal, addMedia from:body"
+                     hx-get="/app/feed/mediaCards"
+                     hx-target="#selected-medias-view"
+                     id="suggestions"
+                     class="d-none">
+                </div>
+                <div id="selected-medias-view">
+                </div>
+                <div id="selected-medias">
+                    <div class="selectedMedia"
+                         th:if="${postDto != null and postDto.media != null}"
+                         th:each="media : ${postDto?.media}"
+                         th:data-id="${media.id}"
+                         th:data-type="${media.type}">
                     </div>
                 </div>
-                <textarea type="text" class="form-control" placeholder="Post something..." rows="5"
-                          name="post-text"></textarea>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" hx-post="/app/feed" hx-include="[name='post-text']"
-                        hx-swap="none">Post
-                </button>
-            </div>
+            <input type="hidden" name="id" th:value="${postDto?.id}">
+            <textarea type="text" class="form-control" placeholder="Post something..." rows="5"
+                      name="post-text" th:text="${postDto?.content} ?: ''"></textarea>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" hx-post="/app/feed" hx-include="closest .modal-content"
+                    hx-swap="none">Post
+            </button>
         </div>
     </div>
 </div>
+
+<div th:fragment="delete_post_confirm_dialog(post)" class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5">Delete Post</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            Are you sure you want to delete this post?
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" th:hx-delete="@{/app/feed/{id}(id=${post.id})}"
+                    hx-swap="none">Delete
+            </button>
+        </div>
+    </div>
+</div>
+
 </html>
