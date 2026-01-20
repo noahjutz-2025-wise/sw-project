@@ -59,7 +59,7 @@
                     <h1 class="trend-title mb-4" th:text="#{vote.delete.title}">Lösche meine Filmbewertung</h1>
                     <p th:text="#{vote.delete.confirm}">Ich möchte meine Bewertung für diesen Film löschen</p>
                     <button th:hx-delete="@{/app/movie/{id}/unvote(id=${id})}"
-                            class="btn btn-primary dropdown-item text-danger">
+                            class="dropdown-item text-danger">
                         <i class="bi bi-trash3-fill pe-1"></i>
                         <span th:text="#{vote.delete.button}">Löschen</span>
                     </button>

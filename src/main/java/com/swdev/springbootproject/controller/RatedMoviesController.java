@@ -1,6 +1,6 @@
 package com.swdev.springbootproject.controller;
 
-import com.swdev.springbootproject.component.TmdbMovieToMovieDtoConverter;
+import com.swdev.springbootproject.component.TmdbMovieToMediaDtoConverter;
 import com.swdev.springbootproject.entity.CbUser;
 import com.swdev.springbootproject.repository.CbUserRepository;
 import com.swdev.springbootproject.repository.UserMovieRatingRepository;
@@ -19,7 +19,7 @@ public class RatedMoviesController {
   private final CbUserRepository cbUserRepository;
   private final TMDBService tmdbService;
   private final UserMovieRatingRepository userMovieRatingRepository;
-  private final TmdbMovieToMovieDtoConverter tmdbMovieToMovieDtoConverter;
+  private final TmdbMovieToMediaDtoConverter tmdbMovieToMediaDtoConverter;
 
   @GetMapping("/app/rated_movies")
   public String showRatedMovies(Authentication authentication, Model model) {
@@ -37,7 +37,7 @@ public class RatedMoviesController {
         userMovieRatingRepository.findByUser(currentUser).stream()
             .map(votelist -> tmdbService.getMovieDetails(votelist.getMovie().getId()))
             .filter(Objects::nonNull)
-            .map(tmdbMovieToMovieDtoConverter::convert)
+            .map(tmdbMovieToMediaDtoConverter::convert)
             .collect(Collectors.toList());
 
     model.addAttribute("movies", movies);
