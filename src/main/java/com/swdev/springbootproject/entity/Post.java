@@ -1,18 +1,18 @@
 package com.swdev.springbootproject.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @Entity
+@Builder
+@AllArgsConstructor
 @Table(name = "posts")
 public class Post {
   @Id
@@ -24,6 +24,12 @@ public class Post {
   @ManyToOne
   @JoinColumn(name = "author_id")
   private CbUser author;
+
+  @ManyToMany(cascade = CascadeType.PERSIST)
+  private List<CbMovie> movies;
+
+  @ManyToMany(cascade = CascadeType.PERSIST)
+  private List<CbTv> tvs;
 
   public Post(String content) {
     this.content = content;

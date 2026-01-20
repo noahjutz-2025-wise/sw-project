@@ -99,8 +99,8 @@
                 </div>
                 <div id="selected-medias">
                     <div class="selectedMedia"
-                         th:if="${postDto != null and postDto.medias != null}"
-                         th:each="media : ${postDto?.medias}"
+                         th:if="${postDto != null and postDto.media != null}"
+                         th:each="media : ${postDto?.media}"
                          th:data-id="${media.id}"
                          th:data-type="${media.type}">
                     </div>
