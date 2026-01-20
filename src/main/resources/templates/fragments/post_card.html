@@ -14,11 +14,11 @@
 
     <div class="card-header">
         <i class="bi bi-person-circle"></i>
-        <th:block th:if="${!#strings.isEmpty(postDto.authorName)}">
-            <a th:href="@{/app/user/{username}(username=${postDto.authorName})}" class="text-decoration-none"
-               th:text="${postDto.authorName}"></a>
+        <th:block th:if="${!#strings.isEmpty(postDto.author.name)}">
+            <a th:href="@{/app/user/{username}(username=${postDto.author.name})}" class="text-decoration-none"
+               th:text="${postDto.author.name}"></a>
         </th:block>
-        <th:block th:if="${#strings.isEmpty(postDto.authorName)}">
+        <th:block th:if="${#strings.isEmpty(postDto.author.name)}">
             <span>Anonymous</span>
         </th:block>
     </div>
@@ -43,14 +43,16 @@
         <div sec:authorize="isAuthenticated()" class="float-end">
 
             <a href="#"
-               th:if="${#authentication.name == postDto.authorEmail}"
+               th:if="${#authentication.name == postDto.author.email}"
                class="btn btn-sm btn-primary"
+               th:hx-get="@{/app/feed/edit-dialog/{id}(id=${postDto.id})}"
+               hx-target="#editModal"
                title="Edit Post">
                 <i class="bi bi-pencil-square"></i>
             </a>
 
             <a href="#"
-               th:if="${#authentication.name == postDto.authorEmail or #authorization.expression('hasAuthority(''admin'')')}"
+               th:if="${#authentication.name == postDto.author.email or #authorization.expression('hasAuthority(''admin'')')}"
                class="btn btn-sm btn-danger"
                th:hx-get="@{/app/feed/delete-confirm/{id}(id=${postDto.id})}"
                hx-target="#deleteConfirmModal"
