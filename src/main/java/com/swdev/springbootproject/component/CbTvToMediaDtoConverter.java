@@ -12,11 +12,12 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class CbTvToMediaDtoConverter implements Converter<CbTv, MediaDto> {
-    private @NonNull TMDBService tmdbService;
-    private @NonNull TmdbTvToMediaDtoConverter tmdbTvToMediaDto;
-    @Override
-    public @Nullable MediaDto convert(CbTv source) {
-        final var tv = tmdbService.getTvDetails(source.getId());
-        return tmdbTvToMediaDto.convert(tv);
-    }
+  private @NonNull TMDBService tmdbService;
+  private @NonNull TmdbTvToMediaDtoConverter tmdbTvToMediaDto;
+
+  @Override
+  public @Nullable MediaDto convert(CbTv source) {
+    final var tv = tmdbService.getTvDetails(source.getId());
+    return tmdbTvToMediaDto.convert(tv);
+  }
 }

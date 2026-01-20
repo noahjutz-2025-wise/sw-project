@@ -73,17 +73,22 @@ public class FeedController {
   public ResponseEntity<Void> post(
       @RequestParam("media_json") String medias,
       @RequestParam("post-text") String postText,
+      @RequestParam(value = "id", required = false) Long id,
       Model model,
       Authentication authentication) {
     final var mediaDtos = stringToMediaDtos(medias);
+    System.out.println(mediaDtos);
     final var user = cbUserRepository.findByEmail(authentication.getName()).orElseThrow();
     final var userDto = UserDto.builder().id(user.getId()).build();
 
     final var postDto =
         PostDto.builder().content(postText).media(mediaDtos).author(userDto).build();
 
-    final var post = postDtoToPost.convert(postDto);
+    final var post = Objects.requireNonNull(postDtoToPost.convert(postDto));
 
+    if (id != null) {
+      post.setId(id);
+    }
     postRepository.save(post);
 
     for (final var mediaDto : mediaDtos) {

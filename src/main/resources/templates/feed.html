@@ -111,7 +111,7 @@
                       name="post-text" th:text="${postDto?.content} ?: ''"></textarea>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-primary" hx-post="/app/feed" hx-include="[name='post-text'],[name='id']"
+            <button type="button" class="btn btn-primary" hx-post="/app/feed" hx-include="closest .modal-content"
                     hx-swap="none">Post
             </button>
         </div>

@@ -12,11 +12,12 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class CbMovieToMediaDtoConverter implements Converter<CbMovie, MediaDto> {
-    private @NonNull TMDBService tmdbService;
-    private @NonNull TmdbMovieToMediaDtoConverter tmdbMovieToMediaDto;
-    @Override
-    public @Nullable MediaDto convert(CbMovie source) {
-        final var movie = tmdbService.getMovieDetails(source.getId());
-        return tmdbMovieToMediaDto.convert(movie);
-    }
+  private @NonNull TMDBService tmdbService;
+  private @NonNull TmdbMovieToMediaDtoConverter tmdbMovieToMediaDto;
+
+  @Override
+  public @Nullable MediaDto convert(CbMovie source) {
+    final var movie = tmdbService.getMovieDetails(source.getId());
+    return tmdbMovieToMediaDto.convert(movie);
+  }
 }
