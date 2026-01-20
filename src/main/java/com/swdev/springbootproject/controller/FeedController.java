@@ -14,6 +14,7 @@ import org.jspecify.annotations.NonNull;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,8 +54,9 @@ public class FeedController {
   }
 
   @DeleteMapping("/{id}")
+  @PreAuthorize("isAuthenticated()")
   @Transactional
-  public ResponseEntity<Void> delete(@PathVariable Long id) {
+  public ResponseEntity<Void> delete(@PathVariable Long id, Authentication authentication) {
     postRepository.deleteById(id);
     return ResponseEntity.ok().header("HX-Refresh", "true").build();
   }
@@ -67,6 +69,7 @@ public class FeedController {
   }
 
   @PostMapping()
+  @PreAuthorize("isAuthenticated()")
   public ResponseEntity<Void> post(
       @RequestParam("media_json") String medias,
       @RequestParam("post-text") String postText,
