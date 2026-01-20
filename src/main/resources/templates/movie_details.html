@@ -62,9 +62,31 @@
                         </tr>
                         <tr th:if="${media.runtime}">
                         <tr>
-                            <th th:text="#{movie.details.your.vote}">Ihre Abstimmung</th>
+                            <th>
+                                <span th:text="#{movie.details.your.vote}">Ihre Abstimmung</span>
+                                <th:block th:if="${rating == null}">
+                                    <a class="icon-link nav-link" th:href="@{/app/movie/{id}/vote(id=${id})}">
+                                        <i class="bi bi-envelope-paper-heart"></i>
+                                    </a>
+                                </th:block>
+                                <th:block th:unless="${rating == null}">
+                                    <a class="icon-link nav-link" th:href="@{/app/movie/{id}/vote(id=${id})}">
+                                        <i class="bi bi-pencil-fill"></i>
+                                    </a>
+                                    <a class="icon-link nav-link" th:href="@{/app/movie/{id}/vote(id=${id})}">
+                                        <i class="bi bi-trash3-fill"></i>
+                                    </a>
+                                </th:block>
+                            </th>
                             <td>
-                                <span th:text="${rating}"></span>
+                                <th:block th:if="${rating == null}">
+                                    <span th:text="#{movie.details.no.votes}"></span>
+                                </th:block>
+                                <th:block th:unless="${rating == null}">
+                                    <span th:text="${rating}"></span>
+                                    <span th:text="#{movie.details.voted.at}"></span>
+                                    <span th:text="${ratedAt}"></span>
+                                </th:block>
                             </td>
                         </tr>
                         <tr>

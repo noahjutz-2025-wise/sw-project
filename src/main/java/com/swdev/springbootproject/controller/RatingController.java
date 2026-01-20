@@ -37,10 +37,16 @@ public class RatingController {
     currentUser = cbUserRepository.findById(currentUser.getId()).orElseThrow();
 
     final var movie = movieRepository.save(CbMovie.builder().id(id).build());
+    final var currentMovie = movieRepository.save(new CbMovie(id));
 
-    userMovieRatingRepository.save(new UserMovieRating(currentUser, movie, rating));
+    final var userMovieRating =
+              userMovieRatingRepository.findByUserAndMovie(currentUser, currentMovie);
 
-    return "redirect:/app/movie/" + id;
+    if (userMovieRating.isEmpty()) {
+        userMovieRatingRepository.save(new UserMovieRating(currentUser, currentMovie, rating));
+    }
+
+    return "redirect:/app/rated_movies";
   }
   /*
   @DeleteMapping("/app/movie/{id}/unvote")

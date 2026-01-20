@@ -5,26 +5,34 @@
       layout:decorate="@{scaffold}">
 <head>
     <meta charset="UTF-8">
-    <title>Voting</title>
+    <title>Votieren</title>
 </head>
-<section layout:fragment="content" class="d-flex flex-column min-vh-100 mx-4">
-    <h1>Vote now</h1>
-    <section class="flex-grow-1 d-flex flex-row align-items-center justify-content-center">
-        <div class="w-100" style="max-width: 350px">
-            <form th:action="@{/app/movie/{id}/vote(id=${id})}" method="post">
-                <div class="mb-3">
-                    <label for="rating" class="form-label" th:text="#{rating.points}">Note (Ganzzahl zwischen 0 und 10)</label>
-                    <input type="number" name="rating" id="rating" min="0" max="10" step="1" class="form-control"/>
-                </div>
+<section layout:fragment="content">
+    <div th:replace="~{fragments/mobile-nav :: mobile-navbar('vote')}"></div>
+    <div class="d-flex">
+        <div th:replace="~{fragments/sidebar :: sidebar('vote')}"></div>
+        <div class="container">
+            <div class="container-fluid d-flex flex-column">
+                <h1 class="trend-title mb-4" th:text="#{vote.title}">Votieren Film</h1>
+                <section class="flex-grow-1 d-flex flex-row align-items-center justify-content-center">
+                    <div class="w-100" style="max-width: 350px">
+                        <form th:action="@{/app/movie/{id}/vote(id=${id})}" method="post">
+                            <div class="mb-3">
+                                <label for="rating" class="form-label" th:text="#{rating.points}">Note (Ganzzahl zwischen 0 und 10)</label>
+                                <input type="number" name="rating" id="rating" min="0" max="10" step="1" class="form-control"/>
+                            </div>
 
-                <div class="d-flex gap-1 mb-3">
-                    <button type="submit" class="btn btn-primary flex-grow-1" th:text="#{rating.submit.button}">
-                        <i class="bi bi-lock fixed-"></i>
-                        Note abgeben
-                    </button>
-                </div>
-            </form>
+                            <div class="d-flex gap-1 mb-3">
+                                <button type="submit" class="btn btn-primary flex-grow-1" th:text="#{rating.submit.button}">
+                                    <i class="bi bi-lock fixed-"></i>
+                                    Note abgeben
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+            </div>
         </div>
-    </section>
+    </div>
 </section>
 </html>
