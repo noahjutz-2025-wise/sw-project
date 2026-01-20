@@ -24,10 +24,10 @@ public class Post {
   @JoinColumn(name = "author_id")
   private CbUser author;
 
-  @ManyToMany(cascade = CascadeType.PERSIST)
+  @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   private List<CbMovie> movies;
 
-  @ManyToMany(cascade = CascadeType.PERSIST)
+  @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   private List<CbTv> tvs;
 
   public Post(String content) {
