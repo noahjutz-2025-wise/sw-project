@@ -1,6 +1,6 @@
-<div th:fragment="movieCard(movieId, certifiedBanger, posterUrl, title)" th:with="releaseDate=${releaseDate ?: null}"
+<div th:fragment="movieCard(movieId, certifiedBangerStatus, posterUrl, title)" th:with="releaseDate=${releaseDate ?: null}"
      class="card movie-card h-100 shadow-sm position-relative">
-    <span th:if="${certifiedBanger}"
+    <span th:if="${certifiedBangerStatus == T(com.swdev.springbootproject.model.dto.MediaDto.CertifiedBangerStatus).CERTIFIED}"
           class="position-absolute top-0 end-0 badge m-1 shadow-sm d-inline-flex fs-5 certified-mark"
           style="z-index: 5;"
           title="Certified Banger">
@@ -34,5 +34,5 @@
         <h5 th:text="${title}" class="card-title"></h5>
         <p th:text="${releaseDate}" class="card-release-date text-muted"></p>
     </div>
-    <div th:insert="fragments/certify-btn :: certifyBtn(movieId=${movieId}, certified=${certifiedBanger})"></div>
+    <div th:insert="~{fragments/certify-btn :: certifyBtn(movieId=${movieId}, certifiedBangerStatus=${certifiedBangerStatus})}"></div>
 </div>

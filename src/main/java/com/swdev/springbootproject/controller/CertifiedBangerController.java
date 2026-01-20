@@ -1,6 +1,7 @@
 package com.swdev.springbootproject.controller;
 
 import com.swdev.springbootproject.entity.CertifiedBanger;
+import com.swdev.springbootproject.model.dto.MediaDto;
 import com.swdev.springbootproject.repository.CertifiedBangerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,7 +23,7 @@ public class CertifiedBangerController {
     }
 
     model.addAttribute("movieId", movieId);
-    model.addAttribute("certified", true);
+    model.addAttribute("certifiedBangerStatus", MediaDto.CertifiedBangerStatus.CERTIFIED);
     return "fragments/certify-btn :: certifyBtn";
   }
 
@@ -33,7 +34,7 @@ public class CertifiedBangerController {
     }
 
     model.addAttribute("movieId", movieId);
-    model.addAttribute("certified", false);
+    model.addAttribute("certifiedBangerStatus", MediaDto.CertifiedBangerStatus.NOT_CERTIFIED);
     return "fragments/certify-btn :: certifyBtn";
   }
 }

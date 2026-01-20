@@ -22,6 +22,9 @@ public class CertifiedBangerService {
             .map(CertifiedBanger::getId)
             .collect(Collectors.toSet());
 
-    movies.forEach(movie -> movie.setCertifiedBanger(certifiedBangersIds.contains(movie.getId())));
+    movies.forEach(movie -> movie.setCertifiedBangerStatus(certifiedBangersIds.contains(movie.getId())
+        ? MediaDto.CertifiedBangerStatus.CERTIFIED
+        : MediaDto.CertifiedBangerStatus.NOT_CERTIFIED
+    ));
   }
 }

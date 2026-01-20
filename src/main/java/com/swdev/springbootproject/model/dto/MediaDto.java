@@ -24,4 +24,11 @@ public class MediaDto {
   private Float popularity;
   private Float voteAverage;
   private Integer voteCount;
+  private CertifiedBangerStatus certifiedBangerStatus;
+
+  public enum CertifiedBangerStatus {
+    CERTIFIED,
+    REQUEST_PENDING,
+    NOT_CERTIFIED,
+  }
 }

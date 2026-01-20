@@ -1,7 +1,7 @@
 <div xmlns:sec="https://www.thymeleaf.org/extras/spring-security"
-     th:fragment="certifyBtn(movieId, certified)">
+     th:fragment="certifyBtn(movieId, certifiedBangerStatus)">
     <button sec:authorize="hasAuthority('admin')"
-            th:if="${!certified}"
+            th:if="${certifiedBangerStatus == T(com.swdev.springbootproject.model.dto.MediaDto.CertifiedBangerStatus).NOT_CERTIFIED}"
             type="button"
             class="btn btn-outline-secondary w-100"
             th:title="#{certify.btn.certify.title}"
@@ -11,7 +11,7 @@
             hx-swap="outerHTML">
     </button>
     <button sec:authorize="hasAuthority('admin')"
-            th:if="${certified}"
+            th:if="${certifiedBangerStatus == T(com.swdev.springbootproject.model.dto.MediaDto.CertifiedBangerStatus).CERTIFIED}"
             type="button"
             class="btn btn-primary w-100"
             th:title="#{certify.btn.certified.title}"
