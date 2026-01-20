@@ -89,7 +89,7 @@
                             put datatag's @data-type into its @data-type
                             append it to #selected-medias then
                             call htmx.trigger('#suggestions', 'addMedia')"
-                     hx-trigger="addMedia from:body"
+                     hx-trigger="shown.bs.modal from:closest .modal, addMedia from:body"
                      hx-get="/app/feed/mediaCards"
                      hx-target="#selected-medias-view"
                      id="suggestions"
