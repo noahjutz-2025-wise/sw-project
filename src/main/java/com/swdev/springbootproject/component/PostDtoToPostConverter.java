@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 @Component
 @RequiredArgsConstructor
-public class PostDtoToPost implements Converter<PostDto, Post> {
+public class PostDtoToPostConverter implements Converter<PostDto, Post> {
   private @NonNull CbUserRepository userRepository;
 
   @Override
@@ -31,7 +31,7 @@ public class PostDtoToPost implements Converter<PostDto, Post> {
     return Post.builder()
         .id(null)
         .content(source.getContent())
-        .author(userRepository.findById(source.getAuthorId()).orElseThrow())
+        .author(userRepository.findById(source.getAuthor().getId()).orElseThrow())
         .movies(movies)
         .tvs(tvs)
         .build();

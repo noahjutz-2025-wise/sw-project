@@ -10,7 +10,5 @@ public class PostDto {
   private final Long id;
   private final String content;
   private final List<MediaDto> media;
-  private final String authorName;
-  private final String authorEmail;
-  private final long authorId;
+  private final UserDto author;
 }

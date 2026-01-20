@@ -2,6 +2,7 @@ package com.swdev.springbootproject.component;
 
 import com.swdev.springbootproject.entity.Post;
 import com.swdev.springbootproject.model.dto.PostDto;
+import com.swdev.springbootproject.model.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
@@ -20,14 +21,13 @@ public class PostToPostDtoConverter implements Converter<Post, PostDto> {
   public @Nullable PostDto convert(Post source) {
     final var movieMediaDtos = source.getMovies().stream().map(cbMovieToMediaDto::convert);
     final var tvMediaDtos = source.getTvs().stream().map(cbTvToMediaDto::convert);
+    final var userDto = UserDto.builder().id(source.getAuthor().getId()).build();
 
     return PostDto.builder()
         .id(source.getId())
         .content(source.getContent())
         .media(Stream.concat(movieMediaDtos, tvMediaDtos).toList())
-        .authorName(source.getAuthor().getName())
-        .authorEmail(source.getAuthor().getEmail())
-        .authorId(source.getAuthor().getId())
+        .author(userDto)
         .build();
   }
 }
