@@ -73,6 +73,11 @@
                        th:unless="${movieDetails.overview != null and !#strings.isEmpty(movieDetails.overview)}"
                        th:text="#{movie.details.noOverview}">
                     </p>
+
+                    <h2 th:text="#{movie.posts}">Posts</h2>
+                    <div th:each="post : ${posts}">
+                        <div th:replace="~{fragments/post_card :: post_card(postDto=${post})}"></div>
+                    </div>
                 </div>
             </div>
         </div>

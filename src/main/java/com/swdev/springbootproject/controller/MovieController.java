@@ -1,5 +1,6 @@
 package com.swdev.springbootproject.controller;
 
+import com.swdev.springbootproject.component.PostToPostDtoConverter;
 import com.swdev.springbootproject.component.QueryParamToBookmarkStatusConverter;
 import com.swdev.springbootproject.entity.CbMovie;
 import com.swdev.springbootproject.entity.CbUser;
@@ -7,8 +8,12 @@ import com.swdev.springbootproject.entity.MovieBookmark;
 import com.swdev.springbootproject.repository.CbUserRepository;
 import com.swdev.springbootproject.repository.MovieBookmarkRepository;
 import com.swdev.springbootproject.repository.MovieRepository;
+import com.swdev.springbootproject.repository.PostRepository;
 import com.swdev.springbootproject.service.TMDBService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,10 +28,21 @@ public class MovieController {
   private final MovieRepository movieRepository;
   private final TMDBService tmdbService;
   private final QueryParamToBookmarkStatusConverter queryParamToBookmarkStatusConverter;
+  private final PostRepository postRepository;
+  private final PostToPostDtoConverter postToPostDto;
 
   @GetMapping("/{id}")
   public String movie(@PathVariable Long id, Model model) {
     final var movie = tmdbService.getMovieDetails(id);
+    final var posts =
+        postRepository
+            .findAllByMovies_Id(movie.getId(), PageRequest.of(0, 10, Sort.by("id").descending()))
+            .stream()
+            .map(postToPostDto::convert)
+            .toList();
+
+    model.addAttribute("posts", posts);
+
     model.addAttribute("movieDetails", movie);
     model.addAttribute("poster", TMDBService.POSTER_BASE_URL + movie.getPosterPath());
     model.addAttribute("backdrop", TMDBService.BACKDROP_BASE_URL + movie.getBackdropPath());
