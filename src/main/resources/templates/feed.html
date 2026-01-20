@@ -106,11 +106,12 @@
                     </div>
                 </div>
             </div>
+            <input type="hidden" name="id" th:value="${postDto?.id}">
             <textarea type="text" class="form-control" placeholder="Post something..." rows="5"
                       name="post-text" th:text="${postDto?.content} ?: ''"></textarea>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-primary" hx-post="/app/feed" hx-include="[name='post-text']"
+            <button type="button" class="btn btn-primary" hx-post="/app/feed" hx-include="[name='post-text'],[name='id']"
                     hx-swap="none">Post
             </button>
         </div>
