@@ -10,7 +10,8 @@
     <div class="d-flex">
         <div th:replace="~{fragments/sidebar :: sidebar('feed')}"></div>
         <button class="btn btn-primary position-fixed end-0 bottom-0 m-5 shadow"
-                type="button" data-bs-toggle="modal" data-bs-target="#postModal">
+                type="button" hx-get="/app/feed/edit-dialog"
+                hx-target="#editModal">
             <i class="bi bi-plus-lg me-1"></i>
             <span th:text="#{feed.new-post}">New Post</span>
         </button>
@@ -27,9 +28,6 @@
         </div>
     </div>
 
-    <div id="postModalPlaceholder">
-        <div id="postModal" class="modal fade" tabindex="-1" th:insert="~{::postModal}"></div>
-    </div>
     <div id="deleteConfirmModalPlaceholder" data-script="
         on htmx:afterSettle
             set x to #deleteConfirmModal

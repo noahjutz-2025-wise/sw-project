@@ -127,6 +127,11 @@ public class FeedController {
     return "feed::postModal";
   }
 
+  @GetMapping("edit-dialog")
+  public String getEditDialog(Model model) {
+    return "feed::postModal";
+  }
+
   private List<MediaDto> stringToMediaDtos(String medias) {
     return Objects.requireNonNull(stringToJsonNodes.convert(medias)).stream()
         .map(jsonNodeToMedia::convert)
