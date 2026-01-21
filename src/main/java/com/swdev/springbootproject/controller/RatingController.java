@@ -38,8 +38,7 @@ public class RatingController {
 
     currentUser = cbUserRepository.findById(currentUser.getId()).orElseThrow();
 
-    final var movie = movieRepository.save(CbMovie.builder().id(id).build());
-    final var currentMovie = movieRepository.save(new CbMovie(id));
+    final var currentMovie = movieRepository.save(CbMovie.builder().id(id).build());
 
     final var userMovieRating =
         userMovieRatingRepository.findByUserAndMovie(currentUser, currentMovie);
@@ -70,7 +69,7 @@ public class RatingController {
 
     currentUser = cbUserRepository.findById(currentUser.getId()).orElseThrow();
 
-    final var currentMovie = movieRepository.save(new CbMovie(id));
+    final var currentMovie = movieRepository.save(CbMovie.builder().id(id).build());
 
     UserMovieRating userMovieRating =
         userMovieRatingRepository.findByMovieAndUser(currentMovie, currentUser);
@@ -99,7 +98,7 @@ public class RatingController {
     }
 
     userMovieRatingRepository
-        .findByUserAndMovie(currentUser, new CbMovie(id))
+        .findByUserAndMovie(currentUser, CbMovie.builder().id(id).build())
         .ifPresent(userMovieRatingRepository::delete);
 
     return "redirect:/app/rated_movies";

@@ -46,10 +46,6 @@ public class MovieController {
             .map(postToPostDto::convert)
             .toList();
 
-    model.addAttribute("posts", posts);
-
-    model.addAttribute("media", media);
-
     var currentUser = (CbUser) authentication.getPrincipal();
 
     if (currentUser == null) {
@@ -58,12 +54,14 @@ public class MovieController {
 
     currentUser = cbUserRepository.findById(currentUser.getId()).orElseThrow();
 
-    final var currentMovie = movieRepository.save(new CbMovie(id));
+    final var currentMovie = movieRepository.save(CbMovie.builder().id(id).build());
 
     final var userMovieRating =
         userMovieRatingRepository.findByUserAndMovie(currentUser, currentMovie);
 
-    model.addAttribute("movieDetails", movie);
+    model.addAttribute("posts", posts);
+    model.addAttribute("media", media);
+    // model.addAttribute("movieDetails", movie);
     model.addAttribute("poster", TMDBService.POSTER_BASE_URL + movie.getPosterPath());
     model.addAttribute("backdrop", TMDBService.BACKDROP_BASE_URL + movie.getBackdropPath());
     model.addAttribute("id", id);

@@ -1,6 +1,6 @@
 package com.swdev.springbootproject.controller;
 
-import com.swdev.springbootproject.component.TmdbMovieToMediaDtoConverter;
+import com.swdev.springbootproject.component.converter.TmdbMovieToMediaDtoConverter;
 import com.swdev.springbootproject.entity.CbUser;
 import com.swdev.springbootproject.repository.CbUserRepository;
 import com.swdev.springbootproject.repository.UserMovieRatingRepository;
