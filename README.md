@@ -99,6 +99,7 @@ classDiagram
     class CertifiedBanger {
         long id
     }
+    CbMovie "1" -- "1" CertifiedBanger: is
     
     class CertifyMovieRequest {
         long id
