@@ -3,6 +3,7 @@ package com.swdev.springbootproject.controller;
 import com.swdev.springbootproject.component.converter.TmdbMovieToMediaDtoConverter;
 import com.swdev.springbootproject.component.converter.TmdbTvToMediaDtoConverter;
 import com.swdev.springbootproject.model.dto.MediaDto;
+import com.swdev.springbootproject.repository.CbUserRepository;
 import com.swdev.springbootproject.service.TMDBService;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ class SearchController {
   private final TMDBService tmdbService;
   private final TmdbMovieToMediaDtoConverter movieToMedia;
   private final TmdbTvToMediaDtoConverter tvToMedia;
+  private final CbUserRepository cbUserRepository;
 
   @GetMapping("")
   public String search() {
@@ -64,7 +66,12 @@ class SearchController {
         yield "fragments/movie_card_grid :: movieCardGrid(movies=${movies})";
       }
       case "users" -> {
-        throw new IllegalStateException("Not yet implemented");
+        final var users =
+            search.isBlank()
+                ? List.<CbUser>of()
+                : cbUserRepository.findByEmailContainingIgnoreCase(search.trim());
+        model.addAttribute("users", users);
+        yield "fragments/user_card_grid :: userCardGrid(users=${users})";
       }
       default -> {
         throw new IllegalArgumentException();

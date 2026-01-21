@@ -1,0 +1,9 @@
+<div th:fragment="userCardGrid(users)">
+    <div class="row g-3">
+        <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+            <div th:each="user : ${users}">
+                <div th:replace="fragments/user_card :: userCard(${user.email}, ${user.name})"></div>
+            </div>
+        </div>
+    </div>
+</div>
