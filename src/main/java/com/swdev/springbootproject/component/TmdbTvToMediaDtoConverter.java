@@ -26,7 +26,7 @@ public class TmdbTvToMediaDtoConverter implements Converter<TmdbTv, MediaDto> {
         .voteCount(source.getVoteCount())
         .runtime(null)
         .type(MediaDtoType.TV)
-        .certifiedBanger(false)
+        .certifiedBangerStatus(MediaDto.CertifiedBangerStatus.NOT_CERTIFIED)
         .build();
   }
 }

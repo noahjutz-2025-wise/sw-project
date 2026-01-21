@@ -116,3 +116,33 @@ body, html {
     max-height: 350px;
     overflow: scroll;
 }
+
+.admin-nav-link {
+    border-left: 3px solid rgba(255, 255, 255, 0.55);
+}
+
+.admin-nav-link.active {
+    background-color: rgba(255, 193, 7, 0.15);
+}
+
+.admin-badge {
+    display: inline-flex;
+    background-color: rgba(255, 255, 255, 0.25);
+    align-items: center;
+}
+
+.admin-sidebar-btn {
+    border-style: dashed;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+.admin-sidebar-btn:hover {
+    background-color: rgba(255, 255, 255, 0.12);;
+}
+
+.admin-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    opacity: 0.75;
+}

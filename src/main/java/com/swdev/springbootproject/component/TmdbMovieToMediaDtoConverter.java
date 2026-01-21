@@ -26,7 +26,7 @@ public class TmdbMovieToMediaDtoConverter implements Converter<TmdbMovie, MediaD
         .voteAverage(source.getVoteAverage())
         .voteCount(source.getVoteCount())
         .type(MediaDtoType.MOVIE)
-        .certifiedBanger(false)
+        .certifiedBangerStatus(MediaDto.CertifiedBangerStatus.NOT_CERTIFIED)
         .build();
   }
 }

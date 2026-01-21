@@ -1,4 +1,4 @@
-<div th:fragment="mobile-navbar(activeTab)">
+<div xmlns:sec="https://www.thymeleaf.org/extras/spring-security" th:fragment="mobile-navbar(activeTab)">
     <nav class="navbar navbar-dark bg-sidebar fixed-top navbar-expand-md d-md-none" hx-boost="false">
         <div class="container-fluid">
             <h6 class="navbar-brand">Menu</h6>
@@ -30,6 +30,14 @@
                     </li>
                     <li class="nav-item"><a href="/user/profile" class="nav-link text-white"
                                             th:classappend="${activeTab == 'profile'} ? 'active' : ''" th:text="#{nav.profile}">Profil</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasAuthority('admin')">
+                        <a href="/admin/critics"
+                            class="nav-link text-light fw-semibold ps-2 d-flex align-content-center admin-nav-link gap-4"
+                            th:classappend="${activeTab == 'critics'} ? 'active bg-light bg-opacity-10 rounded-2' : ''">
+                                <span th:text="#{nav.critics}">Filmkritiker</span>
+                                <span class="badge admin-badge">ADMIN</span>
+                        </a>
                     </li>
                 </ul>
             </div>
