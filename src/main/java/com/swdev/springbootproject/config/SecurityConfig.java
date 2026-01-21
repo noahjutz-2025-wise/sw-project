@@ -1,5 +1,6 @@
 package com.swdev.springbootproject.config;
 
+import com.swdev.springbootproject.component.JwtRequestFilter;
 import com.swdev.springbootproject.repository.CbUserRepository;
 import com.swdev.springbootproject.service.CbUserDetailsService;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableMethodSecurity
@@ -31,13 +33,20 @@ class SecurityConfig {
   }
 
   @Bean
-  public SecurityFilterChain filterChain(HttpSecurity http) {
+  public SecurityFilterChain filterChain(HttpSecurity http, JwtRequestFilter jwtRequestFilter) {
     return http.authorizeHttpRequests(
             a ->
                 a.requestMatchers("/app/**", "/verify", "/user/profile")
                     .authenticated()
                     .requestMatchers(
-                        "/signup", "/", "/css/**", "/js/**", "/error", "/webjars/**", "/images/**")
+                        "/signup",
+                        "/",
+                        "/css/**",
+                        "/js/**",
+                        "/error",
+                        "/webjars/**",
+                        "/images/**",
+                        "/api/auth")
                     .permitAll()
                     .requestMatchers("/admin/**")
                     .hasAuthority("admin")
@@ -47,6 +56,7 @@ class SecurityConfig {
                     .authenticated())
         .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/mood").permitAll())
         .csrf(csrf -> csrf.ignoringRequestMatchers("/**"))
+        .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
         .build();
   }
 
