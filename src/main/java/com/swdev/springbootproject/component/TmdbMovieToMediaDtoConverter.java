@@ -19,6 +19,12 @@ public class TmdbMovieToMediaDtoConverter implements Converter<TmdbMovie, MediaD
         .backdropPath(source.getBackdropPath())
         .releaseDate(source.getReleaseDate())
         .overview(source.getOverview())
+        .tagline(source.getTagline())
+        .revenue(source.getRevenue())
+        .runtime(source.getRuntime())
+        .popularity(source.getPopularity())
+        .voteAverage(source.getVoteAverage())
+        .voteCount(source.getVoteCount())
         .type(MediaDtoType.MOVIE)
         .certifiedBanger(false)
         .build();
