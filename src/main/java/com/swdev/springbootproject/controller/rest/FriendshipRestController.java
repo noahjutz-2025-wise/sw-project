@@ -34,7 +34,7 @@ public class FriendshipRestController {
     return ResponseEntity.ok(friends);
   }
 
-  @PostMapping("/users/friendships")
+  @PostMapping("/users/friendship")
   public ResponseEntity<Void> addFriendship(@RequestBody Map<String, Long> body) {
     Long senderId = body.get("senderId");
     Long receiverId = body.get("receiverId");
