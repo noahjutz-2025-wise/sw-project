@@ -1,0 +1,8 @@
+<div th:fragment="userCard(email, name)">
+    <div class="card h-100 w-100 shadow-sm border-0 mb-3" style="min-width: 18rem;">
+        <div class="card-body py-3 px-4">
+            <div class="fw-semibold text-truncate" th:text="${email}"></div>
+            <div class="text-muted small" th:if="${name != null}" th:text="${name}"></div>
+        </div>
+    </div>
+</div>

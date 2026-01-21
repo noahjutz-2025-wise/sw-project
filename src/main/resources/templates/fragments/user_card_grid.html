@@ -1,0 +1,13 @@
+<div th:fragment="userCardGrid(users)">
+    <div th:if="${#lists.isEmpty(users)}" class="text-center text-muted py-5">
+        <i class="bi bi-inbox-fill fs-3 d-block mb-2"></i>
+        <span th:text="#{user.card.grid.noResults}">Keine Ergebnisse</span>
+    </div>
+    <div class="row g-3">
+        <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+            <div th:each="user : ${users}">
+                <div th:replace="fragments/user_card :: userCard(${user.email}, ${user.name})"></div>
+            </div>
+        </div>
+    </div>
+</div>
