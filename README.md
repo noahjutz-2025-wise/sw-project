@@ -95,6 +95,18 @@ classDiagram
     Post "*" -- "1" CbUser : author
     Post "*" -- "*" CbTv : references
     Post "*" -- "*" CbMovie : references
+    
+    class CertifiedBanger {
+        long id
+    }
+    
+    class CertifyMovieRequest {
+        long id
+        long movieId
+        CbUser cbUser
+        enum status "PENDING, APPROVED, REJECTED"
+    }
+    CertifyMovieRequest "*" -- "1" CbUser : requester
 ```
 
 ## Email Verification Setup
