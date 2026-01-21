@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="de"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="@{scaffold}">
+<head>
+    <title layout:fragment="title">Die von mir bewerteten Filme</title>
+</head>
+<section layout:fragment="content">
+    <div th:replace="~{fragments/mobile-nav :: mobile-navbar('ratedmovies')}"></div>
+    <div class="d-flex">
+        <div th:replace="~{fragments/sidebar :: sidebar('ratedmovies')}"></div>
+        <div class="container">
+            <div class="container-fluid">
+                <h1 class="trend-title mb-4" th:text="#{rated.movies.title}">Die von Ihnen bewerteten Filme</h1>
+                <div th:replace="~{fragments/movie_card_grid :: movieCardGrid(movies=${movies})}"></div>
+            </div>
+        </div>
+    </div>
+</section>
+</html>

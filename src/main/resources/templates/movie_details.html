@@ -55,9 +55,34 @@
                             <th th:text="#{movie.details.rating}">Bewertung</th>
                             <td>
                                 <span th:text="#{movie.details.ratings(${media.voteAverage}, ${media.voteCount})}"></span>
-                                <a class="icon-link nav-link" th:href="@{/app/movie/{id}/vote(id=${id})}">
-                                    <i class="bi bi-envelope-paper-heart"></i>
-                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <span th:text="#{movie.details.your.vote}">Ihre Abstimmung</span>
+                                <th:block th:if="${rating == null}">
+                                    <a class="icon-link nav-link" th:href="@{/app/movie/{id}/vote(id=${id})}">
+                                        <i class="bi bi-envelope-paper-heart"></i>
+                                    </a>
+                                </th:block>
+                                <th:block th:unless="${rating == null}">
+                                    <a class="icon-link nav-link" th:href="@{/app/movie/{id}/revote(id=${id})}">
+                                        <i class="bi bi-pencil-fill"></i>
+                                    </a>
+                                    <a class="icon-link nav-link" th:href="@{/app/movie/{id}/unvote(id=${id})}">
+                                        <i class="bi bi-trash3-fill"></i>
+                                    </a>
+                                </th:block>
+                            </th>
+                            <td>
+                                <th:block th:if="${rating == null}">
+                                    <span th:text="#{movie.details.no.votes}"></span>
+                                </th:block>
+                                <th:block th:unless="${rating == null}">
+                                    <span th:text="${rating}"></span>
+                                    <span th:text="#{movie.details.voted.at}"></span>
+                                    <span th:text="${ratedAt}"></span>
+                                </th:block>
                             </td>
                         </tr>
                         <tr th:if="${media.runtime}">

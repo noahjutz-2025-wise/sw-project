@@ -4,12 +4,13 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import java.time.LocalDateTime;
+import lombok.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "ratings")
@@ -18,11 +19,11 @@ public class UserMovieRating {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "cb_user", referencedColumnName = "username", nullable = false)
-  private CbUser cbUser;
+  private CbUser user;
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "movie_id", referencedColumnName = "id", nullable = false)
   private CbMovie movie;
 
@@ -32,11 +33,12 @@ public class UserMovieRating {
   private Integer rating;
 
   @Column(nullable = false)
-  private LocalDateTime ratedAt = LocalDateTime.now();
+  private LocalDateTime ratedAt;
 
-  public UserMovieRating(CbUser cbUser, CbMovie movie, Integer rating) {
-    this.cbUser = cbUser;
+  public UserMovieRating(CbUser user, CbMovie movie, Integer rating, LocalDateTime ratedAt) {
+    this.user = user;
     this.movie = movie;
     this.rating = rating;
+    this.ratedAt = ratedAt;
   }
 }
