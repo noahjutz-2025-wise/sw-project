@@ -9,7 +9,6 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +23,7 @@ public class PostController {
   private final PostSecurity postSecurity;
 
   @GetMapping
+  @PreAuthorize("isAuthenticated()")
   public List<PostDto> posts(@RequestParam(defaultValue = "0") int page) {
     return postRepository
         .findAll(Pageable.ofSize(10).withPage(page))
@@ -38,6 +38,7 @@ public class PostController {
   }
 
   @PostMapping
+  @PreAuthorize("isAuthenticated()")
   public PostDto createPost(@RequestBody PostDto postDto) {
     assert postDto.getId() == null;
     final var post = postDtoToPostConverter.convert(postDto);
@@ -51,6 +52,7 @@ public class PostController {
   }
 
   @PutMapping
+  @PreAuthorize("@postSecurity.isOwner(#postDto.id, authentication)")
   public PostDto updatePost(@RequestBody PostDto postDto) {
     assert postDto.getId() != null;
     final var post = postDtoToPostConverter.convert(postDto);
