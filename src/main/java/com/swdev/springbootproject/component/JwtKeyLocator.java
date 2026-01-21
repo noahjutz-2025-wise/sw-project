@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class JwtKeyLocator implements Locator<Key> {
-  @Value("${jwt.secret}")
+  @Value("${jwt.secret#{null}")
   private String key;
 
   @Override
