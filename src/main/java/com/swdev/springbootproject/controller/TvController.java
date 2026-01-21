@@ -1,7 +1,7 @@
 package com.swdev.springbootproject.controller;
 
-import com.swdev.springbootproject.component.PostToPostDtoConverter;
-import com.swdev.springbootproject.component.TmdbTvToMediaDtoConverter;
+import com.swdev.springbootproject.component.converter.PostToPostDtoConverter;
+import com.swdev.springbootproject.component.converter.TmdbTvToMediaDtoConverter;
 import com.swdev.springbootproject.repository.PostRepository;
 import com.swdev.springbootproject.repository.TvRepository;
 import com.swdev.springbootproject.service.TMDBService;

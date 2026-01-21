@@ -1,4 +1,4 @@
-package com.swdev.springbootproject.component;
+package com.swdev.springbootproject.component.converter;
 
 import com.swdev.springbootproject.entity.BookmarkStatus;
 import org.jspecify.annotations.Nullable;

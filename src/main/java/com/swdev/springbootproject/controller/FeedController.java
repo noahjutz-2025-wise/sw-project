@@ -1,6 +1,6 @@
 package com.swdev.springbootproject.controller;
 
-import com.swdev.springbootproject.component.*;
+import com.swdev.springbootproject.component.converter.*;
 import com.swdev.springbootproject.entity.*;
 import com.swdev.springbootproject.model.dto.MediaDto;
 import com.swdev.springbootproject.model.dto.PostDto;

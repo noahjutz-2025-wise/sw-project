@@ -1,6 +1,6 @@
-package com.swdev.springbootproject.component;
+package com.swdev.springbootproject.component.converter;
 
-import com.swdev.springbootproject.entity.CbTv;
+import com.swdev.springbootproject.entity.CbMovie;
 import com.swdev.springbootproject.model.dto.MediaDto;
 import com.swdev.springbootproject.service.TMDBService;
 import lombok.RequiredArgsConstructor;
@@ -11,13 +11,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class CbTvToMediaDtoConverter implements Converter<CbTv, MediaDto> {
+public class CbMovieToMediaDtoConverter implements Converter<CbMovie, MediaDto> {
   private @NonNull TMDBService tmdbService;
-  private @NonNull TmdbTvToMediaDtoConverter tmdbTvToMediaDto;
+  private @NonNull TmdbMovieToMediaDtoConverter tmdbMovieToMediaDto;
 
   @Override
-  public @Nullable MediaDto convert(CbTv source) {
-    final var tv = tmdbService.getTvDetails(source.getId());
-    return tmdbTvToMediaDto.convert(tv);
+  public @Nullable MediaDto convert(CbMovie source) {
+    final var movie = tmdbService.getMovieDetails(source.getId());
+    return tmdbMovieToMediaDto.convert(movie);
   }
 }

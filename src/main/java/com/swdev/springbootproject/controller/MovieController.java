@@ -1,8 +1,8 @@
 package com.swdev.springbootproject.controller;
 
-import com.swdev.springbootproject.component.PostToPostDtoConverter;
-import com.swdev.springbootproject.component.QueryParamToBookmarkStatusConverter;
-import com.swdev.springbootproject.component.TmdbMovieToMediaDtoConverter;
+import com.swdev.springbootproject.component.converter.PostToPostDtoConverter;
+import com.swdev.springbootproject.component.converter.QueryParamToBookmarkStatusConverter;
+import com.swdev.springbootproject.component.converter.TmdbMovieToMediaDtoConverter;
 import com.swdev.springbootproject.entity.CbMovie;
 import com.swdev.springbootproject.entity.CbUser;
 import com.swdev.springbootproject.entity.MovieBookmark;

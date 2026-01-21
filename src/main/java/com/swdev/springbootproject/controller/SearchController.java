@@ -1,7 +1,7 @@
 package com.swdev.springbootproject.controller;
 
-import com.swdev.springbootproject.component.TmdbMovieToMediaDtoConverter;
-import com.swdev.springbootproject.component.TmdbTvToMediaDtoConverter;
+import com.swdev.springbootproject.component.converter.TmdbMovieToMediaDtoConverter;
+import com.swdev.springbootproject.component.converter.TmdbTvToMediaDtoConverter;
 import com.swdev.springbootproject.model.dto.MediaDto;
 import com.swdev.springbootproject.service.TMDBService;
 import java.util.List;
