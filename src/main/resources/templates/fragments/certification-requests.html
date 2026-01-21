@@ -17,7 +17,7 @@
                     <tbody>
                     <tr th:each="request : ${pendingRequests}">
                         <td th:text="${request.movieId}"></td>
-                        <td>ToDo</td>
+                        <td th:text="${movieNames[request.movieId]}"></td>
                         <td th:text="${request.cbUser.email}"></td>
                         <td>
                             <button type="button"

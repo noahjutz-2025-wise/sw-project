@@ -3,14 +3,20 @@ package com.swdev.springbootproject.controller;
 import com.swdev.springbootproject.entity.CbUser;
 import com.swdev.springbootproject.entity.CertifiedBanger;
 import com.swdev.springbootproject.entity.CertifyMovieRequest;
+import com.swdev.springbootproject.model.tmdb.TmdbMovie;
 import com.swdev.springbootproject.repository.CertifiedBangerRepository;
 import com.swdev.springbootproject.repository.CertifyMovieRequestRepository;
 import com.swdev.springbootproject.service.CriticService;
+import com.swdev.springbootproject.service.TMDBService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -20,14 +26,17 @@ public class CriticController {
   private final CriticService criticService;
   private final CertifyMovieRequestRepository certifyMovieRequestRepository;
   private final CertifiedBangerRepository certifiedBangerRepository;
+  private final TMDBService tmdbService;
 
   @GetMapping
   public String getUsers(Model model) {
     model.addAttribute("users", criticService.findAllCbUsers());
+    List<CertifyMovieRequest> pendingRequests = certifyMovieRequestRepository.findByStatusOrderByIdDesc(CertifyMovieRequest.RequestStatus.PENDING);
     model.addAttribute(
         "pendingRequests",
         certifyMovieRequestRepository.findByStatusOrderByIdDesc(
             CertifyMovieRequest.RequestStatus.PENDING));
+    addMovieNames(pendingRequests, model);
     return "admin/critics";
   }
 
@@ -68,5 +77,18 @@ public class CriticController {
         certifyMovieRequestRepository.findByStatusOrderByIdDesc(
             CertifyMovieRequest.RequestStatus.PENDING));
     return "fragments/certification-requests :: requestsCard";
+  }
+
+  private void addMovieNames(List<CertifyMovieRequest> requests, Model model) {
+    Map<Long, String> movieNames = new HashMap<>();
+    for (CertifyMovieRequest request : requests) {
+      try {
+        TmdbMovie movie = tmdbService.getMovieDetails(request.getMovieId());
+        movieNames.put(request.getMovieId(), movie.getTitle());
+      } catch (Exception e) {
+        movieNames.put(request.getMovieId(), "Unknown Title");
+      }
+    }
+    model.addAttribute("movieNames", movieNames);
   }
 }
