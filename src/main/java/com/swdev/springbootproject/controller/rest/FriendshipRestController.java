@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+// For development and testing, the REST API is public. but of course ideally there needs to be authentification
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -61,7 +62,7 @@ public class FriendshipRestController {
   }
 
   @DeleteMapping("/users/friendship/{id}")
-  public ResponseEntity<Void> deleteFriendship(@RequestBody Long id) {
+  public ResponseEntity<Void> deleteFriendship(@PathVariable Long id) {
     var friendship = friendshipRepository.findById(id).orElse(null);
     if (friendship == null) {
       return ResponseEntity.notFound().build();
@@ -70,7 +71,7 @@ public class FriendshipRestController {
     return ResponseEntity.noContent().build();
   }
 
-  @PutMapping("/uses/friendship/{id}/update")
+  @PutMapping("/users/friendship/{id}/update")
   public ResponseEntity<Void> updateFriendship(@PathVariable Long id) {
     var friendship = friendshipRepository.findById(id).orElse(null);
     if (friendship == null) {
