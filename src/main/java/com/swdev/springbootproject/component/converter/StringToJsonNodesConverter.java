@@ -1,4 +1,4 @@
-package com.swdev.springbootproject.component;
+package com.swdev.springbootproject.component.converter;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;

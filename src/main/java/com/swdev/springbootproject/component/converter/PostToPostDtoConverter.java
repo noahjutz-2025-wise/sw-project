@@ -1,4 +1,4 @@
-package com.swdev.springbootproject.component;
+package com.swdev.springbootproject.component.converter;
 
 import com.swdev.springbootproject.entity.Post;
 import com.swdev.springbootproject.model.dto.PostDto;

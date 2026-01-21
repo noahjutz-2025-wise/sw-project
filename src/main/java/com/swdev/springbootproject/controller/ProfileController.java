@@ -1,6 +1,6 @@
 package com.swdev.springbootproject.controller;
 
-import com.swdev.springbootproject.component.TmdbMovieToMediaDtoConverter;
+import com.swdev.springbootproject.component.converter.TmdbMovieToMediaDtoConverter;
 import com.swdev.springbootproject.entity.BookmarkStatus;
 import com.swdev.springbootproject.entity.CbUser;
 import com.swdev.springbootproject.entity.Friendship;

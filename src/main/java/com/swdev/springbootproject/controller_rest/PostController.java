@@ -1,7 +1,7 @@
 package com.swdev.springbootproject.controller_rest;
 
-import com.swdev.springbootproject.component.PostDtoToPostConverter;
-import com.swdev.springbootproject.component.PostToPostDtoConverter;
+import com.swdev.springbootproject.component.converter.PostDtoToPostConverter;
+import com.swdev.springbootproject.component.converter.PostToPostDtoConverter;
 import com.swdev.springbootproject.model.dto.PostDto;
 import com.swdev.springbootproject.repository.PostRepository;
 import java.util.List;
