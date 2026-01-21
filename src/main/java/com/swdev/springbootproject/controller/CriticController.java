@@ -58,11 +58,14 @@ public class CriticController {
     if (!certifiedBangerRepository.existsById(request.getMovieId())) {
       certifiedBangerRepository.save(new CertifiedBanger(request.getMovieId()));
     }
-
+    List<CertifyMovieRequest> pendingRequest =
+        certifyMovieRequestRepository.findByStatusOrderByIdDesc(
+            CertifyMovieRequest.RequestStatus.PENDING);
     model.addAttribute(
         "pendingRequests",
         certifyMovieRequestRepository.findByStatusOrderByIdDesc(
             CertifyMovieRequest.RequestStatus.PENDING));
+    addMovieNames(pendingRequest, model);
     return "fragments/certification-requests :: requestsCard";
   }
 
@@ -72,11 +75,14 @@ public class CriticController {
         certifyMovieRequestRepository.findById(requestId).orElseThrow();
     certifyMovieRequest.setStatus(CertifyMovieRequest.RequestStatus.REJECTED);
     certifyMovieRequestRepository.save(certifyMovieRequest);
-
+    List<CertifyMovieRequest> pendingRequest =
+        certifyMovieRequestRepository.findByStatusOrderByIdDesc(
+            CertifyMovieRequest.RequestStatus.PENDING);
     model.addAttribute(
         "pendingRequests",
         certifyMovieRequestRepository.findByStatusOrderByIdDesc(
             CertifyMovieRequest.RequestStatus.PENDING));
+    addMovieNames(pendingRequest, model);
     return "fragments/certification-requests :: requestsCard";
   }
 
