@@ -18,7 +18,7 @@
                             <i class="bi bi-arrow-left"></i>
                         </a>
                         <span class="me-2"></span>
-                        <span th:text="${movieDetails.title}">Movie Details</span>
+                        <span th:text="${media.title}">Movie Details</span>
                     </div>
                 </div>
             </div>
@@ -31,27 +31,27 @@
                 <div class="col-sm-4 col-12">
                     <img width="100%" th:src="${poster}"
                          class="shadow mb-4"/>
-                    <p th:if="${movieDetails.tagline != null and !#strings.isEmpty(movieDetails.tagline)}"
-                       th:text="${'&quot;' + movieDetails.tagline + '&quot;'}">
+                    <p th:if="${media?.tagline != null and !#strings.isEmpty(media.tagline)}"
+                       th:text="${'&quot;' + media.tagline + '&quot;'}">
                     </p>
                 </div>
                 <div class="col-sm-8 col-12">
                     <table class="table">
                         <tr>
                             <th th:text="#{movie.details.releasedOn}">Veröffentlicht am</th>
-                            <td th:text="${movieDetails.releaseDate}"></td>
+                            <td th:text="${media.releaseDate}"></td>
                         </tr>
                         <tr>
                             <th th:text="#{movie.details.revenue}">Umsatz</th>
                             <td>
-                                <span th:text="${#numbers.formatDecimal(movieDetails.revenue, 0, 'COMMA', 0, 'POINT')}"></span>
+                                <span th:text="${#numbers.formatDecimal(media.revenue, 0, 'COMMA', 0, 'POINT')}"></span>
                                 <span th:text="#{movie.details.currency}"></span>
                             </td>
                         </tr>
                         <tr>
                             <th th:text="#{movie.details.rating}">Bewertung</th>
                             <td>
-                                <span th:text="#{movie.details.ratings(${movieDetails.voteAverage}, ${movieDetails.voteCount})}"></span>
+                                <span th:text="#{movie.details.ratings(${media.voteAverage}, ${media.voteCount})}"></span>
                                 <a class="icon-link nav-link" th:href="@{/app/movie/{id}/vote(id=${id})}">
                                     <i class="bi bi-envelope-paper-heart"></i>
                                 </a>
@@ -60,17 +60,17 @@
                         <tr>
                             <th th:text="#{movie.details.duration}">Dauer</th>
                             <td>
-                                <span th:text="${movieDetails.runtime}"></span>
+                                <span th:text="${media.runtime}"></span>
                                 <span th:text="#{movie.details.min}"></span>
                             </td>
                         </tr>
                     </table>
                     <h2 th:text="#{movie.details.overview}">Kurzbeschreibung</h2>
-                    <p th:if="${movieDetails.overview != null and !#strings.isEmpty(movieDetails.overview)}"
-                       th:text="${movieDetails.overview}">
+                    <p th:if="${media.overview != null and !#strings.isEmpty(media.overview)}"
+                       th:text="${media.overview}">
                     </p>
                     <p class="text-muted"
-                       th:unless="${movieDetails.overview != null and !#strings.isEmpty(movieDetails.overview)}"
+                       th:unless="${media.overview != null and !#strings.isEmpty(media.overview)}"
                        th:text="#{movie.details.noOverview}">
                     </p>
 

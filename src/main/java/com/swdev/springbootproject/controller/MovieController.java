@@ -2,6 +2,7 @@ package com.swdev.springbootproject.controller;
 
 import com.swdev.springbootproject.component.PostToPostDtoConverter;
 import com.swdev.springbootproject.component.QueryParamToBookmarkStatusConverter;
+import com.swdev.springbootproject.component.TmdbMovieToMediaDtoConverter;
 import com.swdev.springbootproject.entity.CbMovie;
 import com.swdev.springbootproject.entity.CbUser;
 import com.swdev.springbootproject.entity.MovieBookmark;
@@ -29,10 +30,12 @@ public class MovieController {
   private final QueryParamToBookmarkStatusConverter queryParamToBookmarkStatusConverter;
   private final PostRepository postRepository;
   private final PostToPostDtoConverter postToPostDto;
+  private final TmdbMovieToMediaDtoConverter movieToMediaDto;
 
   @GetMapping("/{id}")
   public String movie(@PathVariable Long id, Model model) {
     final var movie = tmdbService.getMovieDetails(id);
+    final var media = movieToMediaDto.convert(movie);
     final var posts =
         postRepository
             .findAllByMovies_Id(movie.getId(), PageRequest.of(0, 10, Sort.by("id").descending()))
@@ -42,7 +45,7 @@ public class MovieController {
 
     model.addAttribute("posts", posts);
 
-    model.addAttribute("movieDetails", movie);
+    model.addAttribute("media", media);
     model.addAttribute("poster", TMDBService.POSTER_BASE_URL + movie.getPosterPath());
     model.addAttribute("backdrop", TMDBService.BACKDROP_BASE_URL + movie.getBackdropPath());
     model.addAttribute("id", id);
