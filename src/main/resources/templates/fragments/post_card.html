@@ -8,9 +8,9 @@
 
 <div th:fragment="post_card(postDto)" class="card mb-3">
     <img th:if="${postDto.media != null && !postDto.media.isEmpty()}"
-         th:src="${'https://image.tmdb.org/t/p/w500' + postDto.media[0].posterPath}"
+         th:src="${'https://image.tmdb.org/t/p/w780' + postDto.media[0].backdropPath}"
          class="card-img-top" alt="Related Media Image"
-         style="height: 10rem; object-fit: cover; object-position: top;">
+         style="height: 10rem; object-fit: cover">
 
     <div class="card-header">
         <i class="bi bi-person-circle"></i>
