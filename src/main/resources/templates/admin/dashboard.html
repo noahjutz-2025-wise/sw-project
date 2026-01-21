@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="@{scaffold}">
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<section layout:fragment="content">
+    <div th:replace="~{fragments/mobile-nav :: mobile-navbar('dashboard')}"></div>
+    <div class="d-flex">
+        <div th:replace="~{fragments/sidebar :: sidebar('dashboard')}"></div>
+        <div class="container">
+            <h1 class="trend-title mb-4" th:text="#{dashboard.admin.page.title}">Admin Dashboard</h1>
+
+            <th:block th:if="${crud == 'read'}">
+                <h2 th:text="#{dashboard.admin.overview.metrics}">Überblick und Metriken von unserer Datenbank</h2>
+
+                <div class="container mt-5">
+                    <div class="row g-4">
+                        <div class="col-sm-8 col-12">
+                            <table class="table">
+                                <tr>
+                                    <th th:text="#{dashboard.admin.count.users}">Anzahl Users</th>
+                                    <td th:text="${countUsers}"></td>
+                                </tr>
+                                <tr>
+                                    <th th:text="#{dashboard.admin.count.posts}">Anzahl Posts</th>
+                                    <td th:text="${countPosts}"></td>
+                                </tr>
+                                <tr>
+                                    <th th:text="#{dashboard.admin.count.certified.bangers}">Anzahl Certified Bangers</th>
+                                    <td th:text="${countCertifiedBangers}"></td>
+                                </tr>
+                            </table>
+
+                            <h3 th:text="#{dashboard.admin.users.list}">Liste von allen Users</h3>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th th:text="#{dashboard.admin.user.name}">Name</th>
+                                    <th th:text="#{dashboard.admin.user.email}">E-Mail</th>
+                                    <th th:text="#{dashboard.admin.user.authority}">Berechtigung</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody th:each="user : ${users}">
+                                <tr>
+                                    <td th:text="${user.getName()}"></td>
+                                    <td th:text="${user.getEmail()}"></td>
+                                    <td th:text="${user.getAuthority()}"></td>
+                                    <td>
+                                        <a class="icon-link nav-link" th:href="@{/admin/dashboard/{userId}/ban(userId=${user.getId()})}">
+                                            <i class="bi bi-trash3-fill"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+
+            <th:block th:if="${crud == 'delete'}">
+                <h2 th:text="#{dashboard.admin.delete.user.account}">Ich möchte dieses User-Konto löschen</h2>
+                <button th:hx-delete="@{/admin/dashboard/{userId}/ban(userId=${id})}"
+                        class="dropdown-item text-danger" id="user-delete">
+                    <i class="bi bi-trash3-fill pe-1"></i>
+                    <span th:text="#{dashboard.admin.delete.user.button}">User-Konto löschen</span>
+                </button>
+
+                <div><meta http-equiv="refresh" content="5; url=/admin/dashboard"></div>
+            </th:block>
+
+        </div>
+    </div>
+</section>
+</html>
