@@ -20,22 +20,24 @@
                         <td th:text="${movieNames[request.movieId]}"></td>
                         <td th:text="${request.cbUser.email}"></td>
                         <td>
-                            <button type="button"
-                                    class="btn btn-sm btn-success me-2"
-                                    th:hx-post="@{/admin/critics/requests/{id}/approve(id=${request.id})}"
-                                    hx-target="#certification-requests"
-                                    th:text="#{certification.request.approve.btn}"
-                                    hx-swap="outerHTML">
-                                Approve
-                            </button>
-                            <button type="button"
-                                    class="btn btn-sm btn-danger"
-                                    th:hx-post="@{/admin/critics/requests/{id}/reject(id=${request.id})}"
-                                    hx-target="#certification-requests-content"
-                                    th:text="#{certification.request.reject.btn}"
-                                    hx-swap="innerHTML">
-                                Reject
-                            </button>
+                            <div class="d-flex flex-column flex-md-row gap-2">
+                                <button type="button"
+                                        class="btn btn-sm btn-success me-2"
+                                        th:hx-post="@{/admin/critics/requests/{id}/approve(id=${request.id})}"
+                                        hx-target="#certification-requests"
+                                        th:text="#{certification.request.approve.btn}"
+                                        hx-swap="outerHTML">
+                                    Bestätigen
+                                </button>
+                                <button type="button"
+                                        class="btn btn-sm btn-danger"
+                                        th:hx-post="@{/admin/critics/requests/{id}/reject(id=${request.id})}"
+                                        hx-target="#certification-requests-content"
+                                        th:text="#{certification.request.reject.btn}"
+                                        hx-swap="innerHTML">
+                                    Ablehnen
+                                </button>
+                            </div>
                         </td>
                     </tr>
                     </tbody>
