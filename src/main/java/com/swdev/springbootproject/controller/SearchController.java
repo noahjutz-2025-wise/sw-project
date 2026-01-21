@@ -70,7 +70,9 @@ class SearchController {
         final var users =
             search.isBlank()
                 ? List.<CbUser>of()
-                : cbUserRepository.findByEmailContainingIgnoreCase(search.trim()).stream().filter(u -> !Objects.equals(u.getEmail(), "admin")).toList();
+                : cbUserRepository.findByEmailContainingIgnoreCase(search.trim()).stream()
+                    .filter(u -> !Objects.equals(u.getEmail(), "admin"))
+                    .toList();
         model.addAttribute("users", users);
         yield "fragments/user_card_grid :: userCardGrid(users=${users})";
       }
