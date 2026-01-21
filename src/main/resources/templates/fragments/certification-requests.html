@@ -1,0 +1,49 @@
+<div th:fragment="requestsCard" id="certification-requests">
+    <div th:if="${!#lists.isEmpty(pendingRequests)}" class="card shadow-sm mb-4" id="certification-requests-content">
+        <div class="card-header">
+            <h6 class="text-muted">Pending Requests From Movie Critics</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead>
+                    <tr>
+                        <th>Movie ID</th>
+                        <th>Movie Name</th>
+                        <th>Requested By</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="request : ${pendingRequests}">
+                        <td th:text="${request.movieId}"></td>
+                        <td>ToDo</td>
+                        <td th:text="${request.cbUser.email}"></td>
+                        <td>
+                            <button type="button"
+                                    class="btn btn-sm btn-success me-2"
+                                    th:hx-post="@{/admin/critics/requests/{id}/approve(id=${request.id})}"
+                                    hx-target="#certification-requests"
+                                    hx-swap="outerHTML">
+                                Approve
+                            </button>
+                            <button type="button"
+                                    class="btn btn-sm btn-danger"
+                                    th:hx-post="@{/admin/critics/requests/{id}/reject(id=${request.id})}"
+                                    hx-target="#certification-requests-content"
+                                    hx-swap="innerHTML">
+                                Reject
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-secondary text-center mb-4" th:if="${#lists.isEmpty(pendingRequests)}">
+        <p class="text-muted mb-0">
+            <i class="bi bi-inbox"> No requests form critics pending</i>
+        </p>
+    </div>
+</div>

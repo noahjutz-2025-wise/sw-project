@@ -12,6 +12,8 @@
     <div th:replace="~{fragments/sidebar :: sidebar('critics')}"></div>
     <div class="container">
         <h1 class="trend-title mb-4">Certified Critics</h1>
+
+        <div th:insert="~{fragments/certification-requests :: requestsCard}"></div>
         <div class="card shadow-sm">
             <div class="card-body">
                 <div class="table-responsive">

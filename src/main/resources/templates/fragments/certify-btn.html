@@ -21,4 +21,14 @@
             hx-swap="outerHTML">
         Certified &#128163;
     </button>
+
+    <form sec:authorize="hasAuthority('ROLE_CRITIC') and !hasAuthority('admin')"
+            th:if="${certifiedBangerStatus == T(com.swdev.springbootproject.model.dto.MediaDto.CertifiedBangerStatus).NOT_CERTIFIED}"
+            th:action="@{/app/certified/request(movieId=${movieId})}"
+            method="post"
+            onsubmit="this.querySelector('button').innerHTML='Pending'; this.querySelector('button').disabled=true;">
+        <button type="submit" class="btn btn-outline-primary w-100">
+            Request
+        </button>
+    </form>
 </div>
