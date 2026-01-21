@@ -1,17 +1,17 @@
 <div th:fragment="requestsCard" id="certification-requests">
     <div th:if="${!#lists.isEmpty(pendingRequests)}" class="card shadow-sm mb-4" id="certification-requests-content">
         <div class="card-header">
-            <h6 class="text-muted">Pending Requests From Movie Critics</h6>
+            <h6 class="text-muted" th:text="#{certification.request.title}">Anfragen von Filmkritikern</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table align-middle">
                     <thead>
                     <tr>
-                        <th>Movie ID</th>
-                        <th>Movie Name</th>
-                        <th>Requested By</th>
-                        <th>Actions</th>
+                        <th th:text="#{certification.request.movie.id}">Film-ID</th>
+                        <th th:tetx="#{certification.request.movie.name}">Filmtitel</th>
+                        <th th:text="#{certification.request.movie.requester}">Beantragt von</th>
+                        <th th:text="#{certification.request.movie.actions}">Aktionen</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -24,6 +24,7 @@
                                     class="btn btn-sm btn-success me-2"
                                     th:hx-post="@{/admin/critics/requests/{id}/approve(id=${request.id})}"
                                     hx-target="#certification-requests"
+                                    th:text="#{certification.request.approve.btn}"
                                     hx-swap="outerHTML">
                                 Approve
                             </button>
@@ -31,6 +32,7 @@
                                     class="btn btn-sm btn-danger"
                                     th:hx-post="@{/admin/critics/requests/{id}/reject(id=${request.id})}"
                                     hx-target="#certification-requests-content"
+                                    th:text="#{certification.request.reject.btn}"
                                     hx-swap="innerHTML">
                                 Reject
                             </button>
@@ -42,7 +44,7 @@
         </div>
     </div>
     <div class="alert alert-secondary text-center mb-4" th:if="${#lists.isEmpty(pendingRequests)}">
-        <p class="text-muted mb-0">
+        <p class="text-muted mb-0" th:text="#{certification.request.noRequests}">
             <i class="bi bi-inbox"> No requests form critics pending</i>
         </p>
     </div>

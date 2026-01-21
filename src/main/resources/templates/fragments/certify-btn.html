@@ -1,7 +1,8 @@
 <div xmlns:sec="https://www.thymeleaf.org/extras/spring-security"
      th:fragment="certifyBtn(movieId, certifiedBangerStatus)">
     <button sec:authorize="hasAuthority('admin')"
-            th:if="${certifiedBangerStatus == T(com.swdev.springbootproject.model.dto.MediaDto.CertifiedBangerStatus).NOT_CERTIFIED}"
+            th:if="${certifiedBangerStatus == T(com.swdev.springbootproject.model.dto.MediaDto.CertifiedBangerStatus).NOT_CERTIFIED
+                                              || certifiedBangerStatus == T(com.swdev.springbootproject.model.dto.MediaDto.CertifiedBangerStatus).REQUEST_PENDING}"
             type="button"
             class="btn btn-outline-secondary w-100"
             th:title="#{certify.btn.certify.title}"
@@ -27,15 +28,16 @@
             th:action="@{/app/certified/request(movieId=${movieId})}"
             method="post"
             onsubmit="this.querySelector('button').innerHTML='Pending'; this.querySelector('button').disabled=true;">
-        <button type="submit" class="btn btn-outline-primary w-100">
-            Request
+        <button type="submit" class="btn btn-outline-primary w-100" th:text="#{certify.btn.critic.request}">
+            Anfragen
         </button>
     </form>
 
     <button sec:authorize="hasAuthority('ROLE_CRITIC') and !hasAuthority('admin')"
             th:if="${certifiedBangerStatus == T(com.swdev.springbootproject.model.dto.MediaDto.CertifiedBangerStatus).REQUEST_PENDING}"
             class="btn btn-outline-primary w-100"
+            th:text="#{certify.btn.critic.request.pending}"
             disabled>
-            Pending
+        Angefragt
     </button>
 </div>
