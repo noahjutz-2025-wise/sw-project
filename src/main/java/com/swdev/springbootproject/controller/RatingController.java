@@ -39,7 +39,7 @@ public class RatingController {
 
     currentUser = cbUserRepository.findById(currentUser.getId()).orElseThrow();
 
-    final var movie = movieRepository.save(new CbMovie(id));
+    final var movie = movieRepository.save(CbMovie.builder().id(id).build());
 
     userMovieRatingRepository.save(new UserMovieRating(currentUser, movie, rating));
 

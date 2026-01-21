@@ -60,7 +60,7 @@ public class MovieController {
 
     currentUser = cbUserRepository.findById(currentUser.getId()).orElseThrow();
 
-    final var movie = movieRepository.save(new CbMovie(id));
+    final var movie = movieRepository.save(CbMovie.builder().id(id).build());
 
     movieBookmarkRepository.save(
         new MovieBookmark(
@@ -78,7 +78,7 @@ public class MovieController {
     }
 
     movieBookmarkRepository
-        .findByUserAndMovie(currentUser, new CbMovie(id))
+        .findByUserAndMovie(currentUser, CbMovie.builder().id(id).build())
         .ifPresent(movieBookmarkRepository::delete);
 
     return "redirect:/app/movie/" + id;
@@ -89,7 +89,7 @@ public class MovieController {
       @RequestParam Long id, Model model, Authentication authentication) {
     final var bookmark =
         movieBookmarkRepository.findByUserAndMovie(
-            (CbUser) authentication.getPrincipal(), new CbMovie(id));
+            (CbUser) authentication.getPrincipal(), CbMovie.builder().id(id).build());
 
     model.addAttribute("id", id);
     model.addAttribute("activeTab", bookmark.map(MovieBookmark::getStatus).orElse(null));

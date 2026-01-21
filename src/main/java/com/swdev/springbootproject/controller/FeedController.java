@@ -97,14 +97,15 @@ public class FeedController {
           final var movie =
               movieRepository
                   .findById(mediaDto.getId())
-                  .orElseGet(() -> movieRepository.save(new CbMovie(mediaDto.getId())));
+                  .orElseGet(
+                      () -> movieRepository.save(CbMovie.builder().id(mediaDto.getId()).build()));
           postToCbMovieRepository.save(new PostToCbMovie(post, movie));
         }
         case TV -> {
           final var tv =
               tvRepository
                   .findById(mediaDto.getId())
-                  .orElseGet(() -> tvRepository.save(new CbTv(mediaDto.getId())));
+                  .orElseGet(() -> tvRepository.save(CbTv.builder().id(mediaDto.getId()).build()));
           postToCbTvRepository.save(new PostToCbTv(post, tv));
         }
       }
