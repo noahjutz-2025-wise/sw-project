@@ -18,4 +18,10 @@ public class MediaDto {
   private String overview;
   private MediaDtoType type;
   private Boolean certifiedBanger;
+  private String tagline;
+  private Long revenue;
+  private Integer runtime;
+  private Float popularity;
+  private Float voteAverage;
+  private Integer voteCount;
 }

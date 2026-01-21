@@ -14,4 +14,9 @@ public class TmdbTv {
   private String overview;
   private String firstAirDate;
   private String lastAirDate;
+  private String tagline;
+  private Long revenue;
+  private Float popularity;
+  private Float voteAverage;
+  private Integer voteCount;
 }

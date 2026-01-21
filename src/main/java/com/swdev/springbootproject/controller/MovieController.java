@@ -2,6 +2,7 @@ package com.swdev.springbootproject.controller;
 
 import com.swdev.springbootproject.component.PostToPostDtoConverter;
 import com.swdev.springbootproject.component.QueryParamToBookmarkStatusConverter;
+import com.swdev.springbootproject.component.TmdbMovieToMediaDtoConverter;
 import com.swdev.springbootproject.entity.CbMovie;
 import com.swdev.springbootproject.entity.CbUser;
 import com.swdev.springbootproject.entity.MovieBookmark;
@@ -29,10 +30,12 @@ public class MovieController {
   private final QueryParamToBookmarkStatusConverter queryParamToBookmarkStatusConverter;
   private final PostRepository postRepository;
   private final PostToPostDtoConverter postToPostDto;
+  private final TmdbMovieToMediaDtoConverter movieToMediaDto;
 
   @GetMapping("/{id}")
   public String movie(@PathVariable Long id, Model model) {
     final var movie = tmdbService.getMovieDetails(id);
+    final var media = movieToMediaDto.convert(movie);
     final var posts =
         postRepository
             .findAllByMovies_Id(movie.getId(), PageRequest.of(0, 10, Sort.by("id").descending()))
@@ -42,7 +45,7 @@ public class MovieController {
 
     model.addAttribute("posts", posts);
 
-    model.addAttribute("movieDetails", movie);
+    model.addAttribute("media", media);
     model.addAttribute("poster", TMDBService.POSTER_BASE_URL + movie.getPosterPath());
     model.addAttribute("backdrop", TMDBService.BACKDROP_BASE_URL + movie.getBackdropPath());
     model.addAttribute("id", id);
@@ -60,7 +63,7 @@ public class MovieController {
 
     currentUser = cbUserRepository.findById(currentUser.getId()).orElseThrow();
 
-    final var movie = movieRepository.save(new CbMovie(id));
+    final var movie = movieRepository.save(CbMovie.builder().id(id).build());
 
     movieBookmarkRepository.save(
         new MovieBookmark(
@@ -78,7 +81,7 @@ public class MovieController {
     }
 
     movieBookmarkRepository
-        .findByUserAndMovie(currentUser, new CbMovie(id))
+        .findByUserAndMovie(currentUser, CbMovie.builder().id(id).build())
         .ifPresent(movieBookmarkRepository::delete);
 
     return "redirect:/app/movie/" + id;
@@ -89,7 +92,7 @@ public class MovieController {
       @RequestParam Long id, Model model, Authentication authentication) {
     final var bookmark =
         movieBookmarkRepository.findByUserAndMovie(
-            (CbUser) authentication.getPrincipal(), new CbMovie(id));
+            (CbUser) authentication.getPrincipal(), CbMovie.builder().id(id).build());
 
     model.addAttribute("id", id);
     model.addAttribute("activeTab", bookmark.map(MovieBookmark::getStatus).orElse(null));

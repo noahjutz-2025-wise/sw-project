@@ -23,8 +23,8 @@ public class PostDtoToPostConverter implements Converter<PostDto, Post> {
     final var tvs = new ArrayList<CbTv>();
     for (final var mediaDto : source.getMedia()) {
       switch (mediaDto.getType()) {
-        case MOVIE -> movies.add(new CbMovie(mediaDto.getId()));
-        case TV -> tvs.add(new CbTv(mediaDto.getId()));
+        case MOVIE -> movies.add(CbMovie.builder().id(mediaDto.getId()).build());
+        case TV -> tvs.add(CbTv.builder().id(mediaDto.getId()).build());
       }
     }
     return Post.builder()
