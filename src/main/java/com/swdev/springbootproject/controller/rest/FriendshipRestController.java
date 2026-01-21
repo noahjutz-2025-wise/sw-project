@@ -13,7 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-// For development and testing, the REST API is public. but of course ideally there needs to be authentification
+// For development and testing, the REST API is public. but of course ideally there needs to be
+// authentification
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
