@@ -41,6 +41,8 @@ class SecurityConfig {
                     .permitAll()
                     .requestMatchers("/admin/**")
                     .hasAuthority("admin")
+                    .requestMatchers("/api/users/**")
+                    .permitAll()
                     .anyRequest()
                     .authenticated())
         .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/mood").permitAll())
