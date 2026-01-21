@@ -40,11 +40,11 @@
                 </div>
                 <div class="col-sm-8 col-12">
                     <table class="table">
-                        <tr>
+                        <tr th:if="${media.releaseDate}">
                             <th th:text="#{movie.details.releasedOn}">Veröffentlicht am</th>
                             <td th:text="${media.releaseDate}"></td>
                         </tr>
-                        <tr>
+                        <tr th:if="${media.revenue}">
                             <th th:text="#{movie.details.revenue}">Umsatz</th>
                             <td>
                                 <span th:text="${#numbers.formatDecimal(media.revenue, 0, 'COMMA', 0, 'POINT')}"></span>
@@ -60,7 +60,7 @@
                                 </a>
                             </td>
                         </tr>
-                        <tr>
+                        <tr th:if="${media.runtime}">
                             <th th:text="#{movie.details.duration}">Dauer</th>
                             <td>
                                 <span th:text="${media.runtime}"></span>
