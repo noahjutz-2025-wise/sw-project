@@ -31,4 +31,11 @@
             Request
         </button>
     </form>
+
+    <button sec:authorize="hasAuthority('ROLE_CRITIC') and !hasAuthority('admin')"
+            th:if="${certifiedBangerStatus == T(com.swdev.springbootproject.model.dto.MediaDto.CertifiedBangerStatus).REQUEST_PENDING}"
+            class="btn btn-outline-primary w-100"
+            disabled>
+            Pending
+    </button>
 </div>
