@@ -8,15 +8,14 @@ import com.swdev.springbootproject.repository.CertifiedBangerRepository;
 import com.swdev.springbootproject.repository.CertifyMovieRequestRepository;
 import com.swdev.springbootproject.service.CriticService;
 import com.swdev.springbootproject.service.TMDBService;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -31,7 +30,9 @@ public class CriticController {
   @GetMapping
   public String getUsers(Model model) {
     model.addAttribute("users", criticService.findAllCbUsers());
-    List<CertifyMovieRequest> pendingRequests = certifyMovieRequestRepository.findByStatusOrderByIdDesc(CertifyMovieRequest.RequestStatus.PENDING);
+    List<CertifyMovieRequest> pendingRequests =
+        certifyMovieRequestRepository.findByStatusOrderByIdDesc(
+            CertifyMovieRequest.RequestStatus.PENDING);
     model.addAttribute(
         "pendingRequests",
         certifyMovieRequestRepository.findByStatusOrderByIdDesc(
