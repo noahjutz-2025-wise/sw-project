@@ -78,7 +78,6 @@ public class RatingController {
     userMovieRating.setRatedAt(LocalDateTime.now());
 
     userMovieRatingRepository.save(userMovieRating);
-
     return "redirect:/app/rated_movies";
   }
 
