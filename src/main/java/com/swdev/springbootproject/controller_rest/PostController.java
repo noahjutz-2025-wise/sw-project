@@ -1,5 +1,6 @@
 package com.swdev.springbootproject.controller_rest;
 
+import com.swdev.springbootproject.component.PostSecurity;
 import com.swdev.springbootproject.component.converter.PostDtoToPostConverter;
 import com.swdev.springbootproject.component.converter.PostToPostDtoConverter;
 import com.swdev.springbootproject.model.dto.PostDto;
@@ -7,6 +8,8 @@ import com.swdev.springbootproject.repository.PostRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +21,7 @@ public class PostController {
   private final PostRepository postRepository;
   private final PostToPostDtoConverter postToPostDtoConverter;
   private final PostDtoToPostConverter postDtoToPostConverter;
+  private final PostSecurity postSecurity;
 
   @GetMapping
   public List<PostDto> posts(@RequestParam(defaultValue = "0") int page) {
@@ -41,6 +45,7 @@ public class PostController {
   }
 
   @DeleteMapping("/{id}")
+  @PreAuthorize("@postSecurity.isOwner(#id, authentication)")
   public void deletePost(@PathVariable Long id) {
     postRepository.deleteById(id);
   }
