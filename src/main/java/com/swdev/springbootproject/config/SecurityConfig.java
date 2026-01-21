@@ -39,7 +39,7 @@ class SecurityConfig {
                 a.requestMatchers("/app/**", "/verify", "/user/profile")
                     .authenticated()
                     .requestMatchers(
-                        "/signup", "/", "/css/**", "/js/**", "/error", "/webjars/**", "/images/**")
+                        "/signup", "/", "/css/**", "/js/**", "/error", "/webjars/**", "/images/**", "/api/auth")
                     .permitAll()
                     .requestMatchers("/admin/**")
                     .hasAuthority("admin")
