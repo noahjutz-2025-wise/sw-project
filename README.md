@@ -12,6 +12,7 @@ docker run \
   -e SECURITY_OWNER_DEFAULT_PASSWORD=... \
   -e SPRING_MAIL_USERNAME=... \
   -e SPRING_MAIL_PASSWORD=... \
+  -e JWT_SECRET=... \
   quay.io/noahjutz/sw-project
 ```
 
